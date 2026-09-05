@@ -1,6 +1,6 @@
 import React from 'react';
 import './About.css';
-import aboutLogo from '../assets/rectangle-47.png';
+import aboutLogo from '../assets/Rectangle-47.png';
 const About = () => {
   return (
     <section className="container about-section" id="about">
