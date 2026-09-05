@@ -1,0 +1,39 @@
+.vm-section {
+  padding-top: 40px;
+}
+
+.vm-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
+}
+
+.vm-card {
+  height: 462px;
+  background: var(--bg-secondary);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.vm-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vm-bar {
+  height: 30px;
+  width: 100%;
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .vm-grid {
+    grid-template-columns: 1fr;
+  }
+  .vm-card {
+    height: 300px;
+  }
+}
