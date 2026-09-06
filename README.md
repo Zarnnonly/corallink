@@ -1,16 +1,30 @@
-# React + Vite
+# CoralLink ??
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+CoralLink adalah aplikasi web frontend yang dibangun menggunakan **React 19** dan **Vite**, dirancang sebagai platform untuk mendukung pelestarian ekosistem terumbu karang. Proyek ini menggunakan React Router DOM untuk navigasi antar halaman, Lucide React sebagai library ikon, serta integrasi Vercel Analytics dan Speed Insights untuk pemantauan performa secara real-time.
 
-Currently, two official plugins are available:
+## Progres Pengembangan
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Saat ini struktur halaman utama telah selesai dibangun, mencakup halaman beranda (`Home`), halaman ajakan bertindak (`TakeAction`), halaman sambutan setelah registrasi (`Welcome`), serta halaman autentikasi (`SignIn` dan `SignUp`). Setiap halaman memiliki file JSX dan CSS tersendiri untuk menjaga kerapian kode dan kemudahan pemeliharaan ke depannya.
 
-## React Compiler
+Komponen-komponen reusable sudah dikembangkan secara modular di dalam folder `components/`, antara lain: `Navbar`, `Hero`, `About`, `VisionMission`, `Projects`, `Impact`, `FAQ`, dan `Footer`. Masing-masing komponen memiliki stylesheet-nya sendiri dan dirancang agar mudah di-*maintain* serta dapat digunakan ulang di berbagai halaman sesuai kebutuhan.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Dari sisi desain, tampilan antarmuka menggunakan pendekatan modern dengan skema warna yang konsisten, tipografi yang bersih, serta tata letak responsif yang ramah berbagai ukuran layar. Halaman autentikasi seperti `SignIn` dan `SignUp` telah memiliki form interaktif dengan styling yang selaras dengan identitas visual CoralLink secara keseluruhan.
 
-## Expanding the Oxlint configuration
+Ke depan, pengembangan akan difokuskan pada penyempurnaan konten di setiap komponen, peningkatan animasi dan transisi antarmuka, serta integrasi dengan backend API untuk fungsionalitas autentikasi dan manajemen data pengguna yang sesungguhnya. Proyek ini sudah siap untuk di-*deploy* ke Vercel mengingat konfigurasi analytics dan speed insights sudah terpasang sejak awal.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Tech Stack
+
+| Teknologi | Versi |
+|---|---|
+| React | ^19.2.8 |
+| Vite | ^8.2.2 |
+| React Router DOM | ^7.18.3 |
+| Lucide React | ^1.41.0 |
+| Vercel Analytics | ^2.0.1 |
+
+## Menjalankan Proyek
+
+```bash
+npm install
+npm run dev
+```
