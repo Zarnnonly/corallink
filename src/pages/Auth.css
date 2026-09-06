@@ -1,0 +1,218 @@
+.auth-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0A3C52;
+
+  /* Fallback */
+
+  /* Underwater background image from assets */
+  background-image: url('../assets/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+
+
+.auth-container {
+  background-color: #EFFBFC;
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 10;
+}
+
+
+
+.auth-logo-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+
+
+.auth-logo-img {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+  margin-bottom: 16px;
+}
+
+
+
+.auth-title {
+  color: #2F6174;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 8px 0;
+}
+
+
+
+.auth-subtitle {
+  color: #555;
+  font-size: 14px;
+  margin: 0 0 24px 0;
+}
+
+
+
+.role-selector {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+
+
+.role-btn {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #38748C;
+  border-radius: 20px;
+  background: transparent;
+  color: #38748C;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+
+.role-btn.active {
+  background-color: #38748C;
+  color: white;
+}
+
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+
+
+.form-group label {
+  color: #38748C;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #888;
+}
+
+
+
+.auth-input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  font-size: 14px;
+}
+
+
+
+.auth-input:focus {
+  border-color: #38748C;
+}
+
+
+
+.submit-btn {
+  background-color: #38748C;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 16px;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #2F6174;
+}
+
+/* Welcome Page specific */
+
+.welcome-content {
+  text-align: center;
+  color: white;
+  z-index: 10;
+}
+
+
+
+.welcome-title {
+  font-size: 48px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.welcome-subtitle {
+  font-size: 18px;
+  margin: 0 0 40px 0;
+}
+
+
+
+.welcome-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+
+
+.welcome-btn {
+  background-color: white;
+  color: #38748C;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 32px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+
+
+.welcome-btn:hover {
+  transform: scale(1.05);
+}

@@ -1,27 +1,24 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Impact from './components/Impact';
-import VisionMission from './components/VisionMission';
-import Projects from './components/Projects';
-import FAQ from './components/FAQ';
-import Footer from './components/Footer';
+import Home from './pages/Home';
+import TakeAction from './pages/TakeAction';
+import Welcome from './pages/Welcome';
+import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
 
 function App() {
   return (
-    <>
+    <Router>
       <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Impact />
-        <VisionMission />
-        <Projects />
-        <FAQ />
-      </main>
-      <Footer />
-    </>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/take-action" element={<TakeAction />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+      </Routes>
+    </Router>
   );
 }
 
