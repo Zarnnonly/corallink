@@ -164,6 +164,53 @@
   background-color: #2F6174;
 }
 
+
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0 12px;
+  color: #aaa;
+  font-size: 13px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.auth-divider::before {
+  margin-right: 10px;
+}
+
+.auth-divider::after {
+  margin-left: 10px;
+}
+
+
+
+.auth-redirect {
+  text-align: center;
+  font-size: 14px;
+  color: #555;
+  margin: 0;
+}
+
+
+
+.auth-link {
+  color: #38748C;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
 /* Welcome Page specific */
 
 .welcome-content {
