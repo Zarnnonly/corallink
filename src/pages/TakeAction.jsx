@@ -19,7 +19,7 @@ const TakeAction = () => {
               <h2>{project.name}</h2>
               <h3>{project.subtitle}</h3>
               <p>{project.description}</p>
-              <Link to={`/project/${project.id}`} className="action-btn">
+              <Link to={`/invest/${project.id}`} className="action-btn">
                 View Project
               </Link>
             </div>

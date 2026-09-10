@@ -24,7 +24,7 @@ const Projects = () => {
         <div className="projects-grid">
           {projects.map((project) => (
             <Link
-              to={`/project/${project.id}`}
+              to={`/invest/${project.id}`}
               className="project-card"
               key={project.id}
               style={{ textDecoration: 'none' }}

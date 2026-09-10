@@ -37,7 +37,11 @@ const UploadProject = () => {
     const file = e.target.files[0];
     if (file) {
       setImageFile(file);
-      setImagePreview(URL.createObjectURL(file));
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
       setVerificationStatus(null);
       setVerificationResult(null);
     }

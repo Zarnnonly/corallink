@@ -39,12 +39,10 @@ function AppContent() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
 
+        <Route path="/invest/:projectId" element={<InvestPage />} />
+        <Route path="/project/:projectId" element={<ProjectDetail />} />
+
         {/* User Routes */}
-        <Route path="/invest/:projectId" element={
-          <ProtectedRoute allowedRoles={['user']}>
-            <InvestPage />
-          </ProtectedRoute>
-        } />
         <Route path="/invest-form/:projectId" element={
           <ProtectedRoute allowedRoles={['user']}>
             <FormInvestment />
