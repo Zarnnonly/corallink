@@ -14,6 +14,7 @@ import FormInvestment from './pages/FormInvestment';
 import ConfirmInvestment from './pages/ConfirmInvestment';
 import UserProfile from './pages/UserProfile';
 import UploadProject from './pages/UploadProject';
+import AdminPayments from './pages/AdminPayments';
 import UpdateProject from './pages/UpdateProject';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
@@ -71,6 +72,8 @@ function AppContent() {
             <UpdateProject />
           </ProtectedRoute>
         } />
+
+        <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
 
         {/* 404 Catch-all */}
         <Route path="*" element={<NotFound />} />

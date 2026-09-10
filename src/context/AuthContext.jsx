@@ -53,6 +53,6 @@ export const AuthProvider = ({ children }) => {
   };
   return <AuthContext.Provider value={{ user, loading, error, restoreSession, logout,
     login: (email, password) => authenticate('/api/auth/login', { email, password }),
-    register: (nama, email, password) => authenticate('/api/auth/register', { nama, email, password }),
+    register: (name, email, password, phone) => authenticate('/api/auth/register', { name, email, password, phone }),
   }}>{children}</AuthContext.Provider>;
 };

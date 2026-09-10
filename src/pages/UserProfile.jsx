@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import './UserProfile.css';
 import bg from '../assets/bg.webp';
@@ -15,12 +16,14 @@ const UserProfile = () => {
     const controller = new AbortController();
     setHistoryData([]); setLoading(true); setError('');
     if (user.role === 'admin') { setLoading(false); return; }
-    request('/api/donations/saya', { auth: true, signal: controller.signal })
-      .then((data) => { if (!controller.signal.aborted) {
+    Promise.all([request('/api/donations/saya', { auth: true, signal: controller.signal }), request('/api/transactions/me', { auth: true, signal: controller.signal })])
+      .then(([data, transactions]) => { if (!controller.signal.aborted) {
         if (!Array.isArray(data)) throw new Error('Invalid donation response.');
-        setHistoryData(data.map((d) => ({ id: d.id, project: d.project?.namaProyek || 'Project unavailable',
+        const legacy = data.map((d) => ({ id: `donation-${d.id}`, project: d.project?.namaProyek || 'Project unavailable',
           date: new Date(d.createdAt).toLocaleDateString(), amount: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(d.jumlahDonasi)),
-          type: 'Donation record', status: 'Recorded — payment unverified' })));
+          type: 'Donation record', status: 'Recorded — payment unverified', createdAt: d.createdAt }));
+        const payments = transactions.map(t => ({ id: t.id, project: t.project?.namaProyek, date: new Date(t.createdAt).toLocaleDateString(), createdAt: t.createdAt, amount: new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount)), type: t.type, status: t.status, note: t.reviewNote, resume: ['AwaitingProof', 'Failed'].includes(t.status) ? `/confirm-invest/${t.projectId}?transaction=${t.id}` : null }));
+        setHistoryData([...legacy, ...payments].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
       } })
       .catch((e) => { if (!controller.signal.aborted) setError(e.message); })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
@@ -56,11 +59,11 @@ const UserProfile = () => {
             </div>
           </div>
 
-          {/* Donation History Card */}
+          {/* Investment History Card */}
           <div className="history-card">
             <div className="history-header">
-              <h2 className="history-title">Donation History</h2>
-              <p className="history-subtitle">These are donation records only. Payment processing and verification are not available yet.</p>
+              <h2 className="history-title">Investment History</h2>
+              <p className="history-subtitle">Track your contributions. Uploaded payment proofs remain Pending until an administrator verifies the transfer.</p>
             </div>
 
             <div className="history-table-wrapper">
@@ -82,13 +85,13 @@ const UserProfile = () => {
                         <td>{item.date}</td>
                         <td>{item.amount}</td>
                         <td>{item.type}</td>
-                        <td className="col-status">{item.status}</td>
+                        <td className="col-status">{item.status}{item.note && <p>{item.note}</p>}{item.resume && <p><Link to={item.resume}>Upload payment proof</Link></p>}</td>
                       </tr>
                     ))
                   ) : (
                     <tr>
                       <td colSpan="5" style={{ textAlign: 'center', padding: '30px', color: '#666' }}>
-                        {loading ? 'Loading donation history…' : error ? error : user.role === 'admin' ? 'Donation history is available for investor accounts.' : 'No donation records yet.'}
+                        {loading ? 'Loading donation history…' : error ? error : user.role === 'admin' ? 'Donation history is available for investor accounts.' : 'No investment history found.'}
                         {error && <button onClick={() => setAttempt((n) => n + 1)}>Try again</button>}
                       </td>
                     </tr>

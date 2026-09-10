@@ -1,0 +1,2541 @@
+diff --git a/package-lock.json b/package-lock.json
+index fef5a91..c4575cf 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -10,12 +10,14 @@
+       "license": "ISC",
+       "dependencies": {
+         "@prisma/client": "^5.20.0",
+-        "bcrypt": "^5.1.1",
++        "bcrypt": "^6.0.0",
++        "cors": "^2.8.6",
+         "dotenv": "^16.4.5",
+         "express": "^4.21.0",
+         "form-data": "^4.0.6",
+         "jsonwebtoken": "^9.0.2",
+-        "multer": "^1.4.5-lts.1",
++        "multer": "^2.3.0",
++        "sharp": "^0.35.4",
+         "zod": "^3.23.8"
+       },
+       "devDependencies": {
+@@ -23,24 +25,562 @@
+         "prisma": "^5.20.0"
+       }
+     },
+-    "node_modules/@mapbox/node-pre-gyp": {
+-      "version": "1.0.11",
+-      "resolved": "https://registry.npmjs.org/@mapbox/node-pre-gyp/-/node-pre-gyp-1.0.11.tgz",
+-      "integrity": "sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==",
+-      "license": "BSD-3-Clause",
++    "node_modules/@emnapi/runtime": {
++      "version": "1.11.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@emnapi/runtime/-/runtime-1.11.3.tgz",
++      "integrity": "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==",
++      "license": "MIT",
++      "optional": true,
+       "dependencies": {
+-        "detect-libc": "^2.0.0",
+-        "https-proxy-agent": "^5.0.0",
+-        "make-dir": "^3.1.0",
+-        "node-fetch": "^2.6.7",
+-        "nopt": "^5.0.0",
+-        "npmlog": "^5.0.1",
+-        "rimraf": "^3.0.2",
+-        "semver": "^7.3.5",
+-        "tar": "^6.1.11"
++        "tslib": "^2.4.0"
++      }
++    },
++    "node_modules/@img/colour": {
++      "version": "1.1.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/colour/-/colour-1.1.0.tgz",
++      "integrity": "sha512-Td76q7j57o/tLVdgS746cYARfSyxk8iEfRxewL9h4OMzYhbW4TAcppl0mT4eyqXddh6L/jwoM75mo7ixa/pCeQ==",
++      "license": "MIT",
++      "engines": {
++        "node": ">=18"
++      }
++    },
++    "node_modules/@img/sharp-darwin-arm64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-darwin-arm64/-/sharp-darwin-arm64-0.35.4.tgz",
++      "integrity": "sha512-Uhfl4V4lhP2nbUVF9+hyH1+luj86f1gUFeo8ALYxFoULoU+G87D43BfeMP8XHsk9boxAnCY/bf2EHwhA7MuGsA==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
+       },
+-      "bin": {
+-        "node-pre-gyp": "bin/node-pre-gyp"
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-darwin-arm64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-darwin-x64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-darwin-x64/-/sharp-darwin-x64-0.35.4.tgz",
++      "integrity": "sha512-hWniXY3bG5qKpkKrAwPe4y+VTPmf086YQAnkxWh7uA1YrlRouWGa0M0Mxj3ZjnXFkv7/TD1bTy9lGUK26vRvWw==",
++      "cpu": [
++        "x64"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-darwin-x64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-freebsd-wasm32": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-freebsd-wasm32/-/sharp-freebsd-wasm32-0.35.4.tgz",
++      "integrity": "sha512-lIsKw/BU+kjB4eZjxrYrZmwOJYi3Ajrv66iAlBmUPyKc3HpnloevB1g3wxGD9P/5BbQ1brBGl65VRRrCvQDEqA==",
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "freebsd"
++      ],
++      "dependencies": {
++        "@img/sharp-wasm32": "0.35.4"
++      },
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-darwin-arm64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-darwin-arm64/-/sharp-libvips-darwin-arm64-1.3.3.tgz",
++      "integrity": "sha512-suTBPTDGrI9WodccaDdwZItTSaBYASlBk1NSfElSHrUfzu3szG6lvIF58+WiFvnfzuK8ZBFS5zE00PxqxnRiPg==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-darwin-x64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-darwin-x64/-/sharp-libvips-darwin-x64-1.3.3.tgz",
++      "integrity": "sha512-FVJZ5mITMobmXIz/hPDTw0EintTW5H3WfrxwLqEqjiIihlu+hVRyGrFQ60xl0Lxn7Bt3zdpevPaQi0HEzqz9fw==",
++      "cpu": [
++        "x64"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "darwin"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-arm": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-arm/-/sharp-libvips-linux-arm-1.3.3.tgz",
++      "integrity": "sha512-3rbU4vqXXc3hY/OiXdl52xZvT0F1yEngWfvqudtPJg/KkyiaQw2DRsFrNzpmLvfavbwOq3qXn36GP8obHRULQA==",
++      "cpu": [
++        "arm"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-arm64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-arm64/-/sharp-libvips-linux-arm64-1.3.3.tgz",
++      "integrity": "sha512-0DaL0A6Xu6sQSQFwe4iVCrKWU2cCTItnRsYsCdxAMm9NF6twAA9BKnoqy4hqz4+azQ0JHuA26qiUKsf1XJ/v5A==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-ppc64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-ppc64/-/sharp-libvips-linux-ppc64-1.3.3.tgz",
++      "integrity": "sha512-cdn1OvUBwsXhbC0zSzJnNzf5MZ/mTrobawDvNXBTxe8VtqKAm0sRuEY2Evzovb/w9JMk4TvRxqt1mekSuJz64w==",
++      "cpu": [
++        "ppc64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-riscv64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-riscv64/-/sharp-libvips-linux-riscv64-1.3.3.tgz",
++      "integrity": "sha512-HjPVx7yKz+0lqdhDlTw1tt90wamBoxhiXpvl1XZpJLiHH4RCJ5yDTqH+VlYPv2fwFs89JFw4c1IexYOcQUi4IQ==",
++      "cpu": [
++        "riscv64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-s390x": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-s390x/-/sharp-libvips-linux-s390x-1.3.3.tgz",
++      "integrity": "sha512-neWLh+3yCNThxnfy3c4BbVBeGgt9aftno+XbT56iK28RgeDs3UOFWviLWlUu0bArYVYJaFDK+RRohbicUNCm8Q==",
++      "cpu": [
++        "s390x"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linux-x64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linux-x64/-/sharp-libvips-linux-x64-1.3.3.tgz",
++      "integrity": "sha512-4vKmvAst9nrowcqquKFAyZJUDolUaIp8uRiN0mWFguJ1IplC9/pitXtlnnlU4aa/eJw3J7i67V+pwUL+wZGdsA==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linuxmusl-arm64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linuxmusl-arm64/-/sharp-libvips-linuxmusl-arm64-1.3.3.tgz",
++      "integrity": "sha512-Y9kQaLMuNoB0bPYOOdcZMaseNrFpPodIWWMrx+CZyydf2xn68j9WYc6sWWRrDwNkzCQjKYfc68L7jKjGlHMibw==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-libvips-linuxmusl-x64": {
++      "version": "1.3.3",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-libvips-linuxmusl-x64/-/sharp-libvips-linuxmusl-x64-1.3.3.tgz",
++      "integrity": "sha512-fj8Mv0HHfD1Rr+4I68+3agJynxDWtBFgicTbSOb9Bke6pIwzGcJ+RX/yHjmiEGFMCavY/dxvem7MyNaJF+wDiw==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-linux-arm": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-arm/-/sharp-linux-arm-0.35.4.tgz",
++      "integrity": "sha512-7OAS8gI0EReKGVN2HssHlM6umJgxF5VI3xN0p9FA91p/YO+ou5hiNghLdZ5BEHztwaaK5+bLKRf8x/o2L2nk9A==",
++      "cpu": [
++        "arm"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-arm": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linux-arm64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-arm64/-/sharp-linux-arm64-0.35.4.tgz",
++      "integrity": "sha512-De4jpEnAU8Hd5oT0j1G3uL4ZvTuipVMn7YC6vPaJhy6/7EwEae0SVAoBrUMYQbkLGDm85taVWwuPc1a44LTzCQ==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-arm64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linux-ppc64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-ppc64/-/sharp-linux-ppc64-0.35.4.tgz",
++      "integrity": "sha512-2oYZJeIl4kCcMGk4ouZVjnkCtFrpQFlNEtJ6GbxzhHQchwH0NH/qEb9ykmOl29dqwMq+JhFdZn+1ak2FKhI9fQ==",
++      "cpu": [
++        "ppc64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-ppc64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linux-riscv64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-riscv64/-/sharp-linux-riscv64-0.35.4.tgz",
++      "integrity": "sha512-cPbNChoRURAWdebDIHSenxRpgEdy7JkPydSnUxRm9VvKD7m0/xVaR/8Fzlu81pk5nHEvHH87UZUA7cTtwnbJSA==",
++      "cpu": [
++        "riscv64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-riscv64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linux-s390x": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-s390x/-/sharp-linux-s390x-0.35.4.tgz",
++      "integrity": "sha512-RY0JFY8Fd6RonCBtHz+DvadaPkXDSI1AUn6yWL9TipqkZ1vY8w8evqdgyDFnkm4/K1ve1TvZiaePP5oSd4+WVQ==",
++      "cpu": [
++        "s390x"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-s390x": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linux-x64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linux-x64/-/sharp-linux-x64-0.35.4.tgz",
++      "integrity": "sha512-9qvvEAuk8k89TfWUoX2htWjbAMX8p+NxCppjpcg5k6xMsjhBQPTsoIh36h9Qde4WRuGpJeYnOjdosDn/cnv+OA==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "glibc"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linux-x64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linuxmusl-arm64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linuxmusl-arm64/-/sharp-linuxmusl-arm64-0.35.4.tgz",
++      "integrity": "sha512-KB5jxpfWQTr0nc3xdHtWChdbifHrBGsd2SM62Eyxrl8afikm+f5qGBU75SJIZBT/S1MC8XyacdlXBMSWq6OURA==",
++      "cpu": [
++        "arm64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linuxmusl-arm64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-linuxmusl-x64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-linuxmusl-x64/-/sharp-linuxmusl-x64-0.35.4.tgz",
++      "integrity": "sha512-f+eZJZIQNEEd26RPSW+76chwOf1XtA2Y/O+5ocVyLliHkeih3e+jhLVBdNTd2rS3IbNXK8+ug93Vf5ZXtF5Lxg==",
++      "cpu": [
++        "x64"
++      ],
++      "libc": [
++        "musl"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "os": [
++        "linux"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-libvips-linuxmusl-x64": "1.3.3"
++      }
++    },
++    "node_modules/@img/sharp-wasm32": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-wasm32/-/sharp-wasm32-0.35.4.tgz",
++      "integrity": "sha512-zQnl4Kwp7Q6NHsENtU2T/00Zi+w3AQNwz3+UaTyVBy2FpXrzXzGjndpK61onhZjRtRpQXxCTeqw19bVyXOh7jA==",
++      "license": "Apache-2.0 AND LGPL-3.0-or-later AND MIT",
++      "optional": true,
++      "dependencies": {
++        "@emnapi/runtime": "^1.11.3"
++      },
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-webcontainers-wasm32": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-webcontainers-wasm32/-/sharp-webcontainers-wasm32-0.35.4.tgz",
++      "integrity": "sha512-ESfNkywmCfPNyaZjxooddJQiQ+l/nTpGEOGthxiLnIHXC/CmcBixnfwUleX9mCz9ovrUUvKMap/pm8RYbzfwaA==",
++      "cpu": [
++        "wasm32"
++      ],
++      "license": "Apache-2.0",
++      "optional": true,
++      "dependencies": {
++        "@img/sharp-wasm32": "0.35.4"
++      },
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-win32-arm64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-win32-arm64/-/sharp-win32-arm64-0.35.4.tgz",
++      "integrity": "sha512-iNdlBX9gLVvqe2I3uIJSIKTq6wckP/DYxZtcqxm09x5Gi24DnFBmPAWZmr60ZyYMG0xlzo6goG3670ar+RXvRw==",
++      "cpu": [
++        "arm64"
++      ],
++      "license": "Apache-2.0 AND LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-win32-ia32": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-win32-ia32/-/sharp-win32-ia32-0.35.4.tgz",
++      "integrity": "sha512-kqRsbaa5CS6KHlpxnN7WhE6vAAugXyZButpRdvDWetlv6Qv4N9WTcrWzF7tXfB9T7MsoadqdI8hmwLq6UlLvtw==",
++      "cpu": [
++        "ia32"
++      ],
++      "license": "Apache-2.0 AND LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": "^20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      }
++    },
++    "node_modules/@img/sharp-win32-x64": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/@img/sharp-win32-x64/-/sharp-win32-x64-0.35.4.tgz",
++      "integrity": "sha512-XtmnYhBcrORsJ4XJngyzr/EWP0hRZLAZRFaApdKuviyqF78+ylxh2y06ZmtULAMOnObJ3ucpN0AcwSWnMowTRg==",
++      "cpu": [
++        "x64"
++      ],
++      "license": "Apache-2.0 AND LGPL-3.0-or-later",
++      "optional": true,
++      "os": [
++        "win32"
++      ],
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
+       }
+     },
+     "node_modules/@prisma/client": {
+@@ -111,12 +651,6 @@
+         "@prisma/debug": "5.22.0"
+       }
+     },
+-    "node_modules/abbrev": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmjs.org/abbrev/-/abbrev-1.1.1.tgz",
+-      "integrity": "sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==",
+-      "license": "ISC"
+-    },
+     "node_modules/accepts": {
+       "version": "1.3.8",
+       "resolved": "https://registry.npmjs.org/accepts/-/accepts-1.3.8.tgz",
+@@ -130,50 +664,6 @@
+         "node": ">= 0.6"
+       }
+     },
+-    "node_modules/agent-base": {
+-      "version": "6.0.2",
+-      "resolved": "https://registry.npmjs.org/agent-base/-/agent-base-6.0.2.tgz",
+-      "integrity": "sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "debug": "4"
+-      },
+-      "engines": {
+-        "node": ">= 6.0.0"
+-      }
+-    },
+-    "node_modules/agent-base/node_modules/debug": {
+-      "version": "4.4.3",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+-      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "^2.1.3"
+-      },
+-      "engines": {
+-        "node": ">=6.0"
+-      },
+-      "peerDependenciesMeta": {
+-        "supports-color": {
+-          "optional": true
+-        }
+-      }
+-    },
+-    "node_modules/agent-base/node_modules/ms": {
+-      "version": "2.1.3",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-      "license": "MIT"
+-    },
+-    "node_modules/ansi-regex": {
+-      "version": "5.0.1",
+-      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+-      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+     "node_modules/anymatch": {
+       "version": "3.1.3",
+       "resolved": "https://registry.npmjs.org/anymatch/-/anymatch-3.1.3.tgz",
+@@ -194,40 +684,6 @@
+       "integrity": "sha512-klpgFSWLW1ZEs8svjfb7g4qWY0YS5imI82dTg+QahUvJ8YqAY0P10Uk8tTyh9ZGuYEZEMaeJYCF5BFuX552hsw==",
+       "license": "MIT"
+     },
+-    "node_modules/aproba": {
+-      "version": "2.1.0",
+-      "resolved": "https://registry.npmjs.org/aproba/-/aproba-2.1.0.tgz",
+-      "integrity": "sha512-tLIEcj5GuR2RSTnxNKdkK0dJ/GrC7P38sUkiDmDuHfsHmbagTFAxDVIBltoklXEVIQ/f14IL8IMJ5pn9Hez1Ew==",
+-      "license": "ISC"
+-    },
+-    "node_modules/are-we-there-yet": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/are-we-there-yet/-/are-we-there-yet-2.0.0.tgz",
+-      "integrity": "sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==",
+-      "deprecated": "This package is no longer supported.",
+-      "license": "ISC",
+-      "dependencies": {
+-        "delegates": "^1.0.0",
+-        "readable-stream": "^3.6.0"
+-      },
+-      "engines": {
+-        "node": ">=10"
+-      }
+-    },
+-    "node_modules/are-we-there-yet/node_modules/readable-stream": {
+-      "version": "3.6.2",
+-      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz",
+-      "integrity": "sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "inherits": "^2.0.3",
+-        "string_decoder": "^1.1.1",
+-        "util-deprecate": "^1.0.1"
+-      },
+-      "engines": {
+-        "node": ">= 6"
+-      }
+-    },
+     "node_modules/array-flatten": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz",
+@@ -251,17 +707,17 @@
+       }
+     },
+     "node_modules/bcrypt": {
+-      "version": "5.1.1",
+-      "resolved": "https://registry.npmjs.org/bcrypt/-/bcrypt-5.1.1.tgz",
+-      "integrity": "sha512-AGBHOG5hPYZ5Xl9KXzU5iKq9516yEmvCKDg3ecP5kX2aB6UqTeXZxk2ELnDgDm6BQSMlLt9rDB4LoSMx0rYwww==",
++      "version": "6.0.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/bcrypt/-/bcrypt-6.0.0.tgz",
++      "integrity": "sha512-cU8v/EGSrnH+HnxV2z0J7/blxH8gq7Xh2JFT6Aroax7UohdmiJJlxApMxtKfuI7z68NvvVcmR78k2LbT6efhRg==",
+       "hasInstallScript": true,
+       "license": "MIT",
+       "dependencies": {
+-        "@mapbox/node-pre-gyp": "^1.0.11",
+-        "node-addon-api": "^5.0.0"
++        "node-addon-api": "^8.3.0",
++        "node-gyp-build": "^4.8.4"
+       },
+       "engines": {
+-        "node": ">= 10.0.0"
++        "node": ">= 18"
+       }
+     },
+     "node_modules/binary-extensions": {
+@@ -301,22 +757,6 @@
+         "npm": "1.2.8000 || >= 1.4.16"
+       }
+     },
+-    "node_modules/body-parser/node_modules/qs": {
+-      "version": "6.16.0",
+-      "resolved": "https://registry.npmjs.org/qs/-/qs-6.16.0.tgz",
+-      "integrity": "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==",
+-      "license": "BSD-3-Clause",
+-      "dependencies": {
+-        "es-define-property": "^1.0.1",
+-        "side-channel": "^1.1.1"
+-      },
+-      "engines": {
+-        "node": ">=0.6"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/ljharb"
+-      }
+-    },
+     "node_modules/brace-expansion": {
+       "version": "5.0.9",
+       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-5.0.9.tgz",
+@@ -351,9 +791,8 @@
+     },
+     "node_modules/buffer-from": {
+       "version": "1.1.2",
+-      "resolved": "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz",
+-      "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==",
+-      "license": "MIT"
++      "resolved": "http://mirrors.tencentyun.com/npm/buffer-from/-/buffer-from-1.1.2.tgz",
++      "integrity": "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="
+     },
+     "node_modules/busboy": {
+       "version": "1.6.0",
+@@ -429,24 +868,6 @@
+         "fsevents": "~2.3.2"
+       }
+     },
+-    "node_modules/chownr": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/chownr/-/chownr-2.0.0.tgz",
+-      "integrity": "sha512-bIomtDF5KGpdogkLd9VspvFzk9KfpyyGlS8YFVZl7TGPBHL5snIOnxeshwVgPteQ9b4Eydl+pVbIyE1DcvCWgQ==",
+-      "license": "ISC",
+-      "engines": {
+-        "node": ">=10"
+-      }
+-    },
+-    "node_modules/color-support": {
+-      "version": "1.1.3",
+-      "resolved": "https://registry.npmjs.org/color-support/-/color-support-1.1.3.tgz",
+-      "integrity": "sha512-qiBjkpbMLO/HL68y+lh4q0/O1MZFj2RX6X/KmMa3+gJD3z+WwI1ZzDHysvqHGS3mP6mznPckpXmw1nI9cJjyRg==",
+-      "license": "ISC",
+-      "bin": {
+-        "color-support": "bin.js"
+-      }
+-    },
+     "node_modules/combined-stream": {
+       "version": "1.0.8",
+       "resolved": "https://registry.npmjs.org/combined-stream/-/combined-stream-1.0.8.tgz",
+@@ -459,33 +880,21 @@
+         "node": ">= 0.8"
+       }
+     },
+-    "node_modules/concat-map": {
+-      "version": "0.0.1",
+-      "resolved": "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz",
+-      "integrity": "sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==",
+-      "license": "MIT"
+-    },
+     "node_modules/concat-stream": {
+-      "version": "1.6.2",
+-      "resolved": "https://registry.npmjs.org/concat-stream/-/concat-stream-1.6.2.tgz",
+-      "integrity": "sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==",
++      "version": "2.0.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/concat-stream/-/concat-stream-2.0.0.tgz",
++      "integrity": "sha512-MWufYdFw53ccGjCA+Ol7XJYpAlW6/prSMzuPOTRnJGcGzuhLn4Scrz7qf6o8bROZ514ltazcIFJZevcfbo0x7A==",
+       "engines": [
+-        "node >= 0.8"
++        "node >= 6.0"
+       ],
+       "license": "MIT",
+       "dependencies": {
+         "buffer-from": "^1.0.0",
+         "inherits": "^2.0.3",
+-        "readable-stream": "^2.2.2",
++        "readable-stream": "^3.0.2",
+         "typedarray": "^0.0.6"
+       }
+     },
+-    "node_modules/console-control-strings": {
+-      "version": "1.1.0",
+-      "resolved": "https://registry.npmjs.org/console-control-strings/-/console-control-strings-1.1.0.tgz",
+-      "integrity": "sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==",
+-      "license": "ISC"
+-    },
+     "node_modules/content-disposition": {
+       "version": "0.5.4",
+       "resolved": "https://registry.npmjs.org/content-disposition/-/content-disposition-0.5.4.tgz",
+@@ -522,11 +931,22 @@
+       "integrity": "sha512-NXdYc3dLr47pBkpUCHtKSwIOQXLVn8dZEuywboCOJY/osA0wFSLlSawr3KN8qXJEyX66FcONTH8EIlVuK0yyFA==",
+       "license": "MIT"
+     },
+-    "node_modules/core-util-is": {
+-      "version": "1.0.3",
+-      "resolved": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
+-      "integrity": "sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==",
+-      "license": "MIT"
++    "node_modules/cors": {
++      "version": "2.8.6",
++      "resolved": "http://mirrors.tencentyun.com/npm/cors/-/cors-2.8.6.tgz",
++      "integrity": "sha512-tJtZBBHA6vjIAaF6EnIaq6laBBP9aq/Y3ouVJjEfoHbRBcHBAHYcMh/w8LDrk2PvIMMq8gmopa5D4V8RmbrxGw==",
++      "license": "MIT",
++      "dependencies": {
++        "object-assign": "^4",
++        "vary": "^1"
++      },
++      "engines": {
++        "node": ">= 0.10"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
++      }
+     },
+     "node_modules/debug": {
+       "version": "2.6.9",
+@@ -546,12 +966,6 @@
+         "node": ">=0.4.0"
+       }
+     },
+-    "node_modules/delegates": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/delegates/-/delegates-1.0.0.tgz",
+-      "integrity": "sha512-bd2L678uiWATM6m5Z1VzNCErI3jiGzt6HGY8OVICs40JQq/HALfbyNJmp0UDakEY4pMMaN0Ly5om/B1VI/+xfQ==",
+-      "license": "MIT"
+-    },
+     "node_modules/depd": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/depd/-/depd-2.0.0.tgz",
+@@ -573,9 +987,8 @@
+     },
+     "node_modules/detect-libc": {
+       "version": "2.1.2",
+-      "resolved": "https://registry.npmjs.org/detect-libc/-/detect-libc-2.1.2.tgz",
++      "resolved": "http://mirrors.tencentyun.com/npm/detect-libc/-/detect-libc-2.1.2.tgz",
+       "integrity": "sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==",
+-      "license": "Apache-2.0",
+       "engines": {
+         "node": ">=8"
+       }
+@@ -621,12 +1034,6 @@
+       "integrity": "sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==",
+       "license": "MIT"
+     },
+-    "node_modules/emoji-regex": {
+-      "version": "8.0.0",
+-      "resolved": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+-      "integrity": "sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==",
+-      "license": "MIT"
+-    },
+     "node_modules/encodeurl": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/encodeurl/-/encodeurl-2.0.0.tgz",
+@@ -697,14 +1104,14 @@
+       }
+     },
+     "node_modules/express": {
+-      "version": "4.22.2",
+-      "resolved": "https://registry.npmjs.org/express/-/express-4.22.2.tgz",
+-      "integrity": "sha512-IuL+Elrou2ZvCFHs18/CIzy2Nzvo25nZ1/D2eIZlz7c+QUayAcYoiM2BthCjs+EBHVpjYjcuLDAiCWgeIX3X1Q==",
++      "version": "4.22.1",
++      "resolved": "http://mirrors.tencentyun.com/npm/express/-/express-4.22.1.tgz",
++      "integrity": "sha512-F2X8g9P1X7uCPZMA3MVf9wcTqlyNp7IhH5qPCI0izhaOIYXaW9L535tGA3qmjRzpH+bZczqq7hVKxTR4NWnu+g==",
+       "license": "MIT",
+       "dependencies": {
+         "accepts": "~1.3.8",
+         "array-flatten": "1.1.1",
+-        "body-parser": "~1.20.5",
++        "body-parser": "~1.20.3",
+         "content-disposition": "~0.5.4",
+         "content-type": "~1.0.4",
+         "cookie": "~0.7.1",
+@@ -723,7 +1130,7 @@
+         "parseurl": "~1.3.3",
+         "path-to-regexp": "~0.1.12",
+         "proxy-addr": "~2.0.7",
+-        "qs": "~6.15.1",
++        "qs": "~6.14.0",
+         "range-parser": "~1.2.1",
+         "safe-buffer": "5.2.1",
+         "send": "~0.19.0",
+@@ -807,36 +1214,6 @@
+         "node": ">= 0.6"
+       }
+     },
+-    "node_modules/fs-minipass": {
+-      "version": "2.1.0",
+-      "resolved": "https://registry.npmjs.org/fs-minipass/-/fs-minipass-2.1.0.tgz",
+-      "integrity": "sha512-V/JgOLFCS+R6Vcq0slCuaeWEdNC3ouDlJMNIsacH2VtALiu9mV4LPrHc5cDl8k5aw6J8jwgWWpiTo5RYhmIzvg==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "minipass": "^3.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 8"
+-      }
+-    },
+-    "node_modules/fs-minipass/node_modules/minipass": {
+-      "version": "3.3.6",
+-      "resolved": "https://registry.npmjs.org/minipass/-/minipass-3.3.6.tgz",
+-      "integrity": "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "yallist": "^4.0.0"
+-      },
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+-    "node_modules/fs.realpath": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz",
+-      "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==",
+-      "license": "ISC"
+-    },
+     "node_modules/fsevents": {
+       "version": "2.3.3",
+       "resolved": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+@@ -853,32 +1230,11 @@
+     },
+     "node_modules/function-bind": {
+       "version": "1.1.2",
+-      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
+-      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
+-      "license": "MIT",
+-      "funding": {
+-        "url": "https://github.com/sponsors/ljharb"
+-      }
+-    },
+-    "node_modules/gauge": {
+-      "version": "3.0.2",
+-      "resolved": "https://registry.npmjs.org/gauge/-/gauge-3.0.2.tgz",
+-      "integrity": "sha512-+5J6MS/5XksCuXq++uFRsnUd7Ovu1XenbeuIuNRJxYWjgQbPuFhT14lAvsWfqfAmnwluf1OwMjz39HjfLPci0Q==",
+-      "deprecated": "This package is no longer supported.",
+-      "license": "ISC",
+-      "dependencies": {
+-        "aproba": "^1.0.3 || ^2.0.0",
+-        "color-support": "^1.1.2",
+-        "console-control-strings": "^1.0.0",
+-        "has-unicode": "^2.0.1",
+-        "object-assign": "^4.1.1",
+-        "signal-exit": "^3.0.0",
+-        "string-width": "^4.2.3",
+-        "strip-ansi": "^6.0.1",
+-        "wide-align": "^1.1.2"
+-      },
+-      "engines": {
+-        "node": ">=10"
++      "resolved": "https://registry.npmjs.org/function-bind/-/function-bind-1.1.2.tgz",
++      "integrity": "sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==",
++      "license": "MIT",
++      "funding": {
++        "url": "https://github.com/sponsors/ljharb"
+       }
+     },
+     "node_modules/get-intrinsic": {
+@@ -918,27 +1274,6 @@
+         "node": ">= 0.4"
+       }
+     },
+-    "node_modules/glob": {
+-      "version": "7.2.3",
+-      "resolved": "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz",
+-      "integrity": "sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==",
+-      "deprecated": "Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me",
+-      "license": "ISC",
+-      "dependencies": {
+-        "fs.realpath": "^1.0.0",
+-        "inflight": "^1.0.4",
+-        "inherits": "2",
+-        "minimatch": "^3.1.1",
+-        "once": "^1.3.0",
+-        "path-is-absolute": "^1.0.0"
+-      },
+-      "engines": {
+-        "node": "*"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/isaacs"
+-      }
+-    },
+     "node_modules/glob-parent": {
+       "version": "5.1.2",
+       "resolved": "https://registry.npmjs.org/glob-parent/-/glob-parent-5.1.2.tgz",
+@@ -952,34 +1287,6 @@
+         "node": ">= 6"
+       }
+     },
+-    "node_modules/glob/node_modules/balanced-match": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
+-      "integrity": "sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==",
+-      "license": "MIT"
+-    },
+-    "node_modules/glob/node_modules/brace-expansion": {
+-      "version": "1.1.18",
+-      "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.18.tgz",
+-      "integrity": "sha512-Edep/X9fGqVNmzKBVsDYIOtD+z1tuezV70LBjdCst9Tqu76lsnvRiZ6oTic1n+/BIwX6QDGAO94PN4N2SADvtw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "balanced-match": "^1.0.0",
+-        "concat-map": "0.0.1"
+-      }
+-    },
+-    "node_modules/glob/node_modules/minimatch": {
+-      "version": "3.1.5",
+-      "resolved": "https://registry.npmjs.org/minimatch/-/minimatch-3.1.5.tgz",
+-      "integrity": "sha512-VgjWUsnnT6n+NUk6eZq77zeFdpW2LWDzP6zFGrCbHXiYNul5Dzqk2HHQ5uFH2DNW5Xbp8+jVzaeNt94ssEEl4w==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "brace-expansion": "^1.1.7"
+-      },
+-      "engines": {
+-        "node": "*"
+-      }
+-    },
+     "node_modules/gopd": {
+       "version": "1.2.0",
+       "resolved": "https://registry.npmjs.org/gopd/-/gopd-1.2.0.tgz",
+@@ -1029,12 +1336,6 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
+-    "node_modules/has-unicode": {
+-      "version": "2.0.1",
+-      "resolved": "https://registry.npmjs.org/has-unicode/-/has-unicode-2.0.1.tgz",
+-      "integrity": "sha512-8Rf9Y83NBReMnx0gFzA8JImQACstCYWUplepDa9xprwwtmgEZUF0h/i5xSA625zB/I37EtrswSST6OXxwaaIJQ==",
+-      "license": "ISC"
+-    },
+     "node_modules/hasown": {
+       "version": "2.0.4",
+       "resolved": "https://registry.npmjs.org/hasown/-/hasown-2.0.4.tgz",
+@@ -1067,42 +1368,6 @@
+         "url": "https://opencollective.com/express"
+       }
+     },
+-    "node_modules/https-proxy-agent": {
+-      "version": "5.0.1",
+-      "resolved": "https://registry.npmjs.org/https-proxy-agent/-/https-proxy-agent-5.0.1.tgz",
+-      "integrity": "sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "agent-base": "6",
+-        "debug": "4"
+-      },
+-      "engines": {
+-        "node": ">= 6"
+-      }
+-    },
+-    "node_modules/https-proxy-agent/node_modules/debug": {
+-      "version": "4.4.3",
+-      "resolved": "https://registry.npmjs.org/debug/-/debug-4.4.3.tgz",
+-      "integrity": "sha512-RGwwWnwQvkVfavKVt22FGLw+xYSdzARwm0ru6DhTVA3umU5hZc28V3kO4stgYryrTlLpuvgI9GiijltAjNbcqA==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "ms": "^2.1.3"
+-      },
+-      "engines": {
+-        "node": ">=6.0"
+-      },
+-      "peerDependenciesMeta": {
+-        "supports-color": {
+-          "optional": true
+-        }
+-      }
+-    },
+-    "node_modules/https-proxy-agent/node_modules/ms": {
+-      "version": "2.1.3",
+-      "resolved": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+-      "integrity": "sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==",
+-      "license": "MIT"
+-    },
+     "node_modules/iconv-lite": {
+       "version": "0.4.24",
+       "resolved": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.4.24.tgz",
+@@ -1122,17 +1387,6 @@
+       "dev": true,
+       "license": "ISC"
+     },
+-    "node_modules/inflight": {
+-      "version": "1.0.6",
+-      "resolved": "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz",
+-      "integrity": "sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==",
+-      "deprecated": "This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.",
+-      "license": "ISC",
+-      "dependencies": {
+-        "once": "^1.3.0",
+-        "wrappy": "1"
+-      }
+-    },
+     "node_modules/inherits": {
+       "version": "2.0.4",
+       "resolved": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+@@ -1171,15 +1425,6 @@
+         "node": ">=0.10.0"
+       }
+     },
+-    "node_modules/is-fullwidth-code-point": {
+-      "version": "3.0.0",
+-      "resolved": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
+-      "integrity": "sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+     "node_modules/is-glob": {
+       "version": "4.0.3",
+       "resolved": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.3.tgz",
+@@ -1203,12 +1448,6 @@
+         "node": ">=0.12.0"
+       }
+     },
+-    "node_modules/isarray": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
+-      "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==",
+-      "license": "MIT"
+-    },
+     "node_modules/jsonwebtoken": {
+       "version": "9.0.3",
+       "resolved": "https://registry.npmjs.org/jsonwebtoken/-/jsonwebtoken-9.0.3.tgz",
+@@ -1300,30 +1539,6 @@
+       "integrity": "sha512-Sb487aTOCr9drQVL8pIxOzVhafOjZN9UU54hiN8PU3uAiSV7lx1yYNpbNmex2PK6dSJoNTSJUUswT651yww3Mg==",
+       "license": "MIT"
+     },
+-    "node_modules/make-dir": {
+-      "version": "3.1.0",
+-      "resolved": "https://registry.npmjs.org/make-dir/-/make-dir-3.1.0.tgz",
+-      "integrity": "sha512-g3FeP20LNwhALb/6Cz6Dd4F2ngze0jz7tbzrD2wAV+o9FeNHe4rL+yK2md0J/fiSf1sa1ADhXqi5+oVwOM/eGw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "semver": "^6.0.0"
+-      },
+-      "engines": {
+-        "node": ">=8"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/sindresorhus"
+-      }
+-    },
+-    "node_modules/make-dir/node_modules/semver": {
+-      "version": "6.3.1",
+-      "resolved": "https://registry.npmjs.org/semver/-/semver-6.3.1.tgz",
+-      "integrity": "sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==",
+-      "license": "ISC",
+-      "bin": {
+-        "semver": "bin/semver.js"
+-      }
+-    },
+     "node_modules/math-intrinsics": {
+       "version": "1.1.0",
+       "resolved": "https://registry.npmjs.org/math-intrinsics/-/math-intrinsics-1.1.0.tgz",
+@@ -1409,61 +1624,6 @@
+         "url": "https://github.com/sponsors/isaacs"
+       }
+     },
+-    "node_modules/minimist": {
+-      "version": "1.2.8",
+-      "resolved": "https://registry.npmjs.org/minimist/-/minimist-1.2.8.tgz",
+-      "integrity": "sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==",
+-      "license": "MIT",
+-      "funding": {
+-        "url": "https://github.com/sponsors/ljharb"
+-      }
+-    },
+-    "node_modules/minipass": {
+-      "version": "5.0.0",
+-      "resolved": "https://registry.npmjs.org/minipass/-/minipass-5.0.0.tgz",
+-      "integrity": "sha512-3FnjYuehv9k6ovOEbyOswadCDPX1piCfhV8ncmYtHOjuPwylVWsghTLo7rabjC3Rx5xD4HDx8Wm1xnMF7S5qFQ==",
+-      "license": "ISC",
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+-    "node_modules/minizlib": {
+-      "version": "2.1.2",
+-      "resolved": "https://registry.npmjs.org/minizlib/-/minizlib-2.1.2.tgz",
+-      "integrity": "sha512-bAxsR8BVfj60DWXHE3u30oHzfl4G7khkSuPW+qvpd7jFRHm7dLxOjUk1EHACJ/hxLY8phGJ0YhYHZo7jil7Qdg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "minipass": "^3.0.0",
+-        "yallist": "^4.0.0"
+-      },
+-      "engines": {
+-        "node": ">= 8"
+-      }
+-    },
+-    "node_modules/minizlib/node_modules/minipass": {
+-      "version": "3.3.6",
+-      "resolved": "https://registry.npmjs.org/minipass/-/minipass-3.3.6.tgz",
+-      "integrity": "sha512-DxiNidxSEK+tHG6zOIklvNOwm3hvCrbUrdtzY74U6HKTJxvIDfOUL5W5P2Ghd3DTkhhKPYGqeNUIh5qcM4YBfw==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "yallist": "^4.0.0"
+-      },
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+-    "node_modules/mkdirp": {
+-      "version": "0.5.6",
+-      "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-0.5.6.tgz",
+-      "integrity": "sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "minimist": "^1.2.6"
+-      },
+-      "bin": {
+-        "mkdirp": "bin/cmd.js"
+-      }
+-    },
+     "node_modules/ms": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+@@ -1471,22 +1631,22 @@
+       "license": "MIT"
+     },
+     "node_modules/multer": {
+-      "version": "1.4.5-lts.2",
+-      "resolved": "https://registry.npmjs.org/multer/-/multer-1.4.5-lts.2.tgz",
+-      "integrity": "sha512-VzGiVigcG9zUAoCNU+xShztrlr1auZOlurXynNvO9GiWD1/mTBbUljOKY+qMeazBqXgRnjzeEgJI/wyjJUHg9A==",
+-      "deprecated": "Multer 1.x is impacted by a number of vulnerabilities, which have been patched in 2.x. You should upgrade to the latest 2.x version.",
++      "version": "2.3.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/multer/-/multer-2.3.0.tgz",
++      "integrity": "sha512-cjNbm3sttszgZeGfJR124D+jFEfkXCVAsoPBmFn9X7UxmDSFHWqE2CoEj0vrmSpuAFnqWR1Szcm9QTsiHr60Xw==",
+       "license": "MIT",
+       "dependencies": {
+         "append-field": "^1.0.0",
+-        "busboy": "^1.0.0",
+-        "concat-stream": "^1.5.2",
+-        "mkdirp": "^0.5.4",
+-        "object-assign": "^4.1.1",
+-        "type-is": "^1.6.4",
+-        "xtend": "^4.0.0"
++        "busboy": "^1.6.0",
++        "concat-stream": "^2.0.0",
++        "type-is": "^1.6.18"
+       },
+       "engines": {
+-        "node": ">= 6.0.0"
++        "node": ">= 10.16.0"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/express"
+       }
+     },
+     "node_modules/negotiator": {
+@@ -1499,29 +1659,23 @@
+       }
+     },
+     "node_modules/node-addon-api": {
+-      "version": "5.1.0",
+-      "resolved": "https://registry.npmjs.org/node-addon-api/-/node-addon-api-5.1.0.tgz",
+-      "integrity": "sha512-eh0GgfEkpnoWDq+VY8OyvYhFEzBk6jIYbRKdIlyTiAXIVJ8PyBaKb0rp7oDtoddbdoHWhq8wwr+XZ81F1rpNdA==",
+-      "license": "MIT"
+-    },
+-    "node_modules/node-fetch": {
+-      "version": "2.7.0",
+-      "resolved": "https://registry.npmjs.org/node-fetch/-/node-fetch-2.7.0.tgz",
+-      "integrity": "sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==",
++      "version": "8.9.2",
++      "resolved": "http://mirrors.tencentyun.com/npm/node-addon-api/-/node-addon-api-8.9.2.tgz",
++      "integrity": "sha512-VijLXbi3UACN69I0JVXJsX4tjACjNoQDgv2gTF6sx2wWEi8tkSg2eX8p5gSIFi8z2+DL3oHmY6OyKce38SDolg==",
+       "license": "MIT",
+-      "dependencies": {
+-        "whatwg-url": "^5.0.0"
+-      },
+       "engines": {
+-        "node": "4.x || >=6.0.0"
+-      },
+-      "peerDependencies": {
+-        "encoding": "^0.1.0"
+-      },
+-      "peerDependenciesMeta": {
+-        "encoding": {
+-          "optional": true
+-        }
++        "node": "^18 || ^20 || >= 21"
++      }
++    },
++    "node_modules/node-gyp-build": {
++      "version": "4.8.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/node-gyp-build/-/node-gyp-build-4.8.4.tgz",
++      "integrity": "sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==",
++      "license": "MIT",
++      "bin": {
++        "node-gyp-build": "bin.js",
++        "node-gyp-build-optional": "optional.js",
++        "node-gyp-build-test": "build-test.js"
+       }
+     },
+     "node_modules/nodemon": {
+@@ -1578,21 +1732,6 @@
+       "dev": true,
+       "license": "MIT"
+     },
+-    "node_modules/nopt": {
+-      "version": "5.0.0",
+-      "resolved": "https://registry.npmjs.org/nopt/-/nopt-5.0.0.tgz",
+-      "integrity": "sha512-Tbj67rffqceeLpcRXrT7vKAN8CwfPeIBgM7E6iBkmKLV7bEMwpGgYLGv0jACUsECaa/vuxP0IjEont6umdMgtQ==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "abbrev": "1"
+-      },
+-      "bin": {
+-        "nopt": "bin/nopt.js"
+-      },
+-      "engines": {
+-        "node": ">=6"
+-      }
+-    },
+     "node_modules/normalize-path": {
+       "version": "3.0.0",
+       "resolved": "https://registry.npmjs.org/normalize-path/-/normalize-path-3.0.0.tgz",
+@@ -1603,19 +1742,6 @@
+         "node": ">=0.10.0"
+       }
+     },
+-    "node_modules/npmlog": {
+-      "version": "5.0.1",
+-      "resolved": "https://registry.npmjs.org/npmlog/-/npmlog-5.0.1.tgz",
+-      "integrity": "sha512-AqZtDUWOMKs1G/8lwylVjrdYgqA4d9nu8hc+0gzRxlDb1I10+FHBGMXs6aiQHFdCUUlqH99MUMuLfzWDNDtfxw==",
+-      "deprecated": "This package is no longer supported.",
+-      "license": "ISC",
+-      "dependencies": {
+-        "are-we-there-yet": "^2.0.0",
+-        "console-control-strings": "^1.1.0",
+-        "gauge": "^3.0.0",
+-        "set-blocking": "^2.0.0"
+-      }
+-    },
+     "node_modules/object-assign": {
+       "version": "4.1.1",
+       "resolved": "https://registry.npmjs.org/object-assign/-/object-assign-4.1.1.tgz",
+@@ -1649,15 +1775,6 @@
+         "node": ">= 0.8"
+       }
+     },
+-    "node_modules/once": {
+-      "version": "1.4.0",
+-      "resolved": "https://registry.npmjs.org/once/-/once-1.4.0.tgz",
+-      "integrity": "sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "wrappy": "1"
+-      }
+-    },
+     "node_modules/parseurl": {
+       "version": "1.3.3",
+       "resolved": "https://registry.npmjs.org/parseurl/-/parseurl-1.3.3.tgz",
+@@ -1667,15 +1784,6 @@
+         "node": ">= 0.8"
+       }
+     },
+-    "node_modules/path-is-absolute": {
+-      "version": "1.0.1",
+-      "resolved": "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz",
+-      "integrity": "sha512-AVbw3UJ2e9bq64vSaS9Am0fje1Pa8pbGqTTsmXfaIiMpnr5DlDhfJOuLj9Sf95ZPVDAUerDfEk88MPmPe7UCQg==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.10.0"
+-      }
+-    },
+     "node_modules/path-to-regexp": {
+       "version": "0.1.13",
+       "resolved": "https://registry.npmjs.org/path-to-regexp/-/path-to-regexp-0.1.13.tgz",
+@@ -1715,12 +1823,6 @@
+         "fsevents": "2.3.3"
+       }
+     },
+-    "node_modules/process-nextick-args": {
+-      "version": "2.0.1",
+-      "resolved": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
+-      "integrity": "sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==",
+-      "license": "MIT"
+-    },
+     "node_modules/proxy-addr": {
+       "version": "2.0.7",
+       "resolved": "https://registry.npmjs.org/proxy-addr/-/proxy-addr-2.0.7.tgz",
+@@ -1742,9 +1844,9 @@
+       "license": "MIT"
+     },
+     "node_modules/qs": {
+-      "version": "6.15.3",
+-      "resolved": "https://registry.npmjs.org/qs/-/qs-6.15.3.tgz",
+-      "integrity": "sha512-O9gl3zCl5h5blw1KGUzQKhA5oUXSl8rwUIM5o0S3nCXMliSvy5Dzx7/DJcI+SwgICv+IneSZwhBh1oSyEHA71A==",
++      "version": "6.16.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/qs/-/qs-6.16.0.tgz",
++      "integrity": "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA==",
+       "license": "BSD-3-Clause",
+       "dependencies": {
+         "es-define-property": "^1.0.1",
+@@ -1782,26 +1884,19 @@
+       }
+     },
+     "node_modules/readable-stream": {
+-      "version": "2.3.8",
+-      "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
+-      "integrity": "sha512-8p0AUk4XODgIewSi0l8Epjs+EVnWiK7NoDIEGU0HhE7+ZyY8D1IMY7odu5lRrFXGg71L15KG8QrPmum45RTtdA==",
++      "version": "3.6.2",
++      "resolved": "http://mirrors.tencentyun.com/npm/readable-stream/-/readable-stream-3.6.2.tgz",
++      "integrity": "sha512-9u/sniCrY3D5WdsERHzHE4G2YCXqoG5FTHUiCC4SIbr6XcLZBY05ya9EKjYek9O5xOAwjGq+1JdGBAS7Q9ScoA==",
+       "license": "MIT",
+       "dependencies": {
+-        "core-util-is": "~1.0.0",
+-        "inherits": "~2.0.3",
+-        "isarray": "~1.0.0",
+-        "process-nextick-args": "~2.0.0",
+-        "safe-buffer": "~5.1.1",
+-        "string_decoder": "~1.1.1",
+-        "util-deprecate": "~1.0.1"
++        "inherits": "^2.0.3",
++        "string_decoder": "^1.1.1",
++        "util-deprecate": "^1.0.1"
++      },
++      "engines": {
++        "node": ">= 6"
+       }
+     },
+-    "node_modules/readable-stream/node_modules/safe-buffer": {
+-      "version": "5.1.2",
+-      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
+-      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
+-      "license": "MIT"
+-    },
+     "node_modules/readdirp": {
+       "version": "3.6.0",
+       "resolved": "https://registry.npmjs.org/readdirp/-/readdirp-3.6.0.tgz",
+@@ -1815,22 +1910,6 @@
+         "node": ">=8.10.0"
+       }
+     },
+-    "node_modules/rimraf": {
+-      "version": "3.0.2",
+-      "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-3.0.2.tgz",
+-      "integrity": "sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==",
+-      "deprecated": "Rimraf versions prior to v4 are no longer supported",
+-      "license": "ISC",
+-      "dependencies": {
+-        "glob": "^7.1.3"
+-      },
+-      "bin": {
+-        "rimraf": "bin.js"
+-      },
+-      "funding": {
+-        "url": "https://github.com/sponsors/isaacs"
+-      }
+-    },
+     "node_modules/safe-buffer": {
+       "version": "5.2.1",
+       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz",
+@@ -1914,18 +1993,60 @@
+         "node": ">= 0.8.0"
+       }
+     },
+-    "node_modules/set-blocking": {
+-      "version": "2.0.0",
+-      "resolved": "https://registry.npmjs.org/set-blocking/-/set-blocking-2.0.0.tgz",
+-      "integrity": "sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==",
+-      "license": "ISC"
+-    },
+     "node_modules/setprototypeof": {
+       "version": "1.2.0",
+       "resolved": "https://registry.npmjs.org/setprototypeof/-/setprototypeof-1.2.0.tgz",
+       "integrity": "sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==",
+       "license": "ISC"
+     },
++    "node_modules/sharp": {
++      "version": "0.35.4",
++      "resolved": "http://mirrors.tencentyun.com/npm/sharp/-/sharp-0.35.4.tgz",
++      "integrity": "sha512-n++8XWcj+jCOr2IOl7h8LbKnGBDY4aPbmprMONBNFdn0ImXqpGVv5zliDs0V9HbmbCQLpbuo2ej9rAoOQTvMDA==",
++      "dependencies": {
++        "@img/colour": "^1.1.0",
++        "detect-libc": "^2.1.2",
++        "semver": "^7.8.5"
++      },
++      "engines": {
++        "node": ">=20.9.0"
++      },
++      "funding": {
++        "url": "https://opencollective.com/libvips"
++      },
++      "optionalDependencies": {
++        "@img/sharp-darwin-arm64": "0.35.4",
++        "@img/sharp-darwin-x64": "0.35.4",
++        "@img/sharp-freebsd-wasm32": "0.35.4",
++        "@img/sharp-libvips-darwin-arm64": "1.3.3",
++        "@img/sharp-libvips-darwin-x64": "1.3.3",
++        "@img/sharp-libvips-linux-arm": "1.3.3",
++        "@img/sharp-libvips-linux-arm64": "1.3.3",
++        "@img/sharp-libvips-linux-ppc64": "1.3.3",
++        "@img/sharp-libvips-linux-riscv64": "1.3.3",
++        "@img/sharp-libvips-linux-s390x": "1.3.3",
++        "@img/sharp-libvips-linux-x64": "1.3.3",
++        "@img/sharp-libvips-linuxmusl-arm64": "1.3.3",
++        "@img/sharp-libvips-linuxmusl-x64": "1.3.3",
++        "@img/sharp-linux-arm": "0.35.4",
++        "@img/sharp-linux-arm64": "0.35.4",
++        "@img/sharp-linux-ppc64": "0.35.4",
++        "@img/sharp-linux-riscv64": "0.35.4",
++        "@img/sharp-linux-s390x": "0.35.4",
++        "@img/sharp-linux-x64": "0.35.4",
++        "@img/sharp-linuxmusl-arm64": "0.35.4",
++        "@img/sharp-linuxmusl-x64": "0.35.4",
++        "@img/sharp-webcontainers-wasm32": "0.35.4",
++        "@img/sharp-win32-arm64": "0.35.4",
++        "@img/sharp-win32-ia32": "0.35.4",
++        "@img/sharp-win32-x64": "0.35.4"
++      },
++      "peerDependenciesMeta": {
++        "@types/node": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/side-channel": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/side-channel/-/side-channel-1.1.1.tgz",
+@@ -1998,12 +2119,6 @@
+         "url": "https://github.com/sponsors/ljharb"
+       }
+     },
+-    "node_modules/signal-exit": {
+-      "version": "3.0.7",
+-      "resolved": "https://registry.npmjs.org/signal-exit/-/signal-exit-3.0.7.tgz",
+-      "integrity": "sha512-wnD2ZE+l+SPC/uoS0vXeE9L1+0wuaMqKlfz9AMUo38JsyLSBWSFcHR1Rri62LZc12vLr1gb3jl7iwQhgwpAbGQ==",
+-      "license": "ISC"
+-    },
+     "node_modules/simple-update-notifier": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/simple-update-notifier/-/simple-update-notifier-2.0.0.tgz",
+@@ -2035,44 +2150,12 @@
+       }
+     },
+     "node_modules/string_decoder": {
+-      "version": "1.1.1",
+-      "resolved": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
+-      "integrity": "sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "safe-buffer": "~5.1.0"
+-      }
+-    },
+-    "node_modules/string_decoder/node_modules/safe-buffer": {
+-      "version": "5.1.2",
+-      "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
+-      "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==",
+-      "license": "MIT"
+-    },
+-    "node_modules/string-width": {
+-      "version": "4.2.3",
+-      "resolved": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+-      "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "emoji-regex": "^8.0.0",
+-        "is-fullwidth-code-point": "^3.0.0",
+-        "strip-ansi": "^6.0.1"
+-      },
+-      "engines": {
+-        "node": ">=8"
+-      }
+-    },
+-    "node_modules/strip-ansi": {
+-      "version": "6.0.1",
+-      "resolved": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
+-      "integrity": "sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==",
++      "version": "1.3.0",
++      "resolved": "http://mirrors.tencentyun.com/npm/string_decoder/-/string_decoder-1.3.0.tgz",
++      "integrity": "sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==",
+       "license": "MIT",
+       "dependencies": {
+-        "ansi-regex": "^5.0.1"
+-      },
+-      "engines": {
+-        "node": ">=8"
++        "safe-buffer": "~5.2.0"
+       }
+     },
+     "node_modules/supports-color": {
+@@ -2088,36 +2171,6 @@
+         "node": ">=4"
+       }
+     },
+-    "node_modules/tar": {
+-      "version": "6.2.1",
+-      "resolved": "https://registry.npmjs.org/tar/-/tar-6.2.1.tgz",
+-      "integrity": "sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==",
+-      "deprecated": "Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me",
+-      "license": "ISC",
+-      "dependencies": {
+-        "chownr": "^2.0.0",
+-        "fs-minipass": "^2.0.0",
+-        "minipass": "^5.0.0",
+-        "minizlib": "^2.1.1",
+-        "mkdirp": "^1.0.3",
+-        "yallist": "^4.0.0"
+-      },
+-      "engines": {
+-        "node": ">=10"
+-      }
+-    },
+-    "node_modules/tar/node_modules/mkdirp": {
+-      "version": "1.0.4",
+-      "resolved": "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz",
+-      "integrity": "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==",
+-      "license": "MIT",
+-      "bin": {
+-        "mkdirp": "bin/cmd.js"
+-      },
+-      "engines": {
+-        "node": ">=10"
+-      }
+-    },
+     "node_modules/to-regex-range": {
+       "version": "5.0.1",
+       "resolved": "https://registry.npmjs.org/to-regex-range/-/to-regex-range-5.0.1.tgz",
+@@ -2150,11 +2203,12 @@
+         "nodetouch": "bin/nodetouch.js"
+       }
+     },
+-    "node_modules/tr46": {
+-      "version": "0.0.3",
+-      "resolved": "https://registry.npmjs.org/tr46/-/tr46-0.0.3.tgz",
+-      "integrity": "sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==",
+-      "license": "MIT"
++    "node_modules/tslib": {
++      "version": "2.8.1",
++      "resolved": "http://mirrors.tencentyun.com/npm/tslib/-/tslib-2.8.1.tgz",
++      "integrity": "sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==",
++      "license": "0BSD",
++      "optional": true
+     },
+     "node_modules/type-is": {
+       "version": "1.6.18",
+@@ -2171,7 +2225,7 @@
+     },
+     "node_modules/typedarray": {
+       "version": "0.0.6",
+-      "resolved": "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz",
++      "resolved": "http://mirrors.tencentyun.com/npm/typedarray/-/typedarray-0.0.6.tgz",
+       "integrity": "sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==",
+       "license": "MIT"
+     },
+@@ -2193,7 +2247,7 @@
+     },
+     "node_modules/util-deprecate": {
+       "version": "1.0.2",
+-      "resolved": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
++      "resolved": "http://mirrors.tencentyun.com/npm/util-deprecate/-/util-deprecate-1.0.2.tgz",
+       "integrity": "sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==",
+       "license": "MIT"
+     },
+@@ -2215,52 +2269,6 @@
+         "node": ">= 0.8"
+       }
+     },
+-    "node_modules/webidl-conversions": {
+-      "version": "3.0.1",
+-      "resolved": "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-3.0.1.tgz",
+-      "integrity": "sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==",
+-      "license": "BSD-2-Clause"
+-    },
+-    "node_modules/whatwg-url": {
+-      "version": "5.0.0",
+-      "resolved": "https://registry.npmjs.org/whatwg-url/-/whatwg-url-5.0.0.tgz",
+-      "integrity": "sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==",
+-      "license": "MIT",
+-      "dependencies": {
+-        "tr46": "~0.0.3",
+-        "webidl-conversions": "^3.0.0"
+-      }
+-    },
+-    "node_modules/wide-align": {
+-      "version": "1.1.5",
+-      "resolved": "https://registry.npmjs.org/wide-align/-/wide-align-1.1.5.tgz",
+-      "integrity": "sha512-eDMORYaPNZ4sQIuuYPDHdQvf4gyCF9rEEV/yPxGfwPkRodwEgiMUUXTx/dex+Me0wxx53S+NgUHaP7y3MGlDmg==",
+-      "license": "ISC",
+-      "dependencies": {
+-        "string-width": "^1.0.2 || 2 || 3 || 4"
+-      }
+-    },
+-    "node_modules/wrappy": {
+-      "version": "1.0.2",
+-      "resolved": "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz",
+-      "integrity": "sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==",
+-      "license": "ISC"
+-    },
+-    "node_modules/xtend": {
+-      "version": "4.0.2",
+-      "resolved": "https://registry.npmjs.org/xtend/-/xtend-4.0.2.tgz",
+-      "integrity": "sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==",
+-      "license": "MIT",
+-      "engines": {
+-        "node": ">=0.4"
+-      }
+-    },
+-    "node_modules/yallist": {
+-      "version": "4.0.0",
+-      "resolved": "https://registry.npmjs.org/yallist/-/yallist-4.0.0.tgz",
+-      "integrity": "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==",
+-      "license": "ISC"
+-    },
+     "node_modules/zod": {
+       "version": "3.25.76",
+       "resolved": "https://registry.npmjs.org/zod/-/zod-3.25.76.tgz",
+diff --git a/package.json b/package.json
+index 9ecba32..549c581 100644
+--- a/package.json
++++ b/package.json
+@@ -21,16 +21,21 @@
+   "license": "ISC",
+   "dependencies": {
+     "@prisma/client": "^5.20.0",
+-    "bcrypt": "^5.1.1",
++    "bcrypt": "^6.0.0",
++    "cors": "^2.8.6",
+     "dotenv": "^16.4.5",
+     "express": "^4.21.0",
+     "form-data": "^4.0.6",
+     "jsonwebtoken": "^9.0.2",
+-    "multer": "^1.4.5-lts.1",
++    "multer": "^2.3.0",
++    "sharp": "^0.35.4",
+     "zod": "^3.23.8"
+   },
+   "devDependencies": {
+     "nodemon": "^3.1.7",
+     "prisma": "^5.20.0"
++  },
++  "overrides": {
++    "qs": "^6.16.0"
+   }
+ }
+diff --git a/prisma/schema.prisma b/prisma/schema.prisma
+index 98bc15e..ed4b39a 100644
+--- a/prisma/schema.prisma
++++ b/prisma/schema.prisma
+@@ -26,6 +26,7 @@ model User {
+   nama      String
+   email     String   @unique
+   password  String
++  phone     String? @db.VarChar(30)
+   role      Role     @default(investor)
+   createdAt DateTime @default(now()) @map("created_at")
+ 
+@@ -33,6 +34,7 @@ model User {
+   projects  Project[]   @relation("AdminProjects")
+   // Relasi: investor melakukan banyak donasi
+   donations Donation[]
++  transactions Transaction[]
+ 
+   @@map("users")
+ }
+@@ -50,8 +52,20 @@ model Project {
+   statusVerifikasi  StatusVerifikasi  @default(pending) @map("status_verifikasi")
+   createdAt         DateTime          @default(now()) @map("created_at")
+ 
++  description       String? @db.Text
++  species           String?
++  fundingTarget     Decimal? @db.Decimal(14, 2)
++  duration          Int?
++  fragments         Int?
++  area              Float?
++  milestones        Json?
++  milestoneVersion  Int @default(0)
++  progressNote      String? @db.Text
++  aiAnalysis        Json?
++
+   admin     User       @relation("AdminProjects", fields: [adminId], references: [id])
+   donations Donation[]
++  transactions Transaction[]
+ 
+   @@map("projects")
+ }
+@@ -69,3 +83,34 @@ model Donation {
+ 
+   @@map("donations")
+ }
++
++model Transaction {
++  id String @id @default(uuid()) @db.VarChar(36)
++  investorId Int @map("investor_id")
++  projectId Int @map("project_id")
++  amount Decimal @db.Decimal(12, 2)
++  type String @default("One-Time Contribution") @db.VarChar(50)
++  contributorName String? @db.VarChar(191)
++  contributorEmail String? @db.VarChar(191)
++  status String @default("Pending") @db.VarChar(20)
++  proofFile String? @map("proof_file")
++  idempotencyKey String @unique @map("idempotency_key") @db.VarChar(100)
++  reviewNote String? @map("review_note") @db.Text
++  reviewedBy Int? @map("reviewed_by")
++  reviewedAt DateTime? @map("reviewed_at")
++  createdAt DateTime @default(now()) @map("created_at")
++  investor User @relation(fields: [investorId], references: [id])
++  project Project @relation(fields: [projectId], references: [id])
++  @@index([investorId, createdAt])
++  @@index([projectId, status])
++  @@map("transactions")
++}
++
++model PaymentSettings {
++  id Int @id @default(1)
++  bankName String @db.VarChar(100)
++  accountNumber String @db.VarChar(100)
++  accountHolder String @db.VarChar(191)
++  updatedAt DateTime @updatedAt
++  @@map("payment_settings")
++}
+diff --git a/src/controllers/auth.controller.js b/src/controllers/auth.controller.js
+index 46349a4..b8b3a60 100644
+--- a/src/controllers/auth.controller.js
++++ b/src/controllers/auth.controller.js
+@@ -5,7 +5,8 @@ const prisma = require('../config/prisma');
+ const { success, error } = require('../utils/response');
+ 
+ const registerSchema = z.object({
+-  nama: z.string().min(2, 'Nama minimal 2 karakter'),
++  nama: z.string().trim().min(2, 'Nama minimal 2 karakter').max(191),
++  phone: z.string().trim().max(30).regex(/^[+0-9 ()-]*$/, 'Nomor telepon tidak valid').optional(),
+   email: z.string().email('Format email tidak valid'),
+   password: z.string().min(6, 'Password minimal 6 karakter'),
+ });
+@@ -25,11 +26,11 @@ function generateToken(user) {
+ 
+ // POST /api/auth/register
+ async function register(req, res) {
+-  const parsed = registerSchema.safeParse(req.body);
++  const parsed = registerSchema.safeParse({ ...req.body, nama: req.body.nama ?? req.body.name });
+   if (!parsed.success) {
+     return error(res, parsed.error.errors[0].message, 400);
+   }
+-  const { nama, email, password } = parsed.data;
++  const { nama, email, password, phone } = parsed.data;
+ 
+   const existing = await prisma.user.findUnique({ where: { email } });
+   if (existing) {
+@@ -39,13 +40,13 @@ async function register(req, res) {
+   const hashedPassword = await bcrypt.hash(password, 10);
+ 
+   const user = await prisma.user.create({
+-    data: { nama, email, password: hashedPassword, role: 'investor' },
++    data: { nama, email, phone: phone || null, password: hashedPassword, role: 'investor' },
+   });
+ 
+   const token = generateToken(user);
+ 
+   return success(res, 'Registrasi berhasil', {
+-    user: { id: user.id, nama: user.nama, email: user.email, role: user.role },
++    user: { id: user.id, nama: user.nama, name: user.nama, phone: user.phone, email: user.email, role: user.role },
+     token,
+   }, 201);
+ }
+@@ -71,7 +72,7 @@ async function login(req, res) {
+   const token = generateToken(user);
+ 
+   return success(res, 'Login berhasil', {
+-    user: { id: user.id, nama: user.nama, email: user.email, role: user.role },
++    user: { id: user.id, nama: user.nama, name: user.nama, phone: user.phone, email: user.email, role: user.role },
+     token,
+   });
+ }
+@@ -80,7 +81,7 @@ async function login(req, res) {
+ async function profile(req, res) {
+   const user = await prisma.user.findUnique({
+     where: { id: req.user.id },
+-    select: { id: true, nama: true, email: true, role: true, createdAt: true },
++    select: { id: true, nama: true, phone: true, email: true, role: true, createdAt: true },
+   });
+ 
+   if (!user) {
+diff --git a/src/controllers/project.controller.js b/src/controllers/project.controller.js
+index 4ebad64..91d7600 100644
+--- a/src/controllers/project.controller.js
++++ b/src/controllers/project.controller.js
+@@ -1,31 +1,74 @@
++const { z } = require('zod');
+ const prisma = require('../config/prisma');
+ const { success, error } = require('../utils/response');
+-
+-async function getAllProjects(req, res) {
+-  try {
+-    const projects = await prisma.project.findMany();
+-    return success(res, 'Berhasil mengambil data proyek', projects, 200);
+-  } catch (err) {
+-    return error(res, err.message, 500);
+-  }
++const { saveImage, removeImage } = require('../utils/files');
++const optionalNumber = (schema) => z.preprocess(v => v === '' || v == null ? undefined : v, schema.optional());
++const projectSchema = z.object({
++  namaProyek: z.string().trim().min(2).max(191), lokasi: z.string().trim().min(2).max(191),
++  tingkatKerusakan: z.string().trim().max(191).optional(), targetRestorasi: z.string().trim().max(191).optional(),
++  description: z.string().trim().max(10000).optional(), species: z.string().trim().max(191).optional(),
++  fundingTarget: optionalNumber(z.coerce.number().positive().max(999999999999).multipleOf(0.01)),
++  duration: optionalNumber(z.coerce.number().int().positive().max(1200)),
++  fragments: optionalNumber(z.coerce.number().int().positive().max(100000000)),
++  area: optionalNumber(z.coerce.number().positive().max(1000000000)),
++});
++const defaultMilestones = () => [
++  'Site Assessment & Coral Collection', 'Nursery Cultivation & Growth Monitoring',
++  'Reef Transplantation', 'Monitoring & Reporting',
++].map((title, i) => ({ phase: `Phase ${i + 1}`, title, months: '', status: 'Not Started', done: false }));
++const milestoneSchema = z.object({
++  version: z.number().int().nonnegative(), progressNote: z.string().trim().max(10000).optional(),
++  milestones: z.array(z.object({ phase: z.string().min(1).max(50), title: z.string().min(1).max(191),
++    months: z.string().max(100).optional().default(''), status: z.enum(['Not Started', 'In Progress', 'Complete']),
++  })).min(1).max(20),
++});
++const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res)).catch(next);
++async function withFunding(projects) {
++  const totals = await prisma.transaction.groupBy({ by: ['projectId'], where: { status: 'Completed', projectId: { in: projects.map(p => p.id) } }, _sum: { amount: true } });
++  return projects.map(p => ({ ...p, fundingRaised: String(totals.find(t => t.projectId === p.id)?._sum.amount || 0) }));
+ }
+-
+-async function createProject(req, res) {
++const getAllProjects = wrap(async (req, res) => success(res, 'Berhasil mengambil data proyek', await withFunding(await prisma.project.findMany({ orderBy: { createdAt: 'desc' } }))));
++const getProject = wrap(async (req, res) => {
++  const id = Number(req.params.id);
++  if (!Number.isSafeInteger(id) || id < 1) return error(res, 'Proyek tidak ditemukan', 404);
++  const project = await prisma.project.findUnique({ where: { id } });
++  if (!project) return error(res, 'Proyek tidak ditemukan', 404);
++  return success(res, 'Detail proyek', (await withFunding([project]))[0]);
++});
++const createProject = wrap(async (req, res) => {
++  const parsed = projectSchema.safeParse({ ...req.body, namaProyek: req.body.namaProyek ?? req.body.name, lokasi: req.body.lokasi ?? req.body.location });
++  if (!parsed.success) return error(res, parsed.error.errors[0].message, 400);
++  let file;
+   try {
+-    const { namaProyek, lokasi, tingkatKerusakan, targetRestorasi } = req.body;
+-    const newProject = await prisma.project.create({
+-      data: {
+-        adminId: req.user.id,
+-        namaProyek,
+-        lokasi,
+-        tingkatKerusakan,
+-        targetRestorasi
+-      }
+-    });
+-    return success(res, 'Proyek berhasil ditambahkan!', newProject, 201);
+-  } catch (err) {
+-    return error(res, err.message, 500);
+-  }
+-}
+-
+-module.exports = { getAllProjects, createProject };
+\ No newline at end of file
++    let analysis;
++    if (req.file) {
++      file = await saveImage(req.file, 'covers');
++      const payload = new FormData(); payload.append('image', new Blob([file.buffer], { type: 'image/webp' }), 'coral.webp');
++      try {
++        const result = await fetch(process.env.AI_SERVICE_URL || 'http://127.0.0.1:5000/predict', { method: 'POST', body: payload, signal: AbortSignal.timeout(20000) });
++        const data = await result.json();
++        if (result.ok && typeof data.predicted_class === 'string' && Number.isFinite(data.confidence) && data.confidence >= 0 && data.confidence <= 100) analysis = data;
++      } catch { /* A missing analysis must never be treated as approval. */ }
++      if (!analysis) throw Object.assign(new Error('Analisis AI tidak tersedia. Coba lagi.'), { statusCode: 503 });
++      if (analysis.predicted_class !== 'Bleached') throw Object.assign(new Error('Proyek restorasi memerlukan gambar karang yang rusak atau memutih.'), { statusCode: 422 });
++    }
++    const project = await prisma.project.create({ data: {
++      ...parsed.data, adminId: req.user.id, milestones: defaultMilestones(),
++      ...(file ? { imageUrl: file.url } : {}),
++      ...(analysis ? { aiStatus: analysis.predicted_class, confidenceScore: analysis.confidence, aiAnalysis: analysis } : {}),
++    } });
++    return success(res, 'Proyek berhasil dipublikasikan', project, 201);
++  } catch (e) { await removeImage(file); throw e; }
++});
++const updateMilestones = wrap(async (req, res) => {
++  const id = Number(req.params.id), parsed = milestoneSchema.safeParse(req.body);
++  if (!Number.isSafeInteger(id) || id < 1 || !parsed.success) return error(res, 'Data milestone tidak valid', 400);
++  const data = parsed.data;
++  const changed = await prisma.project.updateMany({ where: { id, milestoneVersion: data.version }, data: {
++    milestones: data.milestones.map(m => ({ ...m, done: m.status === 'Complete' })),
++    progressNote: data.progressNote || '', milestoneVersion: { increment: 1 },
++  } });
++  if (!changed.count) return error(res, 'Proyek berubah atau tidak ditemukan. Muat ulang sebelum menyimpan.', 409);
++  return success(res, 'Milestone tersimpan', await prisma.project.findUnique({ where: { id } }));
++});
++module.exports = { getAllProjects, getProject, createProject, updateMilestones };
+diff --git a/src/middleware/auth.middleware.js b/src/middleware/auth.middleware.js
+index 8fd5935..5ec9ab9 100644
+--- a/src/middleware/auth.middleware.js
++++ b/src/middleware/auth.middleware.js
+@@ -1,30 +1,16 @@
+-// Middleware: cek JWT token valid atau tidak
+ const jwt = require('jsonwebtoken');
+-
+-function authenticate(req, res, next) {
+-  const authHeader = req.headers.authorization;
+-
+-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+-    return res.status(401).json({
+-      success: false,
+-      message: 'Token tidak ditemukan. Sertakan header Authorization: Bearer <token>',
+-      data: null,
+-    });
+-  }
+-
+-  const token = authHeader.split(' ')[1];
+-
++const prisma = require('../config/prisma');
++async function authenticate(req, res, next) {
++  const token = req.headers.authorization?.startsWith('Bearer ') ? req.headers.authorization.slice(7) : null;
++  const unauthorized = () => res.status(401).json({ success: false, message: 'Token tidak valid atau sudah kedaluwarsa. Silakan login kembali.', data: null });
++  if (!token) return unauthorized();
++  let decoded;
++  try { decoded = jwt.verify(token, process.env.JWT_SECRET); if (!Number.isSafeInteger(decoded.id)) return unauthorized(); }
++  catch { return unauthorized(); }
+   try {
+-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+-    req.user = decoded; // { id, role }
+-    next();
+-  } catch (err) {
+-    return res.status(401).json({
+-      success: false,
+-      message: 'Token tidak valid atau sudah kedaluwarsa',
+-      data: null,
+-    });
+-  }
++    const user = await prisma.user.findUnique({ where: { id: decoded.id }, select: { id: true, role: true } });
++    if (!user) return unauthorized();
++    req.user = user; return next();
++  } catch (error) { return next(error); }
+ }
+-
+ module.exports = { authenticate };
+diff --git a/src/middleware/errorHandler.middleware.js b/src/middleware/errorHandler.middleware.js
+index 13f4a4d..cd6a53a 100644
+--- a/src/middleware/errorHandler.middleware.js
++++ b/src/middleware/errorHandler.middleware.js
+@@ -8,7 +8,7 @@ function errorHandler(err, req, res, next) {
+ 
+   res.status(err.statusCode || 500).json({
+     success: false,
+-    message: err.message || 'Terjadi kesalahan pada server',
++    message: (process.env.NODE_ENV !== 'production' || (err.statusCode >= 400 && err.statusCode < 500) ? err.message : null) || 'Terjadi kesalahan pada server',
+     data: null,
+   });
+ }
+diff --git a/src/middleware/upload.middleware.js b/src/middleware/upload.middleware.js
+index 0b1711d..59c004d 100644
+--- a/src/middleware/upload.middleware.js
++++ b/src/middleware/upload.middleware.js
+@@ -1,30 +1,9 @@
+-// Middleware: handle upload gambar (foto karang) pakai multer
+ const multer = require('multer');
+-const path = require('path');
+-
+-const storage = multer.diskStorage({
+-  destination: (req, file, cb) => {
+-    cb(null, path.join(__dirname, '../../uploads'));
++module.exports = multer({
++  storage: multer.memoryStorage(),
++  limits: { fileSize: 5 * 1024 * 1024, files: 1, fields: 20, fieldSize: 100000 },
++  fileFilter(req, file, cb) {
++    if (['image/jpeg', 'image/png', 'image/webp'].includes(file.mimetype)) cb(null, true);
++    else cb(Object.assign(new Error('Format file harus JPG, PNG, atau WEBP'), { statusCode: 400 }));
+   },
+-  filename: (req, file, cb) => {
+-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+-    cb(null, uniqueSuffix + path.extname(file.originalname));
+-  },
+-});
+-
+-function fileFilter(req, file, cb) {
+-  const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+-  if (allowedTypes.includes(file.mimetype)) {
+-    cb(null, true);
+-  } else {
+-    cb(new Error('Format file harus JPG, PNG, atau WEBP'));
+-  }
+-}
+-
+-const upload = multer({
+-  storage,
+-  fileFilter,
+-  limits: { fileSize: 5 * 1024 * 1024 }, // max 5MB
+ });
+-
+-module.exports = upload;
+diff --git a/src/routes/auth.routes.js b/src/routes/auth.routes.js
+index 4ac2243..369fae3 100644
+--- a/src/routes/auth.routes.js
++++ b/src/routes/auth.routes.js
+@@ -1,10 +1,13 @@
+ const express = require('express');
+ const router = express.Router();
++const asyncHandler = (handler) => (req, res, next) =>
++  Promise.resolve(handler(req, res, next)).catch(next);
+ const { register, login, profile } = require('../controllers/auth.controller');
+ const { authenticate } = require('../middleware/auth.middleware');
+ 
+-router.post('/register', register);
+-router.post('/login', login);
+-router.get('/profile', authenticate, profile);
++router.post('/register', asyncHandler(register));
++router.post('/login', asyncHandler(login));
++router.get('/me', authenticate, asyncHandler(profile));
++router.get('/profile', authenticate, asyncHandler(profile));
+ 
+ module.exports = router;
+diff --git a/src/routes/donation.routes.js b/src/routes/donation.routes.js
+index f805a7d..4e0b1b3 100644
+--- a/src/routes/donation.routes.js
++++ b/src/routes/donation.routes.js
+@@ -1,10 +1,12 @@
+ const express = require('express');
+ const router = express.Router();
++const asyncHandler = (handler) => (req, res, next) =>
++  Promise.resolve(handler(req, res, next)).catch(next);
+ const { createDonation, getMyDonations } = require('../controllers/donation.controller');
+ const { authenticate } = require('../middleware/auth.middleware');
+ const { requireRole } = require('../middleware/role.middleware');
+ 
+-router.post('/', authenticate, requireRole('investor'), createDonation);
+-router.get('/saya', authenticate, requireRole('investor'), getMyDonations);
++router.post('/', authenticate, requireRole('investor'), asyncHandler(createDonation));
++router.get('/saya', authenticate, requireRole('investor'), asyncHandler(getMyDonations));
+ 
+ module.exports = router;
+diff --git a/src/routes/project.routes.js b/src/routes/project.routes.js
+index f95f4f1..0f85b47 100644
+--- a/src/routes/project.routes.js
++++ b/src/routes/project.routes.js
+@@ -1,9 +1,10 @@
+-const express = require('express');
+-const router = express.Router();
++const router = require('express').Router();
+ const { authenticate } = require('../middleware/auth.middleware');
+-const { getAllProjects, createProject } = require('../controllers/project.controller');
+-
++const { requireRole } = require('../middleware/role.middleware');
++const upload = require('../middleware/upload.middleware');
++const { getAllProjects, getProject, createProject, updateMilestones } = require('../controllers/project.controller');
+ router.get('/', getAllProjects);
+-router.post('/', authenticate, createProject);
+-
+-module.exports = router;
+\ No newline at end of file
++router.get('/:id', getProject);
++router.post('/', authenticate, requireRole('admin'), upload.single('image'), createProject);
++router.put('/:id/milestones', authenticate, requireRole('admin'), updateMilestones);
++module.exports = router;
+diff --git a/src/server.js b/src/server.js
+index 7f62284..d37f09e 100644
+--- a/src/server.js
++++ b/src/server.js
+@@ -1,5 +1,6 @@
+ require('dotenv').config();
+ const express = require('express');
++const cors = require('cors');
+ const path = require('path');
+ 
+ const authRoutes = require('./routes/auth.routes');
+@@ -9,12 +10,20 @@ const { errorHandler } = require('./middleware/errorHandler.middleware');
+ 
+ const app = express();
+ 
++app.set('trust proxy', 'loopback');
++app.disable('x-powered-by');
++app.use(cors({
++  origin: ['https://corallink.web.id', 'https://www.corallink.web.id'],
++  methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
++  allowedHeaders: ['Content-Type', 'Authorization'],
++}));
++
+ app.use(express.json());
+ app.use(express.urlencoded({ extended: true }));
+ 
+ // Biar foto yang diupload bisa diakses lewat URL, misal:
+ // http://localhost:3000/uploads/namafile.jpg
+-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
++app.use('/uploads/covers', express.static(path.join(require('./utils/files').root, 'covers'), { setHeaders: res => res.setHeader('X-Content-Type-Options', 'nosniff') }));
+ 
+ // Health check - buat mastiin server hidup
+ app.get('/', (req, res) => {
+@@ -28,6 +37,8 @@ app.get('/', (req, res) => {
+ app.use('/api/auth', authRoutes);
+ app.use('/api/projects', projectRoutes);
+ app.use('/api/donations', donationRoutes);
++app.use('/api/transactions', require('./routes/transaction.routes'));
++app.use('/api/payments', require('./routes/payment.routes'));
+ 
+ // 404 handler
+ app.use((req, res) => {
+@@ -38,6 +49,8 @@ app.use((req, res) => {
+ app.use(errorHandler);
+ 
+ const PORT = process.env.PORT || 3000;
+-app.listen(PORT, () => {
+-  console.log(`🚀 CoralLink API berjalan di http://localhost:${PORT}`);
++if (require.main === module) app.listen(PORT, '127.0.0.1', () => {
++  console.log(`🚀 CoralLink API berjalan di http://127.0.0.1:${PORT}`);
+ });
++
++module.exports = app;
+--- /dev/null
++++ b/deploy/corallink-ml.service
+@@ -0,0 +1,26 @@
++[Unit]
++Description=CoralLink coral image prediction
++After=network.target
++StartLimitIntervalSec=120
++StartLimitBurst=5
++
++[Service]
++Type=simple
++User=corallink
++Group=corallink
++WorkingDirectory=/opt/corallink-ml
++Environment=PYTHONDONTWRITEBYTECODE=1
++Environment=KERAS_HOME=/tmp/keras
++ExecStart=/opt/corallink-ml/.venv/bin/python -c "from app import app; app.run(host='127.0.0.1', port=5000, debug=False)"
++Restart=on-failure
++RestartSec=5
++TimeoutStopSec=30
++NoNewPrivileges=true
++PrivateTmp=true
++ProtectSystem=strict
++ProtectHome=true
++StandardOutput=journal
++StandardError=journal
++
++[Install]
++WantedBy=multi-user.target
+--- /dev/null
++++ b/prisma/migrations/20260910120000_project_publishing_transactions/migration.sql
+@@ -0,0 +1,49 @@
++-- AlterTable
++ALTER TABLE `projects` ADD COLUMN `aiAnalysis` JSON NULL,
++    ADD COLUMN `area` DOUBLE NULL,
++    ADD COLUMN `description` TEXT NULL,
++    ADD COLUMN `duration` INTEGER NULL,
++    ADD COLUMN `fragments` INTEGER NULL,
++    ADD COLUMN `fundingTarget` DECIMAL(14, 2) NULL,
++    ADD COLUMN `milestoneVersion` INTEGER NOT NULL DEFAULT 0,
++    ADD COLUMN `milestones` JSON NULL,
++    ADD COLUMN `progressNote` TEXT NULL,
++    ADD COLUMN `species` VARCHAR(191) NULL;
++
++-- CreateTable
++CREATE TABLE `transactions` (
++    `id` VARCHAR(36) NOT NULL,
++    `investor_id` INTEGER NOT NULL,
++    `project_id` INTEGER NOT NULL,
++    `amount` DECIMAL(12, 2) NOT NULL,
++    `status` VARCHAR(20) NOT NULL DEFAULT 'Pending',
++    `proof_file` VARCHAR(191) NULL,
++    `idempotency_key` VARCHAR(100) NOT NULL,
++    `review_note` TEXT NULL,
++    `reviewed_by` INTEGER NULL,
++    `reviewed_at` DATETIME(3) NULL,
++    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
++
++    UNIQUE INDEX `transactions_idempotency_key_key`(`idempotency_key`),
++    INDEX `transactions_investor_id_created_at_idx`(`investor_id`, `created_at`),
++    INDEX `transactions_project_id_status_idx`(`project_id`, `status`),
++    PRIMARY KEY (`id`)
++) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
++
++-- CreateTable
++CREATE TABLE `payment_settings` (
++    `id` INTEGER NOT NULL DEFAULT 1,
++    `bankName` VARCHAR(100) NOT NULL,
++    `accountNumber` VARCHAR(100) NOT NULL,
++    `accountHolder` VARCHAR(191) NOT NULL,
++    `updatedAt` DATETIME(3) NOT NULL,
++
++    PRIMARY KEY (`id`)
++) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
++
++-- AddForeignKey
++ALTER TABLE `transactions` ADD CONSTRAINT `transactions_investor_id_fkey` FOREIGN KEY (`investor_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
++
++-- AddForeignKey
++ALTER TABLE `transactions` ADD CONSTRAINT `transactions_project_id_fkey` FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
++
+--- /dev/null
++++ b/prisma/migrations/20260910130000_frontend_profile_fields/migration.sql
+@@ -0,0 +1,8 @@
++-- AlterTable
++ALTER TABLE `users` ADD COLUMN `phone` VARCHAR(30) NULL;
++
++-- AlterTable
++ALTER TABLE `transactions` ADD COLUMN `contributorEmail` VARCHAR(191) NULL,
++    ADD COLUMN `contributorName` VARCHAR(191) NULL,
++    ADD COLUMN `type` VARCHAR(50) NOT NULL DEFAULT 'One-Time Contribution';
++
+--- /dev/null
++++ b/src/routes/payment.routes.js
+@@ -0,0 +1,18 @@
++const router = require('express').Router();
++const { z } = require('zod');
++const prisma = require('../config/prisma');
++const { authenticate } = require('../middleware/auth.middleware');
++const { requireRole } = require('../middleware/role.middleware');
++const { success, error } = require('../utils/response');
++router.get('/settings', async (req, res, next) => {
++  try { const data = await prisma.paymentSettings.findUnique({ where: { id: 1 } }); return success(res, 'Rekening tujuan', { enabled: Boolean(data), ...data }); } catch (e) { next(e); }
++});
++router.put('/settings', authenticate, requireRole('admin'), async (req, res, next) => {
++  try {
++    const parsed = z.object({ bankName: z.string().trim().min(2).max(100), accountNumber: z.string().trim().regex(/^[0-9 -]{5,100}$/), accountHolder: z.string().trim().min(2).max(191) }).safeParse(req.body);
++    if (!parsed.success) return error(res, 'Isi bank, nomor rekening, dan nama pemilik yang valid.', 400);
++    const data = await prisma.paymentSettings.upsert({ where: { id: 1 }, create: { id: 1, ...parsed.data }, update: parsed.data });
++    return success(res, 'Rekening tersimpan', { enabled: true, ...data });
++  } catch (e) { next(e); }
++});
++module.exports = router;
+--- /dev/null
++++ b/src/routes/transaction.routes.js
+@@ -0,0 +1,70 @@
++const router = require('express').Router();
++const path = require('path');
++const { z } = require('zod');
++const prisma = require('../config/prisma');
++const { authenticate } = require('../middleware/auth.middleware');
++const { requireRole } = require('../middleware/role.middleware');
++const upload = require('../middleware/upload.middleware');
++const { success, error } = require('../utils/response');
++const { saveImage, removeImage, root } = require('../utils/files');
++const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res)).catch(next);
++const include = { project: { select: { namaProyek: true, lokasi: true } } };
++const view = t => { const { proofFile, ...data } = t; return { ...data, hasProof: Boolean(proofFile) }; };
++router.use(authenticate);
++router.get('/me', requireRole('investor'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findMany({ where: { investorId: req.user.id }, include, orderBy: { createdAt: 'desc' } });
++  return success(res, 'Riwayat pembayaran', data.map(view));
++}));
++router.get('/', requireRole('admin'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findMany({ include: { ...include, investor: { select: { nama: true, email: true } } }, orderBy: { createdAt: 'desc' }, take: 500 });
++  return success(res, 'Pembayaran terbaru (maksimal 500)', data.map(view));
++}));
++router.post('/', requireRole('investor'), wrap(async (req, res) => {
++  const parsed = z.object({ projectId: z.coerce.number().int().positive(), amount: z.coerce.number().positive().max(9999999999).multipleOf(0.01), idempotencyKey: z.string().uuid(), type: z.enum(['One-Time Contribution', 'Monthly Contribution']).default('One-Time Contribution'), contributorName: z.string().trim().min(2).max(191).optional(), contributorEmail: z.string().email().max(191).optional() }).safeParse(req.body);
++  if (!parsed.success) return error(res, 'Proyek, nominal, atau ID permintaan tidak valid', 400);
++  const { projectId, amount, idempotencyKey, type, contributorName, contributorEmail } = parsed.data;
++  const existing = await prisma.transaction.findUnique({ where: { idempotencyKey }, include });
++  if (existing) {
++    if (existing.investorId !== req.user.id || existing.projectId !== projectId || Number(existing.amount) !== amount || existing.type !== type) return error(res, 'ID permintaan sudah digunakan', 409);
++    return success(res, 'Permintaan sudah dibuat', view(existing));
++  }
++  if (!await prisma.paymentSettings.findUnique({ where: { id: 1 } })) return error(res, 'Rekening tujuan belum diatur admin', 503);
++  if (!await prisma.project.findUnique({ where: { id: projectId } })) return error(res, 'Proyek tidak ditemukan', 404);
++  try {
++    const data = await prisma.transaction.create({ data: { projectId, amount, idempotencyKey, type, contributorName, contributorEmail, investorId: req.user.id, status: 'AwaitingProof' }, include });
++    return success(res, 'Permintaan dibuat; belum dibayar', view(data), 201);
++  } catch (e) { if (e.code === 'P2002') return error(res, 'Permintaan sedang diproses. Coba lagi dengan ID yang sama.', 409); throw e; }
++}));
++router.get('/:id', wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id }, include });
++  if (!data || (req.user.role !== 'admin' && data.investorId !== req.user.id)) return error(res, 'Transaksi tidak ditemukan', 404);
++  return success(res, 'Detail pembayaran', view(data));
++}));
++router.get('/:id/proof', wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id } });
++  if (!data?.proofFile || (req.user.role !== 'admin' && data.investorId !== req.user.id)) return error(res, 'Bukti tidak ditemukan', 404);
++  res.set({ 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
++  return res.sendFile(path.join(root, 'private', path.basename(data.proofFile)));
++}));
++router.post('/:id/proof', requireRole('investor'), upload.single('image'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id } });
++  if (!data || data.investorId !== req.user.id) return error(res, 'Transaksi tidak ditemukan', 404);
++  if (!['AwaitingProof', 'Failed'].includes(data.status)) return error(res, 'Bukti sedang ditinjau atau pembayaran sudah selesai', 409);
++  let file; let committed = false;
++  try {
++    file = await saveImage(req.file, 'private');
++    const updated = await prisma.transaction.updateMany({ where: { id: data.id, status: data.status }, data: { proofFile: file.filename, status: 'Pending', reviewedBy: null, reviewedAt: null, reviewNote: null } });
++    if (!updated.count) { await removeImage(file); return error(res, 'Transaksi berubah. Muat ulang.', 409); }
++    committed = true;
++    if (data.proofFile) await removeImage({ fullPath: path.join(root, 'private', path.basename(data.proofFile)) });
++    return success(res, 'Bukti terkirim, menunggu verifikasi admin', view(await prisma.transaction.findUnique({ where: { id: data.id }, include })));
++  } catch (e) { if (!committed) await removeImage(file); throw e; }
++}));
++router.put('/:id/status', requireRole('admin'), wrap(async (req, res) => {
++  const parsed = z.object({ status: z.enum(['Completed', 'Failed']), note: z.string().trim().max(2000).optional() }).safeParse(req.body);
++  if (!parsed.success || (parsed.data.status === 'Failed' && !parsed.data.note)) return error(res, 'Status atau alasan penolakan tidak valid', 400);
++  const updated = await prisma.transaction.updateMany({ where: { id: req.params.id, status: 'Pending', proofFile: { not: null } }, data: { status: parsed.data.status, reviewNote: parsed.data.note || '', reviewedBy: req.user.id, reviewedAt: new Date() } });
++  if (!updated.count) return error(res, 'Hanya bukti berstatus Pending yang bisa diverifikasi. Muat ulang.', 409);
++  return success(res, 'Verifikasi tersimpan', view(await prisma.transaction.findUnique({ where: { id: req.params.id }, include })));
++}));
++module.exports = router;
+--- /dev/null
++++ b/src/utils/files.js
+@@ -0,0 +1,22 @@
++const sharp = require('sharp');
++const fs = require('fs/promises');
++const path = require('path');
++const { randomUUID } = require('crypto');
++const root = path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../uploads'));
++async function saveImage(file, folder) {
++  if (!file) throw Object.assign(new Error('Pilih gambar JPG, PNG, atau WEBP.'), { statusCode: 400 });
++  let buffer;
++  try {
++    const image = sharp(file.buffer, { limitInputPixels: 25000000 });
++    const metadata = await image.metadata();
++    if (!['jpeg', 'png', 'webp'].includes(metadata.format)) throw new Error();
++    buffer = await image.rotate().resize({ width: 2400, height: 2400, fit: 'inside', withoutEnlargement: true }).webp({ quality: 90 }).toBuffer();
++  } catch { throw Object.assign(new Error('File gambar tidak valid atau terlalu besar.'), { statusCode: 400 }); }
++  await fs.mkdir(path.join(root, folder), { recursive: true });
++  const filename = `${randomUUID()}.webp`;
++  const fullPath = path.join(root, folder, filename);
++  await fs.writeFile(fullPath, buffer, { flag: 'wx', mode: 0o640 });
++  return { filename, fullPath, url: `/uploads/${folder}/${filename}`, buffer };
++}
++const removeImage = (file) => file ? fs.unlink(file.fullPath).catch(() => {}) : Promise.resolve();
++module.exports = { saveImage, removeImage, root };
+--- /dev/null
++++ b/test/project-access.test.js
+@@ -0,0 +1,26 @@
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const express = require('express');
++const jwt = require('jsonwebtoken');
++process.env.JWT_SECRET = require('node:crypto').randomBytes(32).toString('hex');
++const prisma = require('../src/config/prisma');
++let writes = 0;
++prisma.user.findUnique = async ({ where }) => ({ id: where.id, role: where.id === 2 ? 'admin' : 'investor' });
++prisma.project.create = async ({ data }) => { writes++; return { id: 1, ...data }; };
++const app = express();
++app.use(express.json());
++app.use('/api/projects', require('../src/routes/project.routes'));
++test('project creation requires admin and validates payload before database write', async () => {
++  const server = app.listen(0, '127.0.0.1');
++  await new Promise((resolve) => server.once('listening', resolve));
++  const url = `http://127.0.0.1:${server.address().port}/api/projects`;
++  const send = (role, body = {}) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(role ? { Authorization: `Bearer ${jwt.sign({ id: role === 'admin' ? 2 : 1, role }, process.env.JWT_SECRET)}` } : {}) }, body: JSON.stringify(body) });
++  try {
++    assert.equal((await send()).status, 401);
++    assert.equal((await send('investor')).status, 403);
++    assert.equal((await send('admin')).status, 400);
++    assert.equal(writes, 0);
++    assert.equal((await send('admin', { namaProyek: 'Reef test', lokasi: 'Bali', aiStatus: 'verified', adminId: 99 })).status, 201);
++    assert.equal(writes, 1);
++  } finally { await new Promise((resolve) => server.close(resolve)); await prisma.$disconnect(); }
++});
+--- /dev/null
++++ b/test/publishing.test.js
+@@ -0,0 +1,60 @@
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const { randomUUID, randomBytes } = require('crypto');
++const jwt = require('jsonwebtoken');
++const sharp = require('sharp');
++if (!process.env.DATABASE_URL?.includes('/corallink_verify_')) throw new Error('Use an isolated corallink_verify_ database');
++process.env.JWT_SECRET = randomBytes(32).toString('hex');
++const prisma = require('../src/config/prisma');
++const app = require('../src/server');
++test('publishing, milestone concurrency, private proofs, role authorization and payment accounting', async () => {
++ const server = app.listen(0, '127.0.0.1'); await new Promise(r => server.once('listening', r));
++ const base = `http://127.0.0.1:${server.address().port}`;
++ const admin = await prisma.user.create({ data: { nama: 'Test admin', email: 'admin@example.invalid', password: randomBytes(32).toString('hex'), role: 'admin' } });
++ const investor = await prisma.user.create({ data: { nama: 'Test investor', email: 'investor@example.invalid', password: randomBytes(32).toString('hex'), role: 'investor' } });
++ const other = await prisma.user.create({ data: { nama: 'Other investor', email: 'other@example.invalid', password: randomBytes(32).toString('hex'), role: 'investor' } });
++ const token = u => jwt.sign({ id: u.id, role: u.role }, process.env.JWT_SECRET);
++ const call = (url, method = 'GET', user, body) => fetch(base + url, { method, headers: { ...(user ? { Authorization: `Bearer ${token(user)}` } : {}), ...(body && !(body instanceof FormData) ? { 'Content-Type':'application/json' } : {}) }, body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined });
++ const image = await sharp({ create: { width: 20, height: 20, channels: 3, background: '#ffffff' } }).png().toBuffer();
++ const ml = require('http').createServer((req,res) => { res.setHeader('Content-Type','application/json'); res.end(JSON.stringify({predicted_class:'Bleached',confidence:99})); }).listen(0,'127.0.0.1');
++ await new Promise(r=>ml.once('listening',r)); process.env.AI_SERVICE_URL = `http://127.0.0.1:${ml.address().port}/predict`;
++ const form = (buffer = image) => { const f = new FormData(); f.append('image', new Blob([buffer], { type:'image/png' }), 'image.png'); f.append('namaProyek', 'Test reef'); f.append('lokasi', 'Test location'); f.append('description', 'Full project description'); f.append('species', 'Acropora'); f.append('fundingTarget', '100000'); return f; };
++ try {
++  assert.equal((await call('/api/projects','POST', null, {})).status,401);
++  assert.equal((await call('/api/projects','POST', investor, {})).status,403);
++  assert.equal((await call('/api/projects','POST', admin, {})).status,400);
++  assert.equal((await call('/api/projects','POST', admin, form(Buffer.from('not an image')))).status,400);
++  const response = await call('/api/projects','POST',admin,form()); assert.equal(response.status,201); const project = (await response.json()).data;
++  assert.equal(project.description,'Full project description'); assert.equal(project.milestones.length,4);
++  assert.equal((await call(project.imageUrl)).status,200);
++  assert.equal((await call(`/api/projects/${project.id}`)).status,200);
++  const milestone = { version:0, milestones:[{phase:'Phase 1',title:'Assessment',status:'Complete'}], progressNote:'Completed field assessment' };
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',investor,milestone)).status,403);
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',admin,milestone)).status,200);
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',admin,milestone)).status,409);
++  const payload = { projectId:project.id, amount:25000, idempotencyKey:randomUUID(), status:'Completed' };
++  assert.equal((await call('/api/transactions','POST',investor,payload)).status,503);
++  const account = { bankName:'TEST ONLY', accountNumber:'00000000', accountHolder:'TEST ONLY' };
++  assert.equal((await call('/api/payments/settings','PUT',investor,account)).status,403);
++  assert.equal((await call('/api/payments/settings','PUT',admin,account)).status,200);
++  const transaction = (await (await call('/api/transactions','POST',investor,payload)).json()).data;
++  assert.equal(transaction.status,'AwaitingProof');
++  assert.equal((await (await call('/api/transactions','POST',investor,payload)).json()).data.id,transaction.id);
++  assert.equal((await call(`/api/transactions/${transaction.id}`,'GET',other)).status,404);
++  const proof = new FormData(); proof.append('image',new Blob([image],{type:'image/png'}),'proof.png');
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'POST',investor,proof)).status,200);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET',other)).status,404);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET')).status,401);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET',admin)).status,200);
++  const stored = await prisma.transaction.findUnique({where:{id:transaction.id}});
++  assert.equal((await call('/uploads/private/'+stored.proofFile)).status,404);
++  assert.equal((await (await call(`/api/projects/${project.id}`)).json()).data.fundingRaised,'0');
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',investor,{status:'Completed'})).status,403);
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',admin,{status:'Completed'})).status,200);
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',admin,{status:'Completed'})).status,409);
++  assert.equal((await (await call(`/api/projects/${project.id}`)).json()).data.fundingRaised,'25000');
++  assert.equal((await (await call('/api/transactions/me','GET',investor)).json()).data.length,1);
++  await prisma.user.update({where:{id:admin.id},data:{role:'investor'}});
++  assert.equal((await call('/api/projects','POST',admin,form())).status,403);
++ } finally { await new Promise(r => ml.close(r)); await new Promise(r => server.close(r)); await prisma.$disconnect(); }
++});
