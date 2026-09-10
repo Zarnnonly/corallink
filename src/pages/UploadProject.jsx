@@ -1,13 +1,10 @@
 import React, { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { predict } from '../lib/api';
 import Footer from '../components/Footer';
 import './UploadProject.css';
-import { useProjects } from '../context/ProjectContext';
 import { useToast } from '../context/ToastContext';
 
 const UploadProject = () => {
-  const navigate = useNavigate();
-  const { addProject } = useProjects();
   const { showToast } = useToast();
   const fileInputRef = useRef(null);
 
@@ -26,7 +23,6 @@ const UploadProject = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [verificationStatus, setVerificationStatus] = useState(null); // null | 'loading' | 'passed' | 'failed'
   const [verificationResult, setVerificationResult] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +32,7 @@ const UploadProject = () => {
   const handleImageSelect = (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 10 * 1024 * 1024) { showToast('Choose a JPG, PNG or WEBP image up to 10MB.', 'error'); return; }
       setImageFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -48,47 +45,15 @@ const UploadProject = () => {
   };
 
   const handleVerify = async () => {
-    if (!imageFile) return;
+    if (!imageFile || verificationStatus === 'loading') return;
 
     setVerificationStatus('loading');
     setVerificationResult(null);
 
     try {
-      const formDataPayload = new FormData();
-      formDataPayload.append('file', imageFile);
-
-      const response = await fetch('https://api.corallink.web.id/predict', {
-        method: 'POST',
-        body: formDataPayload,
-      });
-
-      const data = await response.json();
-
-      // Try to extract condition from various possible response formats
-      const condition = (
-        data.condition ||
-        data.prediction ||
-        data.result ||
-        data.class ||
-        data.label ||
-        ''
-      ).toLowerCase();
-
-      if (condition.includes('healthy') && !condition.includes('unhealthy')) {
-        setVerificationStatus('failed');
-        setVerificationResult({
-          condition: data.condition || data.prediction || data.result || data.class || data.label || 'Healthy',
-          confidence: data.confidence || data.confidence_score || data.score || null,
-          message: 'Image indicates healthy coral. This project cannot be uploaded because only damaged or unhealthy coral reefs qualify for restoration projects.',
-        });
-      } else {
-        setVerificationStatus('passed');
-        setVerificationResult({
-          condition: data.condition || data.prediction || data.result || data.class || data.label || 'Unhealthy',
-          confidence: data.confidence || data.confidence_score || data.score || null,
-          message: 'Image verified! Coral appears damaged or unhealthy. This project qualifies for restoration funding.',
-        });
-      }
+      const data = await predict(imageFile);
+      setVerificationStatus('passed');
+      setVerificationResult({ ...data, message: 'AI estimate only. This result does not approve a project or funding.' });
     } catch (error) {
       setVerificationStatus('failed');
       setVerificationResult({
@@ -101,69 +66,8 @@ const UploadProject = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (verificationStatus !== 'passed') return;
-
-    // Save new project to localStorage
-    const newProject = {
-      id: formData.projectName.toLowerCase().replace(/\s+/g, '-'),
-      name: formData.projectName.toUpperCase(),
-      subtitle: `${formData.species} Restoration Project`,
-      description: formData.description,
-      location: formData.location,
-      species: formData.species,
-      status: 'Needs Restoration',
-      statusColor: '#E53935',
-      goal: {
-        fragments: `${formData.fragments} coral fragments`,
-        area: `${formData.area} m² restoration area`,
-        duration: `${formData.duration} months project duration`,
-      },
-      fundingTarget: `Rp ${Number(formData.fundingGoal).toLocaleString('id-ID')}`,
-      fundingPercent: 0,
-      milestones: [
-        { phase: 'Phase 1', title: 'Site Assessment & Coral Collection', months: 'Month 1–3', done: false },
-        { phase: 'Phase 2', title: 'Nursery Cultivation & Growth Monitoring', months: 'Month 4–9', done: false },
-        { phase: 'Phase 3', title: 'Reef Transplantation', months: 'Month 10–14', done: false },
-        { phase: 'Phase 4', title: 'Monitoring & Reporting', months: 'Month 15–18', done: false },
-      ],
-      condition: verificationResult?.condition || 'Unhealthy',
-      conditionType: 'unhealthy',
-      confidenceScore: verificationResult?.confidence ? `${(verificationResult.confidence * 100).toFixed(2)}%` : 'N/A',
-      analysisStatus: 'Verified',
-      characteristics: ['Coral condition assessed via AI image analysis.'],
-      supportingFactors: ['Environmental data pending field assessment.'],
-      whyThisMatters: ['Restoring damaged coral reefs helps rebuild marine biodiversity and protect coastal communities.'],
-      recommendations: ['Conduct regular monitoring to track restoration progress.'],
-      image: imagePreview || '',
-    };
-
-    addProject(newProject);
-    showToast('Project uploaded successfully!', 'success');
-    setSubmitted(true);
+    showToast('Project publishing with cover images is not available yet.', 'info');
   };
-
-  if (submitted) {
-    return (
-      <>
-        <div className="upload-page">
-          <div className="upload-success-card">
-            <div className="success-icon">&#10003;</div>
-            <h2>Project Uploaded Successfully!</h2>
-            <p>Your coral restoration project <strong>{formData.projectName}</strong> has been submitted for review.</p>
-            <div className="success-actions">
-              <button className="success-btn primary" onClick={() => navigate('/take-action')}>
-                View All Projects
-              </button>
-              <button className="success-btn secondary" onClick={() => { setSubmitted(false); setFormData({ projectName: '', species: '', location: '', description: '', fundingGoal: '', duration: '', fragments: '', area: '' }); setImageFile(null); setImagePreview(null); setVerificationStatus(null); setVerificationResult(null); }}>
-                Upload Another Project
-              </button>
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
 
   return (
     <>
@@ -171,7 +75,7 @@ const UploadProject = () => {
         <div className="upload-container">
           <div className="upload-header">
             <h1>Upload New Project</h1>
-            <p>Submit a new coral restoration project. Your coral image must be verified by our AI system before the project can be published.</p>
+            <p>Project publishing with cover images is not available yet. You can still analyze a coral image below.</p>
           </div>
 
           <form className="upload-form" onSubmit={handleSubmit}>
@@ -179,10 +83,10 @@ const UploadProject = () => {
             <div className="upload-section verification-section">
               <div className="section-number">1</div>
               <div className="section-content">
-                <h2>AI Coral Verification</h2>
-                <p className="section-desc">Upload a photo of the coral reef. Our AI will analyze the image to confirm it needs restoration.</p>
+                <h2>AI Coral Analysis</h2>
+                <p className="section-desc">Upload a photo of the coral reef. Our AI will estimate its condition for review.</p>
 
-                <div className="image-upload-area" onClick={() => fileInputRef.current?.click()}>
+                <div className="image-upload-area" role="button" tabIndex={0} aria-label="Select coral image" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click(); }} onClick={() => fileInputRef.current?.click()}>
                   {imagePreview ? (
                     <img src={imagePreview} alt="Preview" className="image-preview" />
                   ) : (
@@ -195,7 +99,8 @@ const UploadProject = () => {
                   <input
                     type="file"
                     ref={fileInputRef}
-                    accept="image/*"
+                    accept="image/jpeg,image/png,image/webp"
+                    disabled={verificationStatus === 'loading'}
                     onChange={handleImageSelect}
                     hidden
                   />
@@ -226,10 +131,10 @@ const UploadProject = () => {
                       <span className="vr-condition">
                         Detected: <strong>{verificationResult.condition}</strong>
                       </span>
-                      {verificationResult.confidence && (
+                      {verificationResult.confidence != null && (
                         <span className="vr-confidence">
                           Confidence: {typeof verificationResult.confidence === 'number'
-                            ? `${(verificationResult.confidence * 100).toFixed(1)}%`
+                            ? `${verificationResult.confidence.toFixed(1)}%`
                             : verificationResult.confidence}
                         </span>
                       )}
@@ -241,13 +146,13 @@ const UploadProject = () => {
             </div>
 
             {/* Section 2: Project Details */}
-            <div className={`upload-section details-section ${verificationStatus !== 'passed' ? 'locked' : ''}`}>
+            <div className={`upload-section details-section locked`}>
               <div className="section-number">2</div>
               <div className="section-content">
                 <h2>Project Details</h2>
-                {verificationStatus !== 'passed' && (
+                {(
                   <div className="lock-overlay">
-                    <span>🔒 Complete AI verification first</span>
+                    <span>🔒 Project publishing is not available yet</span>
                   </div>
                 )}
                 <p className="section-desc">Provide details about the coral restoration project.</p>
@@ -262,7 +167,7 @@ const UploadProject = () => {
                       onChange={handleInputChange}
                       placeholder="e.g., Acropora Cervicornis Restoration"
                       required
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -274,7 +179,7 @@ const UploadProject = () => {
                       onChange={handleInputChange}
                       placeholder="e.g., Acropora cervicornis"
                       required
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -286,7 +191,7 @@ const UploadProject = () => {
                       onChange={handleInputChange}
                       placeholder="e.g., Raja Ampat, Indonesia"
                       required
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group full">
@@ -297,7 +202,7 @@ const UploadProject = () => {
                       onChange={handleInputChange}
                       placeholder="Describe the current condition and restoration goals..."
                       rows={4}
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -309,7 +214,7 @@ const UploadProject = () => {
                       onChange={handleInputChange}
                       placeholder="e.g., 60.000.000"
                       required
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -320,7 +225,7 @@ const UploadProject = () => {
                       value={formData.duration}
                       onChange={handleInputChange}
                       placeholder="e.g., 18"
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -331,7 +236,7 @@ const UploadProject = () => {
                       value={formData.fragments}
                       onChange={handleInputChange}
                       placeholder="e.g., 500"
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                   <div className="form-group">
@@ -342,7 +247,7 @@ const UploadProject = () => {
                       value={formData.area}
                       onChange={handleInputChange}
                       placeholder="e.g., 500"
-                      disabled={verificationStatus !== 'passed'}
+                      disabled
                     />
                   </div>
                 </div>
@@ -350,7 +255,7 @@ const UploadProject = () => {
                 <button
                   type="submit"
                   className="submit-project-btn"
-                  disabled={verificationStatus !== 'passed'}
+                  disabled
                 >
                   Upload Project
                 </button>

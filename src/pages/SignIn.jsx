@@ -13,14 +13,19 @@ const SignIn = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState('');
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) return;
-    
-    // Call the mock login
-    login(email);
-    showToast('Signed in successfully!', 'success');
-    navigate('/');
+    if (submitting || !email || !password) return;
+
+    setSubmitting(true); setFormError('');
+    try {
+      await login(email.trim(), password);
+      showToast('Signed in successfully!', 'success');
+      navigate('/');
+    } catch (error) { setFormError(error.message); }
+    finally { setSubmitting(false); }
   };
 
   return (
@@ -33,13 +38,14 @@ const SignIn = () => {
         </div>
 
         <form onSubmit={handleSubmit}>
+          {formError && <p role="alert">{formError}</p>}
           <div className="form-group">
-            <label>Email Address</label>
+            <label htmlFor="auth-email-address">Email Address</label>
             <div className="input-wrapper">
               <Mail size={18} className="input-icon" />
-              <input 
-                type="email" 
-                className="auth-input" 
+              <input id="auth-email-address"
+                type="email"
+                className="auth-input"
                 placeholder="Enter your Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -49,12 +55,12 @@ const SignIn = () => {
           </div>
 
           <div className="form-group">
-            <label>Password</label>
+            <label htmlFor="auth-password">Password</label>
             <div className="input-wrapper">
               <Lock size={18} className="input-icon" />
-              <input 
-                type="password" 
-                className="auth-input" 
+              <input id="auth-password"
+                type="password"
+                className="auth-input"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -63,7 +69,7 @@ const SignIn = () => {
             </div>
           </div>
 
-          <button type="submit" className="submit-btn" style={{width: '100%'}}>Sign In</button>
+          <button disabled={submitting} type="submit" className="submit-btn" style={{width: '100%'}}>Sign In</button>
         </form>
 
         <div className="auth-divider">

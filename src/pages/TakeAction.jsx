@@ -1,3 +1,4 @@
+import ProjectState from '../components/ProjectState';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -10,10 +11,11 @@ const TakeAction = () => {
   return (
     <>
       <div className="take-action-page container">
+          <ProjectState />
         {projects.map((project) => (
           <div key={project.id} className="action-card">
             <div className="action-card-left">
-              <img src={project.image} alt={`Action ${project.name}`} className="action-card-image" />
+              {project.image ? <img src={project.image} alt={`Action ${project.name}`} className="action-card-image" /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
             </div>
             <div className="action-card-right">
               <h2>{project.name}</h2>

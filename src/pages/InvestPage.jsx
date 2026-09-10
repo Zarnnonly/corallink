@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import ProjectState from '../components/ProjectState';
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import './InvestPage.css';
 import { useProjects } from '../context/ProjectContext';
 
 const InvestPage = () => {
   const { projectId } = useParams();
-  const { getProject } = useProjects();
+  const { getProject, loading, error } = useProjects();
   const project = getProject(projectId);
-  const navigate = useNavigate();
+
+  if (loading || error) return <div className="container"><ProjectState /></div>;
 
   if (!project) {
     return (
@@ -54,7 +56,7 @@ const InvestPage = () => {
                   <div className="pd-stat-block">
                     <span className="pd-stat-label">ESTIMATED FUNDING</span>
                     <p className="pd-funding-amount">{project.fundingTarget}</p>
-                    <div className="pd-progress-wrap">
+                    {project.fundingPercent !== null && <div className="pd-progress-wrap">
                       <div className="pd-progress-bar">
                         <div
                           className="pd-progress-fill"
@@ -62,16 +64,16 @@ const InvestPage = () => {
                         />
                       </div>
                       <span className="pd-progress-pct">{project.fundingPercent}%</span>
-                    </div>
+                    </div>}
                   </div>
                 </div>
 
                 <div className="pd-action-buttons">
                   <button
                     className="pd-invest-btn"
-                    onClick={() => navigate(`/invest-form/${project.id}`)}
+                    disabled title="Payments are not available yet"
                   >
-                    Investment
+                    Payments unavailable
                   </button>
                   <Link to={`/project/${project.id}`} className="pd-detail-project-btn">
                     Detail Project
@@ -82,7 +84,7 @@ const InvestPage = () => {
               {/* Right: Image */}
               <div className="pd-image-wrap">
                 <Link to={`/project/${project.id}`}>
-                  <img src={project.image} alt={project.name} className="pd-hero-image" />
+                  {project.image ? <img src={project.image} alt={project.name} className="pd-hero-image" /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
                   <div className="pd-image-overlay">
                     <span>View AI Analysis Result</span>
                   </div>
@@ -96,6 +98,7 @@ const InvestPage = () => {
         <section className="pd-milestones-section">
           <div className="pd-milestones-inner">
             <h3 className="pd-milestones-title">Project Milestones</h3>
+            {!project.milestones.length && <p>Milestones are not available yet.</p>}
             <div className="pd-milestones-track">
               {project.milestones.map((m, i) => (
                 <div key={i} className={`pd-milestone${m.done ? ' done' : ' pending'}`}>

@@ -1,0 +1,38 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { request, predict, setToken, getToken } from '../src/lib/api.js';
+const values = new Map();
+globalThis.localStorage = { getItem: (k) => values.get(k) ?? null, setItem: (k, v) => values.set(k, v), removeItem: (k) => values.delete(k) };
+globalThis.window = new EventTarget();
+const reply = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });
+test('API handles actual envelopes, expiry, errors and multipart prediction contract', async () => {
+  setToken('expired');
+  let expired = 0;
+  window.addEventListener('corallink:unauthorized', () => expired++);
+  globalThis.fetch = async (_, options) => { assert.equal(options.headers.Authorization, 'Bearer expired'); return reply({ success: false, message: 'Expired' }, 401); };
+  await assert.rejects(request('/api/auth/profile', { auth: true }), /Expired/);
+  assert.equal(getToken(), null); assert.equal(expired, 1);
+  setToken('current');
+  globalThis.fetch = async () => { setToken('new-session'); return reply({ message: 'Old request expired' }, 401); };
+  await assert.rejects(request('/api/auth/profile', { auth: true }));
+  assert.equal(getToken(), 'new-session');
+  globalThis.fetch = async () => reply({ success: false, message: 'Rejected' });
+  await assert.rejects(request('/api/projects'), /Rejected/);
+  globalThis.fetch = async () => { throw new TypeError('Failed to fetch'); };
+  await assert.rejects(request('/api/projects'), /Cannot connect/);
+  globalThis.fetch = async () => reply({ success: true, data: [] });
+  assert.deepEqual(await request('/api/projects'), []);
+  globalThis.fetch = async (url, options) => {
+    assert.ok(url.endsWith('/predict'));
+    assert.ok(options.body.get('image') instanceof Blob);
+    assert.equal(options.body.get('file'), null);
+    assert.equal(options.headers.Authorization, undefined);
+    assert.equal(options.headers['Content-Type'], undefined);
+    return reply({ predicted_class: 'Bleached', confidence: 99.58 });
+  };
+  assert.deepEqual(await predict(new Blob(['image'])), { condition: 'Bleached', confidence: 99.58 });
+  globalThis.fetch = async () => reply({ error: 'Not an image' }, 400);
+  await assert.rejects(predict(new Blob()), /Not an image/);
+  globalThis.fetch = async () => reply({});
+  await assert.rejects(predict(new Blob()), /Unrecognized AI response/);
+});

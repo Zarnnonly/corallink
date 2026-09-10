@@ -1,3 +1,4 @@
+import ProjectState from '../components/ProjectState';
 import React from 'react';
 import './Projects.css';
 import { Link } from 'react-router-dom';
@@ -22,6 +23,7 @@ const Projects = () => {
         </div>
 
         <div className="projects-grid">
+          <ProjectState />
           {projects.map((project) => (
             <Link
               to={`/invest/${project.id}`}
@@ -29,11 +31,11 @@ const Projects = () => {
               key={project.id}
               style={{ textDecoration: 'none' }}
             >
-              <img
+              {project.image ? <img
                 src={project.image}
                 alt={project.name}
                 className="project-image"
-              />
+              /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
               <div className="project-overlay">
                 <h4 className="project-title">{project.name}</h4>
                 <p className="project-subtitle-card">{project.subtitle}</p>

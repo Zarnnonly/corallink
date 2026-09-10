@@ -33,8 +33,8 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         {user ? (
-          <div className="navbar-menu-wrap" onMouseEnter={() => setMenuOpen(true)} onMouseLeave={() => setMenuOpen(false)}>
-            <button className="navbar-profile-btn" onClick={toggleMenu}>
+          <div className="navbar-menu-wrap" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setMenuOpen(false); }} onKeyDown={(e) => { if (e.key === 'Escape') setMenuOpen(false); }}>
+            <button className="navbar-profile-btn" aria-label="Account menu" aria-expanded={menuOpen} onClick={toggleMenu}>
               <UserCircle size={28} strokeWidth={1.5} />
               <ChevronDown size={14} />
             </button>
@@ -45,7 +45,7 @@ const Navbar = () => {
                   <span className="dropdown-user-role">{user.role === 'admin' ? 'Admin' : 'Investor'}</span>
                 </div>
                 <div className="dropdown-divider"></div>
-                {user.role === 'user' && (
+                {user && (
                   <Link to="/profile" className="dropdown-item" onClick={() => setMenuOpen(false)}>
                     <UserCircle size={16} /> My Profile
                   </Link>
