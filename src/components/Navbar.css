@@ -37,6 +37,7 @@
 
 .navbar-menu-wrap {
   position: relative;
+  padding-bottom: 8px; /* Invisible bridge to prevent hover loss */
 }
 
 .navbar-profile-btn {
@@ -60,7 +61,6 @@
   position: absolute;
   top: 100%;
   right: 0;
-  margin-top: 8px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(47, 97, 116, 0.15);
