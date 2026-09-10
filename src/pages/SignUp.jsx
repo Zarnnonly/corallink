@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Mail, Lock } from 'lucide-react';
+import { User, Mail, Lock, Phone } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import logoImg from '../assets/rectangle-47.webp';
 import { useAuth } from '../context/AuthContext';
@@ -7,6 +7,7 @@ import { useToast } from '../context/ToastContext';
 import './Auth.css';
 
 const SignUp = () => {
+  const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,7 +29,7 @@ const SignUp = () => {
 
     setSubmitting(true); setFormError('');
     try {
-      await register(name.trim(), email.trim(), password);
+      await register(name.trim(), email.trim(), password, phone.trim());
       showToast('Account created successfully!', 'success');
       navigate('/');
     } catch (error) { setFormError(error.message); }
@@ -106,6 +107,14 @@ const SignUp = () => {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
               />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="auth-phone">Phone Number</label>
+            <div className="input-wrapper">
+              <Phone size={18} className="input-icon" />
+              <input id="auth-phone" type="tel" className="auth-input" placeholder="Enter your Phone Number" value={phone} onChange={(e) => setPhone(e.target.value)} />
             </div>
           </div>
 

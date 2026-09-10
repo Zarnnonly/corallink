@@ -1,46 +1,36 @@
-# Backend integration
+# CoralLink frontend integration
 
-The frontend now uses the existing Express API at `VITE_API_URL=https://api.corallink.web.id`. `.env.production` contains this public build setting; Vercel dashboard values override it and require a new build. Never put database credentials or JWT signing secrets in Vite variables.
+The original frontend before integration (commit 405c7a9) is the layout and interaction reference. Investment, payment confirmation, milestone editing and upload-success layouts have been restored. CSS and visual assets are unchanged. Existing mock project data remains in the repository but is not used as production data.
 
-## UI to API mapping
+## Supported flows
 
-| UI | Existing API | Behavior |
-| --- | --- | --- |
-| Register | POST /api/auth/register | Sends nama/email/password; backend determines investor role. Phone input removed because it cannot be saved. |
-| Sign in | POST /api/auth/login | Sends email/password and stores returned bearer token. |
-| Session/profile | GET /api/auth/profile | Validates persisted token before protected content; maps nama to name and investor to UI user role. No /auth/me dependency. |
-| Logout/401 | Local session removal | Clears bearer token and in-memory user; expired sessions require sign-in. No server token revocation endpoint exists. |
-| Home/catalog | GET /api/projects | API data only, loading/error/retry/empty states. Existing mock project file is retained but unused. |
-| Project/detail | GET /api/projects | Finds numeric ID in the loaded list; no unsupported detail endpoint. Missing funding, milestones, species and analysis fields are shown as unavailable. Old mock slugs do not map to backend IDs. |
-| Profile history | GET /api/donations/saya | Investor-specific donation records, explicitly payment unverified. Admin can view profile without calling investor-only history. |
-| Payment/proof | Not available | Both direct payment routes show an unavailable notice; no fake QR code, local transaction or success confirmation. POST /api/donations is intentionally not presented as a payment flow. |
-| Admin project publishing | Partial backend support | Full cover/metadata upload remains disabled. Existing POST /api/projects receives server-side admin guard and validation in the backend patch. |
-| Milestones | Not available | Editing/submission disabled. |
-| AI analysis | POST /predict | Multipart image, actual predicted_class and percentage confidence; HTTP and malformed response errors rejected. Analysis is informational, never authorization or funding approval. |
+- Register/login/profile/logout and restored optional phone field; name maps compatibly to backend nama. Investor role maps to the existing user UI role. Session restoration waits for the server and handles 401.
+- Project publication retains the image -> AI analysis -> project details -> success workflow. Full description, species, funding target, fragments, area and duration persist with a real cover. Backend repeats ML analysis independently and requires Bleached for image-based restoration submissions; the client cannot approve its own image.
+- Catalog/details load saved projects. Funding progress counts only administrator-verified Completed payments. Original project/AI sections display saved backend data.
+- Milestone status and progress notes persist. Concurrent edits return a conflict instead of silently overwriting a newer version.
+- Investment retains amount buttons, monthly/once choices, investor details and the two-column layout. Monthly means a manually repeated contribution, not automatic debit.
+- Confirmation retains the summary, payment area, proof selection and support button. The fake QR image is replaced by the official bank information configured by admin. A transaction ID in the URL restores the request after refresh. Uploaded proof is Pending until reviewed.
+- Profile shows real transaction statuses alongside clearly marked legacy donation records. A failed proof can be resubmitted.
+- Admin Payment Review configures the official bank account and reviews private proofs. Approval requires checking the bank statement. Only approved amounts count as funding.
 
-No schema migration or infrastructure/CORS changes are needed. Impact figures remaining in the marketing section are explicitly labeled illustrative, not verified platform metrics.
+No real bank account was supplied or seeded. An administrator must enter the official account under Account menu -> Payment Review before transfer instructions can be enabled. All test account numbers belong only to isolated test databases.
 
-## Backend changes
+## API and storage
 
-Actual source was inspected in `/root/corallink-api` and compared with `/opt/corallink-api`, not assumed to match GitHub. Only `src/routes/project.routes.js` and `src/controllers/project.controller.js` were copied into runtime for this integration. Existing CORS, loopback bind, dependency updates and async error handling were preserved. The service was restarted successfully. A targeted backup is in `/root/corallink-deploy/frontend-integration-backup`.
+Public frontend config remains `VITE_API_URL=https://api.corallink.web.id` in `.env.production`. It is not a secret. Vite reads it during build; Vercel Config values override the file. JWT signing and database secrets stay on the VPS.
 
-- POST /api/projects now requires `admin` after JWT authentication.
-- Project names/locations are validated; optional damage/restoration strings retain the existing contract. Caller-supplied admin IDs and AI approval fields are not trusted.
-- Backend regression test: `node --test test/project-access.test.js` (in backend checkout).
-- Backend changes have not been pushed: the connected GitHub account has read-only access to MustikaJr/corallink-api.
+Backend additions preserve existing endpoints and fields: project metadata, GET /api/projects/:id, milestone PUT, /api/transactions and owner/admin proof routes, /api/payments/settings, phone and /api/auth/me. Public images are re-encoded WebP under /uploads/covers. Proof images are on persistent VPS disk and accessible only through authenticated routes. No cloud-storage provider is required for this deployment.
 
-## Verification and deployment status
+Project and payment persistence uses additive Prisma migrations. Database backup precedes migration. The backend GitHub repository is still read-only to the connected account; `backend-patches/backend-sync.patch` captures the complete unpublished backend source changes (including prior deployment fixes) relative to its GitHub baseline. Do not blindly pull/reset the VPS checkout.
 
-Frontend checks: `npm run build`, `npm run lint`, `node --test tests/api.test.js`.
+## Validation and deployment
 
-Browser testing uses local build assets intercepted at the production frontend origin, with real HTTPS requests to the running API. This avoids changing the production CORS allowlist. It does **not** mean the frontend build has been deployed to Vercel. Localhost requests correctly show a connection error under the existing production-only CORS policy.
+`npm run build`, `npm test`, `npm run lint`; lint has React warnings. Backend isolated tests verify migrations, server role enforcement, image validation, milestone concurrency, private proof authorization, idempotent transaction creation, and funding only after approval.
 
-Vercel connector returned no accessible teams; project inspection requires a team ID. No dashboard environment settings or Vercel deployments have been changed by this integration. Once deployed, recheck the actual production frontend login/session/catalog/AI paths. Preview domains also need a deliberate backend CORS policy if they must call the live API.
+Browser checks use the local production build and an isolated real Express/MariaDB backend, with real ML. Baseline screenshots use original page markup with reference-only fixes for the old mock initialization/guard race. Screenshots are under /root/corallink-browser-tools/layout-review. These checks are distinct from production frontend verification.
 
-Remaining backend capabilities: payment processing/verification, cover and proof storage, complete project metadata, milestones, and optional dedicated detail endpoint. These are not simulated by the UI.
+Backend runtime is /opt/corallink-api. Database/source backup: /root/corallink-deploy/publishing-backup. Permanent ML startup is enabled as corallink-ml.service, running the existing model and application as a non-root user at loopback port 5000. No Nginx changes.
 
-## ML recovery during verification
+Verified 10 September 2026: isolated browser suite passes publication/cover persistence, original milestone editor, restored investment and confirmation layouts, proof upload Pending, explicit admin approval, and investor Completed status without uncaught page exceptions. All four original layouts have comparison screenshots. Compiled CSS SHA-256 is identical to the pre-integration reference: 4567f369f9eaa468f5fb68ec56b199acc37f6166e7fed66f3d81f18833fd4585.
 
-The VPS restarted during the session. Express resumed automatically, but ML had no persistent service and port 5000 was empty; `/predict` returned 502. The existing unmodified `/root/CoralLink/app.py` was restarted with a transient systemd unit `corallink-ml-recovery`. `/health` recovered. This unit is temporary and does not establish boot persistence; a permanent ML service remains operational follow-up. Nginx/model/endpoint configuration was not changed.
-
-The reviewable backend change is included in `backend-patches/admin-projects.patch`; it is already applied to the VPS runtime, but still needs to be incorporated into the backend GitHub repository by an account with write access.
+The live API also passed register using name/phone, /auth/me, multipart project creation with server ML, public cover, detail and milestone persistence. Temporary production test account/project/files were removed. Payment approval tests used only isolated databases and do not represent real money received.

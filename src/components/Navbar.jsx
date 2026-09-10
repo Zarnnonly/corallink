@@ -55,6 +55,7 @@ const Navbar = () => {
                     <Link to="/upload-project" className="dropdown-item" onClick={() => setMenuOpen(false)}>
                       <Upload size={16} /> Upload Project
                     </Link>
+                    <Link to="/admin/payments" className="dropdown-item" onClick={() => setMenuOpen(false)}>Payment Review</Link>
                     <Link to="/update-project" className="dropdown-item" onClick={() => setMenuOpen(false)}>
                       <RefreshCw size={16} /> Update Project
                     </Link>

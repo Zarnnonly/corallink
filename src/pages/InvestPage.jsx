@@ -1,11 +1,12 @@
 import ProjectState from '../components/ProjectState';
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 import './InvestPage.css';
 import { useProjects } from '../context/ProjectContext';
 
 const InvestPage = () => {
+  const navigate = useNavigate();
   const { projectId } = useParams();
   const { getProject, loading, error } = useProjects();
   const project = getProject(projectId);
@@ -71,9 +72,9 @@ const InvestPage = () => {
                 <div className="pd-action-buttons">
                   <button
                     className="pd-invest-btn"
-                    disabled title="Payments are not available yet"
+                    onClick={() => navigate(`/invest-form/${project.id}`)}
                   >
-                    Payments unavailable
+                    Investment
                   </button>
                   <Link to={`/project/${project.id}`} className="pd-detail-project-btn">
                     Detail Project

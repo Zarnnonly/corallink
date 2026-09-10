@@ -3,7 +3,7 @@ const TOKEN_KEY = 'corallink_token';
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
 export const setToken = (token) => token ? localStorage.setItem(TOKEN_KEY, token) : localStorage.removeItem(TOKEN_KEY);
 
-export async function request(path, { auth = false, body, signal, ...options } = {}) {
+export async function request(path, { auth = false, body, signal, responseType, ...options } = {}) {
   const token = auth ? getToken() : null;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 30000);
@@ -17,6 +17,7 @@ export async function request(path, { auth = false, body, signal, ...options } =
         ...(token ? { Authorization: `Bearer ${token}` } : {}), ...options.headers },
       body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
     });
+    if (response.ok && responseType === 'blob') return await response.blob();
     const data = await response.json().catch(() => null);
     if (!response.ok || data?.success === false) {
       if (auth && response.status === 401 && token === getToken()) {
