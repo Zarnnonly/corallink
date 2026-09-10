@@ -66,7 +66,7 @@ const FormInvestment = () => {
             <div className="form-section">
               <label>Select investment type</label>
               <p className="form-help">How would you like to support this project?</p>
-              {investType === 'Give Monthly' && <p className="form-help">Monthly contributions use manual bank transfers. No automatic debit is set up.</p>}
+              {investType === 'Give Monthly' && <p className="form-help">Monthly contributions use manual payments. No automatic debit is set up.</p>}
               <div className="toggle-group">
                 <button
                   type="button"
