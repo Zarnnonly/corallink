@@ -204,86 +204,16 @@
   }
 }
 
+/* The original navigation stays visible; small screens get room to wrap. */
+.site-header { position: sticky; top: 0; z-index: 100; background: var(--bg-primary); }
+.navbar-dropdown { max-width: calc(100vw - 32px); }
 @media (max-width: 768px) {
-  .navbar {
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-between;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    gap: 8px;
-  }
-
-  .navbar-logo {
-    font-size: 22px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .navbar-links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    white-space: nowrap;
-    flex-shrink: 1;
-  }
-
-  .nav-link {
-    font-size: 12.5px;
-    white-space: nowrap;
-  }
-
-  .navbar-login {
-    padding: 5px 14px;
-    font-size: 12.5px;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+  .navbar { flex-wrap: wrap; gap: 0 12px; padding-top: 8px; padding-bottom: 4px; }
+  .navbar-logo { font-size: 24px; }
+  .navbar-right { margin-left: auto; }
+  .navbar-menu-wrap { padding-bottom: 0; }
+  .navbar-profile-btn, .navbar-signin-btn { min-height: 44px; }
+  .navbar-links { order: 3; width: 100%; justify-content: space-between; gap: 8px; }
+  .nav-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
+  .nav-active::after { bottom: 4px; }
 }
-
-@media (max-width: 480px) {
-  .navbar {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    gap: 6px;
-  }
-
-  .navbar-logo {
-    font-size: 17px;
-  }
-
-  .navbar-links {
-    gap: 6px;
-  }
-
-  .nav-link {
-    font-size: 10.5px;
-  }
-
-  .navbar-login {
-    padding: 4px 9px;
-    font-size: 10.5px;
-  }
-}
-
-@media (max-width: 360px) {
-  .navbar-logo {
-    font-size: 15px;
-  }
-
-  .navbar-links {
-    gap: 4px;
-  }
-
-  .nav-link {
-    font-size: 9.5px;
-  }
-
-  .navbar-login {
-    padding: 3px 7px;
-    font-size: 9.5px;
-  }
-}
-
-

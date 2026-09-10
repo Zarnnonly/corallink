@@ -190,3 +190,24 @@ section {
     max-width: unset;
   }
 }
+
+
+/* Motion enhances the existing components without changing their layout. */
+html { scroll-padding-top: 132px; }
+body { overflow-x: clip; }
+:where(button, a, input, select, textarea):focus-visible { outline: 2px solid #38748C; outline-offset: 3px; }
+button:disabled { cursor: not-allowed; }
+@keyframes coralEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .auth-container, .form-invest-container, .confirm-card, .profile-container, .upload-container, .update-container, .pdv2-card { animation: coralEnter .35s ease-out; }
+  .hero-banner { animation: coralEnter .5s ease-out; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+@media (max-width: 768px) {
+  input, select, textarea { min-width: 0; max-width: 100%; }
+  .container { padding-left: 16px; padding-right: 16px; }
+  .section-title { font-size: 32px; margin-bottom: 24px; }
+  .toast-message { min-width: 0; overflow-wrap: anywhere; }
+}

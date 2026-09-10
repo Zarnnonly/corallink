@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './UserProfile.css';
 import bg from '../assets/bg.webp';
 import { request } from '../lib/api';
@@ -8,6 +8,41 @@ import { useAuth } from '../context/AuthContext';
 const UserProfile = () => {
   const { user } = useAuth();
   const [historyData, setHistoryData] = useState([]);
+  const photoInput = useRef(null);
+  const [photo, setPhoto] = useState('');
+  const [photoRevision, setPhotoRevision] = useState(0);
+  const [photoBusy, setPhotoBusy] = useState(false);
+  const [photoError, setPhotoError] = useState('');
+  const [photoMessage, setPhotoMessage] = useState('');
+  useEffect(() => {
+    const controller = new AbortController();
+    let objectUrl;
+    request('/api/auth/profile/photo', { auth: true, responseType: 'blob', signal: controller.signal })
+      .then(blob => {
+        if (controller.signal.aborted) return;
+        if (blob.size) objectUrl = URL.createObjectURL(blob);
+        setPhoto(objectUrl || '');
+      })
+      .catch(e => { if (!controller.signal.aborted) setPhotoError(e.message); });
+    return () => { controller.abort(); if (objectUrl) URL.revokeObjectURL(objectUrl); };
+  }, [user.id, photoRevision]);
+
+  const uploadPhoto = async e => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file || photoBusy) return;
+    setPhotoError(''); setPhotoMessage('');
+    if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type) || file.size > 5 * 1024 * 1024) {
+      setPhotoError('Choose a JPG, PNG or WEBP image up to 5MB.'); return;
+    }
+    setPhotoBusy(true);
+    const body = new FormData(); body.append('image', file);
+    try {
+      await request('/api/auth/profile/photo', { method: 'POST', auth: true, body });
+      setPhotoRevision(n => n + 1); setPhotoMessage('Profile photo saved.');
+    } catch (error) { setPhotoError(error.message); }
+    finally { setPhotoBusy(false); }
+  };
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -47,10 +82,10 @@ const UserProfile = () => {
           <div className="profile-header">
             <div className="profile-avatar-wrapper">
               <div className="profile-avatar">
-                {/* Placeholder for user image */}
-                <div className="avatar-placeholder">{initials}</div>
+                {photo ? <img src={photo} alt="Your profile" className="profile-photo" /> : <div className="avatar-placeholder">{initials}</div>}
               </div>
-              <div className="profile-avatar-badge">+</div>
+              <button type="button" className="profile-avatar-badge" aria-label="Upload profile photo" title="Upload profile photo" disabled={photoBusy} onClick={() => photoInput.current?.click()}>+</button>
+              <input ref={photoInput} type="file" accept="image/jpeg,image/png,image/webp" onChange={uploadPhoto} hidden />
             </div>
             
             <div className="profile-info">
@@ -58,6 +93,7 @@ const UserProfile = () => {
               <p className="profile-email">{displayEmail}</p>
             </div>
           </div>
+          <p className="profile-photo-feedback" role={photoError ? 'alert' : 'status'}>{photoBusy ? 'Uploading photo…' : photoError || photoMessage || 'Tap + to upload a profile photo (JPG, PNG or WEBP, up to 5MB).'}</p>
 
           {/* Investment History Card */}
           <div className="history-card">
@@ -66,8 +102,9 @@ const UserProfile = () => {
               <p className="history-subtitle">Track your contributions. Uploaded payment proofs remain Pending until an administrator verifies the transfer.</p>
             </div>
 
-            <div className="history-table-wrapper">
-              <table className="history-table">
+            {historyData.length > 0 && <p className="history-scroll-hint">Swipe the table to see all investment details.</p>}
+            <div className="history-table-wrapper" role="region" aria-label="Investment history" tabIndex={0}>
+              <table className={`history-table${historyData.length ? '' : ' history-table-empty'}`}>
                 <thead>
                   <tr>
                     <th>Project</th>

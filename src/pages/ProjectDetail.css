@@ -1,8 +1,8 @@
 /* ─── Project Detail Page (AI Analysis) ─── */
 .pdv2-page {
   background: #EFFBFC;
-  width: 1440px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   min-height: 2260px;
   padding-bottom: 64px;
@@ -79,7 +79,7 @@
 /* ─── Top Row: Image & AI Block ─── */
 .pdv2-top-row {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: minmax(0, 1fr) 400px;
   gap: 40px;
   align-items: stretch;
 }
@@ -249,4 +249,17 @@
     padding: 24px;
     margin: 0 24px;
   }
+}
+
+@media (max-width: 768px) {
+  .pdv2-header-bar { padding: 20px 16px; }
+  .pdv2-header-title { font-size: 22px; }
+  .pdv2-back-btn { flex-shrink: 0; margin-right: 12px; }
+  .pdv2-card { margin: 0 16px; padding: 20px 16px; gap: 24px; }
+  .pdv2-top-row { gap: 20px; min-width: 0; }
+  .pdv2-ai-block { padding: 20px 16px; min-width: 0; }
+  .pdv2-ai-row { gap: 12px; flex-wrap: wrap; }
+  .pdv2-section { min-width: 0; overflow-wrap: anywhere; }
+  .pdv2-section-title { font-size: 18px; }
+  .pdv2-img-wrap { height: 240px; }
 }

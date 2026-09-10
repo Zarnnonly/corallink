@@ -187,3 +187,20 @@
     height: 300px;
   }
 }
+
+
+.confirm-left { min-width: 0; }
+@media (max-width: 900px) {
+  .confirm-right { flex: none; }
+}
+@media (max-width: 768px) {
+  .confirm-invest-page { padding: 16px; min-height: 100svh; align-items: flex-start; }
+  .confirm-left { padding: 24px 16px; }
+  .confirm-project-name { font-size: 22px; overflow-wrap: anywhere; }
+  .confirm-project-subtitle { margin-bottom: 24px; }
+  .summary-details { gap: 16px; margin-bottom: 24px; }
+  .payment-section { padding: 20px 8px; margin-bottom: 24px; }
+  .upload-btn { padding: 12px 14px; font-size: 13px; text-align: center; }
+  .confirm-support-btn { max-width: none; }
+  .confirm-right { height: 240px; padding: 0 16px 16px; }
+}

@@ -40,7 +40,7 @@ const SignUp = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-logo-header">
-          <img src={logoImg} alt="CoralLink Logo" className="auth-logo-img" />
+          <Link to="/" className="auth-brand" aria-label="CoralLink home"><img src={logoImg} alt="CoralLink Logo" className="auth-logo-img" /></Link>
           <h2 className="auth-title">Sign Up</h2>
           <p className="auth-subtitle">Create your account to get started</p>
         </div>

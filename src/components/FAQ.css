@@ -75,3 +75,12 @@
   color: rgb(255, 255, 255);
   list-style: 1.6;
 }
+
+@media (max-width: 768px) {
+  .faq-section { padding-top: 16px; }
+  .faq-list { gap: 16px; }
+  .faq-question { padding: 18px 20px; font-size: 15px; line-height: 1.5; gap: 12px; }
+  .faq-icon { margin-left: 0; flex-shrink: 0; }
+  .faq-answer { padding-inline: 20px; font-size: 14px; }
+  .faq-item.active .faq-answer { max-height: none; }
+}

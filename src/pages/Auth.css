@@ -263,3 +263,19 @@
 .welcome-btn:hover {
   transform: scale(1.05);
 }
+
+.auth-page { padding: 24px 16px; }
+.auth-brand { display: inline-flex; }
+.auth-container .auth-input { padding-left: 40px; }
+@media (max-width: 768px) {
+  .auth-page { min-height: 100svh; background-attachment: scroll; }
+  .auth-container { padding: 24px 20px; margin: auto; }
+  .auth-logo-header { margin-bottom: 16px; text-align: center; }
+  .auth-logo-img { width: 104px; margin-bottom: 8px; }
+  .auth-title { font-size: 26px; }
+  .auth-subtitle { margin-bottom: 8px; }
+  .auth-container .auth-input { font-size: 16px; }
+  .auth-container .form-group { margin-bottom: 14px; }
+  .welcome-title { font-size: 36px; }
+  .welcome-buttons { gap: 12px; flex-wrap: wrap; }
+}

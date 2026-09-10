@@ -21,7 +21,8 @@ const Navbar = () => {
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
-    <nav className="navbar container">
+    <header className="site-header">
+    <nav className="navbar container" aria-label="Main navigation">
       <Link to="/" className="navbar-logo" style={{ textDecoration: 'none', color: 'inherit' }}>
         CORALLINK
       </Link>
@@ -74,6 +75,7 @@ const Navbar = () => {
         )}
       </div>
     </nav>
+    </header>
   );
 };
 

@@ -154,3 +154,17 @@
     padding-left: 20px;
   }
 }
+
+@media (max-width: 768px) {
+  .vm-section { padding-top: 16px; }
+  .vm-section .section-title { font-size: 32px; margin-bottom: 24px; }
+  .vm-grid { gap: 20px; margin-bottom: 24px; }
+  .vm-card { min-height: 0; }
+  .vm-card-title { font-size: 28px; }
+  .vm-card-header { height: 64px; flex-shrink: 0; }
+  .vm-card-body { padding: 20px; }
+  .vm-card-text, .vm-list { font-size: 17px; line-height: 1.7; }
+  .vm-list li { margin-bottom: 12px; }
+  .vm-message { margin-top: 20px; padding: 0; }
+  .vm-message p { font-size: 17px; }
+}

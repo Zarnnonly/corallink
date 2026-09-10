@@ -37,7 +37,7 @@
 }
 
 /* ─── Sections ─── */
-.upload-section {
+.upload-page .upload-section {
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(47, 97, 116, 0.07);
@@ -47,7 +47,7 @@
   position: relative;
 }
 
-.upload-section.locked .section-content {
+.upload-page .upload-section.locked .section-content {
   opacity: 0.4;
   pointer-events: none;
   filter: blur(1px);
@@ -246,25 +246,25 @@
   gap: 20px;
 }
 
-.form-group {
+.upload-form .form-group {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-.form-group.full {
+.upload-form .form-group.full {
   grid-column: 1 / -1;
 }
 
-.form-group label {
+.upload-form .form-group label {
   font-size: 14px;
   font-weight: 600;
   color: #38748C;
 }
 
-.form-group input,
-.form-group textarea,
-.form-group select {
+.upload-form .form-group input,
+.upload-form .form-group textarea,
+.upload-form .form-group select {
   padding: 12px 16px;
   border: 1px solid #B8DDE8;
   border-radius: 10px;
@@ -276,20 +276,20 @@
   font-family: 'Inter', sans-serif;
 }
 
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
+.upload-form .form-group input:focus,
+.upload-form .form-group textarea:focus,
+.upload-form .form-group select:focus {
   border-color: #38A8C4;
 }
 
-.form-group input:disabled,
-.form-group textarea:disabled,
-.form-group select:disabled {
+.upload-form .form-group input:disabled,
+.upload-form .form-group textarea:disabled,
+.upload-form .form-group select:disabled {
   background: #f0f0f0;
   cursor: not-allowed;
 }
 
-.form-group textarea {
+.upload-form .form-group textarea {
   resize: vertical;
 }
 
@@ -384,7 +384,7 @@
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
-  .upload-section {
+  .upload-page .upload-section {
     flex-direction: column;
     padding: 24px;
   }
@@ -396,4 +396,22 @@
   .success-actions {
     flex-direction: column;
   }
+}
+
+
+@media (max-width: 768px) {
+  .upload-page { padding: 24px 16px 40px; }
+  .upload-header { margin-bottom: 24px; }
+  .upload-header h1 { font-size: 26px; }
+  .upload-form { gap: 20px; }
+  .upload-page .upload-section { padding: 20px 16px; gap: 16px; }
+  .section-content, .form-grid, .upload-form .form-group { min-width: 0; }
+  .section-content h2 { font-size: 20px; }
+  .lock-overlay { white-space: normal; width: calc(100% - 32px); text-align: center; padding: 12px 16px; }
+  .image-upload-area { min-height: 200px; }
+  .upload-placeholder { text-align: center; padding: 16px; }
+  .verify-btn { align-self: stretch; padding-inline: 12px; }
+  .upload-form .form-group input, .upload-form .form-group textarea, .upload-form .form-group select { width: 100%; font-size: 16px; }
+  .upload-success-card { padding: 28px 20px; margin: 24px auto; }
+  .submit-project-btn { max-width: none; }
 }
