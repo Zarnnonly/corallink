@@ -9,11 +9,11 @@ The original frontend before integration (commit 405c7a9) is the layout and inte
 - Catalog/details load saved projects. Funding progress counts only administrator-verified Completed payments. Original project/AI sections display saved backend data.
 - Milestone status and progress notes persist. Concurrent edits return a conflict instead of silently overwriting a newer version.
 - Investment retains amount buttons, monthly/once choices, investor details and the two-column layout. Monthly means a manually repeated contribution, not automatic debit.
-- Confirmation retains the summary, payment area, proof selection and support button. The fake QR image is replaced by the official bank information configured by admin. A transaction ID in the URL restores the request after refresh. Uploaded proof is Pending until reviewed.
+- Confirmation retains the summary, payment area, proof selection and support button. The original QR box displays the user-supplied QRIS (Karimmm, Digital & Kreati), served by GET /api/payments/qris. Tap it to open the original image at full size. A configured bank account remains an optional alternative. A transaction ID in the URL restores the request after refresh. Uploaded proof is Pending until reviewed.
 - Profile shows real transaction statuses alongside clearly marked legacy donation records. A failed proof can be resubmitted.
 - Admin Payment Review configures the official bank account and reviews private proofs. Approval requires checking the bank statement. Only approved amounts count as funding.
 
-No real bank account was supplied or seeded. An administrator must enter the official account under Account menu -> Payment Review before transfer instructions can be enabled. All test account numbers belong only to isolated test databases.
+No real bank account was supplied or seeded. QRIS enables payment requests independently of a bank account. An administrator can optionally enter an official bank account under Account menu -> Payment Review. All test account numbers belong only to isolated test databases.
 
 ## API and storage
 

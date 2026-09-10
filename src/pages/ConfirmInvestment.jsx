@@ -1,4 +1,4 @@
-import { request } from '../lib/api';
+import { request, API_URL } from '../lib/api';
 import ProjectState from '../components/ProjectState';
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
@@ -75,17 +75,20 @@ const ConfirmInvestment = () => {
               </div>
               <div className="summary-item">
                 <span className="summary-label">Payment Method</span>
-                <span className="summary-value">Bank Transfer</span>
+                <span className="summary-value">{settings?.qrisImageUrl ? 'QRIS' : 'Bank Transfer'}</span>
               </div>
             </div>
 
             <div className="payment-section">
-              <p className="qris-instruction">Transfer the exact amount to the official account below, then upload your payment proof.</p>
+              <p className="qris-instruction">{settings?.qrisImageUrl ? 'Please scan the QR code below and enter the exact investment amount, then upload your payment proof.' : 'Transfer the exact amount to the official account below, then upload your payment proof.'}</p>
               <div className="qris-placeholder">
                 <div className="qris-box">
-                  {settings?.enabled ? <div><strong>{settings.bankName}</strong><p>{settings.accountNumber}</p><p>{settings.accountHolder}</p></div> : <p>Official payment account is not configured.</p>}
+                  {settings?.qrisImageUrl ? <a href={`${API_URL}${settings.qrisImageUrl}`} target="_blank" rel="noopener noreferrer" aria-label="Open full-size QRIS"><img src={`${API_URL}${settings.qrisImageUrl}`} alt={`QRIS — ${settings.qrisMerchant}`} className="qris-image" style={{ width: '150px', height: '150px', objectFit: 'contain' }} /></a> : settings?.bankEnabled ? <div><strong>{settings.bankName}</strong><p>{settings.accountNumber}</p><p>{settings.accountHolder}</p></div> : <p>Official payment account is not configured.</p>}
                 </div>
               </div>
+
+              {settings?.qrisImageUrl && <p className="qris-instruction">{settings.qrisMerchant}<br />Tap the QR code to open it full size.</p>}
+              {settings?.qrisImageUrl && settings?.bankEnabled && <p className="qris-instruction">Or bank transfer: {settings.bankName} — {settings.accountNumber}<br />{settings.accountHolder}</p>}
 
               <div className="upload-section">
                 <label className="upload-btn">
