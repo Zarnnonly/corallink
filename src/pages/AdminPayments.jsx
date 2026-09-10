@@ -69,7 +69,8 @@ export default function AdminPayments() {
       </form>
       <div className="update-card"><h2>Payment submissions</h2><p>Latest 500 submissions</p>
         {!loading && !transactions.length && <p>No payment submissions yet.</p>}
-        <div className="history-table-wrapper"><table className="history-table"><thead><tr><th>Investor / Project</th><th>Amount</th><th>Status</th><th>Proof</th></tr></thead>
+        {transactions.length > 0 && <p className="history-scroll-hint">Swipe the table to see payment details and review proofs.</p>}
+        <div className="history-table-wrapper" role="region" aria-label="Payment submissions" tabIndex={0}><table className="history-table"><thead><tr><th>Investor / Project</th><th>Amount</th><th>Status</th><th>Proof</th></tr></thead>
           <tbody>{transactions.map(t => <tr key={t.id}><td>{t.investor?.nama}<br />{t.investor?.email}<br />{t.project?.namaProyek}</td><td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount))}</td><td>{t.status}</td><td><button disabled={!t.hasProof || busy} onClick={() => { setError(''); setSelected(t); }}>Review proof</button></td></tr>)}</tbody>
         </table></div>
       </div>

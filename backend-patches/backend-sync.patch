@@ -1,3 +1,162 @@
+diff --git a/DEPLOYMENT.md b/DEPLOYMENT.md
+new file mode 100644
+index 0000000..369433c
+--- /dev/null
++++ b/DEPLOYMENT.md
+@@ -0,0 +1,121 @@
++# Deployment VPS CoralLink
++
++Deployment 10 September 2026 dari commit 21842868a4d6008f81035894f1048c799fda70ae.
++Checkout: /root/corallink-api. Aplikasi berjalan: /opt/corallink-api.
++Perubahan lokal belum di-push ke GitHub.
++
++## Infrastruktur
++
++- Express via `npm start`, user/group `corallink`, bind 127.0.0.1:3000.
++- MariaDB 11.8, database `corallink_db`, bind 127.0.0.1:3306.
++- User database `corallink`@`127.0.0.1` hanya SELECT, INSERT, UPDATE, DELETE pada database aplikasi.
++- Migrasi `20260909071554_init_tabel` diterapkan melalui `prisma migrate deploy`. Seed contoh tidak dijalankan.
++- `/etc/systemd/system/corallink-api.service`: boot otomatis, Restart=on-failure, RestartSec=5, journald, ProtectSystem=strict, ProtectHome=true, NoNewPrivileges=true, direktori upload dapat ditulis.
++- `/etc/mysql/mariadb.conf.d/99-corallink-local.cnf`: bind-address localhost.
++- `/etc/nginx/sites-available/corallink-api`: HTTPS, client_max_body_size 20M, header Host/X-Real-IP/X-Forwarded-For/X-Forwarded-Proto.
++- `/predict` dan `/health` tetap menuju Python 127.0.0.1:5000; route lainnya menuju Express.
++- HTTP dialihkan ke HTTPS. Frontend harus memanggil POST /predict langsung melalui HTTPS.
++- Sertifikat Let's Encrypt api.corallink.web.id berlaku hingga 9 Desember 2026; certbot.timer enabled.
++- Backup sebelum perubahan: /root/corallink-deploy-backup/nginx-before dan mysql-before. Konfigurasi site lain dipertahankan.
++
++## Environment produksi
++
++File `/opt/corallink-api/.env`, permission 0640 root:corallink. Jangan commit atau menampilkan secret.
++
++```
++DATABASE_URL="mysql://corallink:<generated-secret>@127.0.0.1:3306/corallink_db"
++JWT_SECRET="<generated-random-secret>"
++JWT_EXPIRES_IN="1d"
++NODE_ENV=production
++PORT=3000
++AI_SERVICE_URL="http://127.0.0.1:5000/predict"
++USE_DUMMY_AI=false
++```
++
++DATABASE_URL dan JWT_SECRET wajib valid; nilai produksi sudah dibuat. AI_SERVICE_URL belum digunakan route existing. Frontend: VITE_API_URL=https://api.corallink.web.id. Auth memakai Bearer token; CORS mengizinkan https://corallink.web.id dan https://www.corallink.web.id.
++
++## Endpoint existing
++
++| Method | Path | Akses / kontrak |
++|---|---|---|
++| GET | / | Health Express |
++| POST | /api/auth/register | Public; nama, email, password; role investor |
++| POST | /api/auth/login | Public; email, password; user + token |
++| GET | /api/auth/profile | Bearer JWT |
++| GET | /api/projects | Public |
++| POST | /api/projects | JWT; namaProyek, lokasi, tingkatKerusakan, targetRestorasi; belum ada pembatasan admin |
++| POST | /api/donations | Investor JWT; projectId, jumlahDonasi, pesanDukungan opsional |
++| GET | /api/donations/saya | Investor JWT |
++| POST | /predict | Service ML existing; multipart field image |
++| GET | /health | Health ML |
++
++Respons Express menggunakan { success, message, data }. GET /api/auth dan GET /api/donations tidak tersedia; gunakan subroute di atas.
++
++## Perubahan source dan dependency
++
++src/server.js: CORS allowlist, trust proxy loopback, hilangkan X-Powered-By, bind localhost.
++src/routes/auth.routes.js dan donation.routes.js: teruskan rejected promises ke error middleware Express 4.
++package.json/package-lock.json: tambah cors 2.8.6; bcrypt 6.0.0, multer 2.3.0, override qs ^6.16.0 untuk perbaikan audit. `npm audit --omit=dev` melaporkan 0 vulnerability setelah perubahan.
++
++## Verifikasi
++
++GET localhost:3000, HTTPS / dan /api/projects: 200; projects data [].
++CORS GET dan OPTIONS kedua origin: lulus, origin asing tidak memperoleh header allow-origin.
++Registrasi/login/profile/history dan guard tanpa JWT: lulus. Akun tes sementara dihapus, seed tidak digunakan.
++nginx -t lulus; tidak ada broken symlink sites-enabled; port 3000/3306 hanya localhost.
++
++## Operasional
++
++```
++systemctl status corallink-api mariadb nginx
++journalctl -u corallink-api -n 100 --no-pager
++journalctl -u corallink-api -f
++systemctl restart corallink-api
++nginx -t && systemctl reload nginx
++curl http://127.0.0.1:3000
++curl https://api.corallink.web.id
++curl https://api.corallink.web.id/api/projects
++curl -i -X OPTIONS https://api.corallink.web.id/api/projects -H 'Origin: https://corallink.web.id' -H 'Access-Control-Request-Method: POST' -H 'Access-Control-Request-Headers: authorization,content-type'
++```
++
++Migrasi berikutnya harus menggunakan kredensial operator dengan izin DDL sementara, bukan memperluas izin permanen user runtime. Jangan menggunakan migrate dev/reset di production. Backup database sebelum migrasi berikutnya. Direktori deployment berisi dependency Prisma CLI untuk operasi migrasi; code dimiliki root. Salin deployment berikutnya dengan mempertahankan symlink.
++
++## Pekerjaan aplikasi tersisa
++
++Spesifikasi frontend backendnote.md belum diimplementasikan sebagai perluasan scope: name/user versus nama/investor, /auth/me, detail/slug proyek, milestones, transactions, phone, field proyek lengkap, cloud storage, bukti pembayaran dan status transaksi belum tersedia. Kontrak existing dipertahankan.
++Route POST /api/projects saat ini mengizinkan semua user terautentikasi, bukan hanya admin. Pembatasan role dan validasi payload perlu dikerjakan sebelum alur admin/investasi dianggap siap produksi penuh. Donasi existing hanya pencatatan, bukan proses/verifikasi pembayaran.
++Middleware upload tersedia (batas 5MB) tetapi tidak dipasang pada route proyek; Nginx 20M tidak otomatis menambah kemampuan upload backend. Helper AI tidak digunakan route; frontend dapat memanggil /predict HTTPS secara terpisah.
++Service Python existing masih bind 0.0.0.0:5000 dan memakai Flask development server; konfigurasi tersebut tidak diubah dalam lingkup deployment Express. Backup data otomatis/offsite belum dikonfigurasi.
++
++Verifikasi akhir: certbot renew --cert-name api.corallink.web.id --dry-run berhasil. Prediksi melalui HTTPS dengan TES1.jpg mengembalikan Bleached, confidence 99.58. Service Express active setelah restart. Hak DB CRUD terverifikasi dan tabel users kembali kosong sesudah tes. Health Express setelah restart: 200.
++
++## Frontend integration follow-up — 10 September 2026
++
++POST /api/projects now requires requireRole('admin') after authenticate. The controller validates names, locations and optional damage/restoration strings with Zod. No schema changes. The two source files were copied to /opt/corallink-api and Express restarted. Previous CORS, async error and security dependency changes remain intact. New regression test: node --test test/project-access.test.js. Backend GitHub push is unavailable to the connected frontend owner; a targeted patch is also in /root/corallink/backend-patches/admin-projects.patch.
++
++The VPS restarted during browser testing. Express started automatically, but the existing ML process did not. Existing app.py was recovered unchanged under transient unit corallink-ml-recovery.service; permanent ML boot persistence is still pending. Nginx and the model were not modified.
++
++## Complete project and payment integration — 10 September 2026
++
++Backups before additive migrations: /root/corallink-deploy/publishing-backup (database.sql is private). New nullable project metadata and transaction/payment-settings tables were deployed using a temporary DDL operator which was removed afterward. Runtime corallink database permissions remain CRUD-only. Phone and contribution/contact fields were added in a second additive migration. Existing users/projects/donations are retained.
++
++Project publishing uses POST /api/projects multipart image plus namaProyek/name, lokasi/location, description, species, fundingTarget, duration, fragments, area. JSON legacy fields are still accepted. Images are decoded/re-encoded with a 5MB upload and 25MP input limit. Public covers are served only under /uploads/covers; payment proofs are not exposed by static serving. ML analysis is independently repeated server-side and only the supported Bleached classification is accepted for new image-based restoration submissions; client AI fields never grant authorization.
++
++GET /api/projects/:id and PUT /api/projects/:id/milestones support persisted detail/progress, with optimistic milestoneVersion conflict checks. GET /api/projects includes fundingRaised from Completed transactions only. Existing donation records do not contribute to verified funding.
++
++Payment routes: GET/PUT /api/payments/settings (PUT admin); POST /api/transactions (investor, idempotencyKey UUID); GET /api/transactions/me (investor); GET /api/transactions (admin); GET /api/transactions/:id (owner/admin); POST /api/transactions/:id/proof (owner investor); GET /api/transactions/:id/proof (owner/admin); PUT /api/transactions/:id/status (admin). State flow: AwaitingProof -> Pending -> Completed or Failed. Rejected proof can be resubmitted; Completed cannot be overwritten. Monthly Contribution records represent manual monthly transfers, not automatic debits. No bank account is seeded into production; admin enters the official account in the frontend Payment Review page.
++
++JWT middleware checks the current database role, so an old admin token cannot survive demotion. /api/auth/register supports name and nama plus optional phone; /api/auth/me aliases /profile.
++
++Permanent ML service: /etc/systemd/system/corallink-ml.service, enabled at boot, runs as corallink from /opt/corallink-ml with loopback bind and automatic restart. Model and Flask application are copied unchanged from the existing source. The old transient recovery unit is stopped; Nginx remains unchanged. This retains the existing Flask server implementation.
++
++Validation: isolated MariaDB migration plus test/publishing.test.js verifies publishing, image validation, detail, milestone conflict, role checks, private proof access, idempotency and verified-only funding. test/project-access.test.js covers baseline guard/validation. Browser harness and original-layout screenshots are in /root/corallink-browser-tools; test bank/account fixtures run only against isolated corallink_verify_ databases.
++
++
++## QRIS and profile photo follow-up — 11 September 2026
++
++The supplied static QRIS image is served at GET /api/payments/qris. Payment settings enable QRIS independently of an optional bank account; payment proof still requires manual administrator verification.
++
++GET/POST /api/auth/profile/photo is authenticated and always resolves the user from the current session. Uploads reuse decoded-image validation, strip metadata, resize to at most 512px and atomically replace uploads/avatars/<user-id>.webp. Photos are private (no static route, private/no-store responses), and survive service restarts. Back up uploads/avatars together with covers and private proofs. No schema migration was required.
++
++The complete frontend backend-patches/backend-sync.patch includes source, migrations, tests and deployment documentation relative to the original backend GitHub baseline; backend GitHub access remains read-only.
+diff --git a/deploy/corallink-ml.service b/deploy/corallink-ml.service
+new file mode 100644
+index 0000000..583f710
+--- /dev/null
++++ b/deploy/corallink-ml.service
+@@ -0,0 +1,26 @@
++[Unit]
++Description=CoralLink coral image prediction
++After=network.target
++StartLimitIntervalSec=120
++StartLimitBurst=5
++
++[Service]
++Type=simple
++User=corallink
++Group=corallink
++WorkingDirectory=/opt/corallink-ml
++Environment=PYTHONDONTWRITEBYTECODE=1
++Environment=KERAS_HOME=/tmp/keras
++ExecStart=/opt/corallink-ml/.venv/bin/python -c "from app import app; app.run(host='127.0.0.1', port=5000, debug=False)"
++Restart=on-failure
++RestartSec=5
++TimeoutStopSec=30
++NoNewPrivileges=true
++PrivateTmp=true
++ProtectSystem=strict
++ProtectHome=true
++StandardOutput=journal
++StandardError=journal
++
++[Install]
++WantedBy=multi-user.target
 diff --git a/package-lock.json b/package-lock.json
 index fef5a91..c4575cf 100644
 --- a/package-lock.json
@@ -1774,6 +1933,75 @@ index 9ecba32..549c581 100644
 +    "qs": "^6.16.0"
    }
  }
+diff --git a/prisma/migrations/20260910120000_project_publishing_transactions/migration.sql b/prisma/migrations/20260910120000_project_publishing_transactions/migration.sql
+new file mode 100644
+index 0000000..6676315
+--- /dev/null
++++ b/prisma/migrations/20260910120000_project_publishing_transactions/migration.sql
+@@ -0,0 +1,49 @@
++-- AlterTable
++ALTER TABLE `projects` ADD COLUMN `aiAnalysis` JSON NULL,
++    ADD COLUMN `area` DOUBLE NULL,
++    ADD COLUMN `description` TEXT NULL,
++    ADD COLUMN `duration` INTEGER NULL,
++    ADD COLUMN `fragments` INTEGER NULL,
++    ADD COLUMN `fundingTarget` DECIMAL(14, 2) NULL,
++    ADD COLUMN `milestoneVersion` INTEGER NOT NULL DEFAULT 0,
++    ADD COLUMN `milestones` JSON NULL,
++    ADD COLUMN `progressNote` TEXT NULL,
++    ADD COLUMN `species` VARCHAR(191) NULL;
++
++-- CreateTable
++CREATE TABLE `transactions` (
++    `id` VARCHAR(36) NOT NULL,
++    `investor_id` INTEGER NOT NULL,
++    `project_id` INTEGER NOT NULL,
++    `amount` DECIMAL(12, 2) NOT NULL,
++    `status` VARCHAR(20) NOT NULL DEFAULT 'Pending',
++    `proof_file` VARCHAR(191) NULL,
++    `idempotency_key` VARCHAR(100) NOT NULL,
++    `review_note` TEXT NULL,
++    `reviewed_by` INTEGER NULL,
++    `reviewed_at` DATETIME(3) NULL,
++    `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
++
++    UNIQUE INDEX `transactions_idempotency_key_key`(`idempotency_key`),
++    INDEX `transactions_investor_id_created_at_idx`(`investor_id`, `created_at`),
++    INDEX `transactions_project_id_status_idx`(`project_id`, `status`),
++    PRIMARY KEY (`id`)
++) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
++
++-- CreateTable
++CREATE TABLE `payment_settings` (
++    `id` INTEGER NOT NULL DEFAULT 1,
++    `bankName` VARCHAR(100) NOT NULL,
++    `accountNumber` VARCHAR(100) NOT NULL,
++    `accountHolder` VARCHAR(191) NOT NULL,
++    `updatedAt` DATETIME(3) NOT NULL,
++
++    PRIMARY KEY (`id`)
++) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
++
++-- AddForeignKey
++ALTER TABLE `transactions` ADD CONSTRAINT `transactions_investor_id_fkey` FOREIGN KEY (`investor_id`) REFERENCES `users`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
++
++-- AddForeignKey
++ALTER TABLE `transactions` ADD CONSTRAINT `transactions_project_id_fkey` FOREIGN KEY (`project_id`) REFERENCES `projects`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
++
+diff --git a/prisma/migrations/20260910130000_frontend_profile_fields/migration.sql b/prisma/migrations/20260910130000_frontend_profile_fields/migration.sql
+new file mode 100644
+index 0000000..e60a45a
+--- /dev/null
++++ b/prisma/migrations/20260910130000_frontend_profile_fields/migration.sql
+@@ -0,0 +1,8 @@
++-- AlterTable
++ALTER TABLE `users` ADD COLUMN `phone` VARCHAR(30) NULL;
++
++-- AlterTable
++ALTER TABLE `transactions` ADD COLUMN `contributorEmail` VARCHAR(191) NULL,
++    ADD COLUMN `contributorName` VARCHAR(191) NULL,
++    ADD COLUMN `type` VARCHAR(50) NOT NULL DEFAULT 'One-Time Contribution';
++
 diff --git a/prisma/schema.prisma b/prisma/schema.prisma
 index 98bc15e..ed4b39a 100644
 --- a/prisma/schema.prisma
@@ -3435,10 +3663,10 @@ index 0b1711d..59c004d 100644
 -
 -module.exports = upload;
 diff --git a/src/routes/auth.routes.js b/src/routes/auth.routes.js
-index 4ac2243..369fae3 100644
+index 4ac2243..c392cc1 100644
 --- a/src/routes/auth.routes.js
 +++ b/src/routes/auth.routes.js
-@@ -1,10 +1,13 @@
+@@ -1,10 +1,14 @@
  const express = require('express');
  const router = express.Router();
 +const asyncHandler = (handler) => (req, res, next) =>
@@ -3453,6 +3681,7 @@ index 4ac2243..369fae3 100644
 +router.post('/login', asyncHandler(login));
 +router.get('/me', authenticate, asyncHandler(profile));
 +router.get('/profile', authenticate, asyncHandler(profile));
++router.use('/profile/photo', require('./profile-photo.routes'));
  
  module.exports = router;
 diff --git a/src/routes/donation.routes.js b/src/routes/donation.routes.js
@@ -3474,6 +3703,78 @@ index f805a7d..4e0b1b3 100644
 +router.get('/saya', authenticate, requireRole('investor'), asyncHandler(getMyDonations));
  
  module.exports = router;
+diff --git a/src/routes/payment.routes.js b/src/routes/payment.routes.js
+new file mode 100644
+index 0000000..0944436
+--- /dev/null
++++ b/src/routes/payment.routes.js
+@@ -0,0 +1,23 @@
++const { paymentSettings, qrisPath } = require('../utils/paymentSettings');
++const router = require('express').Router();
++const { z } = require('zod');
++const prisma = require('../config/prisma');
++const { authenticate } = require('../middleware/auth.middleware');
++const { requireRole } = require('../middleware/role.middleware');
++const { success, error } = require('../utils/response');
++router.get('/settings', async (req, res, next) => {
++  try { return success(res, 'Metode pembayaran', await paymentSettings()); } catch (e) { next(e); }
++});
++router.get('/qris', (req, res, next) => {
++  res.set({ 'X-Content-Type-Options': 'nosniff', 'Cache-Control': 'public, max-age=300' });
++  res.sendFile(qrisPath(), err => { if (err && !res.headersSent) next(err); });
++});
++router.put('/settings', authenticate, requireRole('admin'), async (req, res, next) => {
++  try {
++    const parsed = z.object({ bankName: z.string().trim().min(2).max(100), accountNumber: z.string().trim().regex(/^[0-9 -]{5,100}$/), accountHolder: z.string().trim().min(2).max(191) }).safeParse(req.body);
++    if (!parsed.success) return error(res, 'Isi bank, nomor rekening, dan nama pemilik yang valid.', 400);
++    await prisma.paymentSettings.upsert({ where: { id: 1 }, create: { id: 1, ...parsed.data }, update: parsed.data });
++    return success(res, 'Rekening tersimpan', await paymentSettings());
++  } catch (e) { next(e); }
++});
++module.exports = router;
+diff --git a/src/routes/profile-photo.routes.js b/src/routes/profile-photo.routes.js
+new file mode 100644
+index 0000000..01a92e1
+--- /dev/null
++++ b/src/routes/profile-photo.routes.js
+@@ -0,0 +1,37 @@
++const router = require('express').Router();
++const fs = require('fs/promises');
++const path = require('path');
++const { authenticate } = require('../middleware/auth.middleware');
++const upload = require('../middleware/upload.middleware');
++const { root, saveImage, removeImage } = require('../utils/files');
++const { success } = require('../utils/response');
++
++router.use(authenticate);
++// The owner comes from the verified session; the client cannot choose a user ID.
++const photoPath = req => path.join(root, 'avatars', `${req.user.id}.webp`);
++
++router.get('/', async (req, res, next) => {
++  res.set({ 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
++  try {
++    const image = await fs.readFile(photoPath(req));
++    return res.type('webp').send(image);
++  } catch (err) {
++    if (err.code === 'ENOENT') return res.status(204).end();
++    next(err);
++  }
++});
++
++router.post('/', upload.single('image'), async (req, res, next) => {
++  let image;
++  try {
++    image = await saveImage(req.file, 'avatars', 512);
++    // Atomic replacement preserves the previous photo if validation/write fails.
++    await fs.rename(image.fullPath, photoPath(req));
++    return success(res, 'Foto profil tersimpan', { uploaded: true });
++  } catch (err) {
++    await removeImage(image);
++    next(err);
++  }
++});
++
++module.exports = router;
 diff --git a/src/routes/project.routes.js b/src/routes/project.routes.js
 index f95f4f1..0f85b47 100644
 --- a/src/routes/project.routes.js
@@ -3496,6 +3797,83 @@ index f95f4f1..0f85b47 100644
 +router.get('/:id', getProject);
 +router.post('/', authenticate, requireRole('admin'), upload.single('image'), createProject);
 +router.put('/:id/milestones', authenticate, requireRole('admin'), updateMilestones);
++module.exports = router;
+diff --git a/src/routes/transaction.routes.js b/src/routes/transaction.routes.js
+new file mode 100644
+index 0000000..5f5f8e1
+--- /dev/null
++++ b/src/routes/transaction.routes.js
+@@ -0,0 +1,71 @@
++const { paymentSettings } = require('../utils/paymentSettings');
++const router = require('express').Router();
++const path = require('path');
++const { z } = require('zod');
++const prisma = require('../config/prisma');
++const { authenticate } = require('../middleware/auth.middleware');
++const { requireRole } = require('../middleware/role.middleware');
++const upload = require('../middleware/upload.middleware');
++const { success, error } = require('../utils/response');
++const { saveImage, removeImage, root } = require('../utils/files');
++const wrap = fn => (req, res, next) => Promise.resolve(fn(req, res)).catch(next);
++const include = { project: { select: { namaProyek: true, lokasi: true } } };
++const view = t => { const { proofFile, ...data } = t; return { ...data, hasProof: Boolean(proofFile) }; };
++router.use(authenticate);
++router.get('/me', requireRole('investor'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findMany({ where: { investorId: req.user.id }, include, orderBy: { createdAt: 'desc' } });
++  return success(res, 'Riwayat pembayaran', data.map(view));
++}));
++router.get('/', requireRole('admin'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findMany({ include: { ...include, investor: { select: { nama: true, email: true } } }, orderBy: { createdAt: 'desc' }, take: 500 });
++  return success(res, 'Pembayaran terbaru (maksimal 500)', data.map(view));
++}));
++router.post('/', requireRole('investor'), wrap(async (req, res) => {
++  const parsed = z.object({ projectId: z.coerce.number().int().positive(), amount: z.coerce.number().positive().max(9999999999).multipleOf(0.01), idempotencyKey: z.string().uuid(), type: z.enum(['One-Time Contribution', 'Monthly Contribution']).default('One-Time Contribution'), contributorName: z.string().trim().min(2).max(191).optional(), contributorEmail: z.string().email().max(191).optional() }).safeParse(req.body);
++  if (!parsed.success) return error(res, 'Proyek, nominal, atau ID permintaan tidak valid', 400);
++  const { projectId, amount, idempotencyKey, type, contributorName, contributorEmail } = parsed.data;
++  const existing = await prisma.transaction.findUnique({ where: { idempotencyKey }, include });
++  if (existing) {
++    if (existing.investorId !== req.user.id || existing.projectId !== projectId || Number(existing.amount) !== amount || existing.type !== type) return error(res, 'ID permintaan sudah digunakan', 409);
++    return success(res, 'Permintaan sudah dibuat', view(existing));
++  }
++  if (!(await paymentSettings()).enabled) return error(res, 'Metode pembayaran belum diatur admin', 503);
++  if (!await prisma.project.findUnique({ where: { id: projectId } })) return error(res, 'Proyek tidak ditemukan', 404);
++  try {
++    const data = await prisma.transaction.create({ data: { projectId, amount, idempotencyKey, type, contributorName, contributorEmail, investorId: req.user.id, status: 'AwaitingProof' }, include });
++    return success(res, 'Permintaan dibuat; belum dibayar', view(data), 201);
++  } catch (e) { if (e.code === 'P2002') return error(res, 'Permintaan sedang diproses. Coba lagi dengan ID yang sama.', 409); throw e; }
++}));
++router.get('/:id', wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id }, include });
++  if (!data || (req.user.role !== 'admin' && data.investorId !== req.user.id)) return error(res, 'Transaksi tidak ditemukan', 404);
++  return success(res, 'Detail pembayaran', view(data));
++}));
++router.get('/:id/proof', wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id } });
++  if (!data?.proofFile || (req.user.role !== 'admin' && data.investorId !== req.user.id)) return error(res, 'Bukti tidak ditemukan', 404);
++  res.set({ 'Cache-Control': 'private, no-store', 'X-Content-Type-Options': 'nosniff' });
++  return res.sendFile(path.join(root, 'private', path.basename(data.proofFile)));
++}));
++router.post('/:id/proof', requireRole('investor'), upload.single('image'), wrap(async (req, res) => {
++  const data = await prisma.transaction.findUnique({ where: { id: req.params.id } });
++  if (!data || data.investorId !== req.user.id) return error(res, 'Transaksi tidak ditemukan', 404);
++  if (!['AwaitingProof', 'Failed'].includes(data.status)) return error(res, 'Bukti sedang ditinjau atau pembayaran sudah selesai', 409);
++  let file; let committed = false;
++  try {
++    file = await saveImage(req.file, 'private');
++    const updated = await prisma.transaction.updateMany({ where: { id: data.id, status: data.status }, data: { proofFile: file.filename, status: 'Pending', reviewedBy: null, reviewedAt: null, reviewNote: null } });
++    if (!updated.count) { await removeImage(file); return error(res, 'Transaksi berubah. Muat ulang.', 409); }
++    committed = true;
++    if (data.proofFile) await removeImage({ fullPath: path.join(root, 'private', path.basename(data.proofFile)) });
++    return success(res, 'Bukti terkirim, menunggu verifikasi admin', view(await prisma.transaction.findUnique({ where: { id: data.id }, include })));
++  } catch (e) { if (!committed) await removeImage(file); throw e; }
++}));
++router.put('/:id/status', requireRole('admin'), wrap(async (req, res) => {
++  const parsed = z.object({ status: z.enum(['Completed', 'Failed']), note: z.string().trim().max(2000).optional() }).safeParse(req.body);
++  if (!parsed.success || (parsed.data.status === 'Failed' && !parsed.data.note)) return error(res, 'Status atau alasan penolakan tidak valid', 400);
++  const updated = await prisma.transaction.updateMany({ where: { id: req.params.id, status: 'Pending', proofFile: { not: null } }, data: { status: parsed.data.status, reviewNote: parsed.data.note || '', reviewedBy: req.user.id, reviewedAt: new Date() } });
++  if (!updated.count) return error(res, 'Hanya bukti berstatus Pending yang bisa diverifikasi. Muat ulang.', 409);
++  return success(res, 'Verifikasi tersimpan', view(await prisma.transaction.findUnique({ where: { id: req.params.id }, include })));
++}));
 +module.exports = router;
 diff --git a/src/server.js b/src/server.js
 index 7f62284..d37f09e 100644
@@ -3550,6 +3928,34 @@ index 7f62284..d37f09e 100644
  });
 +
 +module.exports = app;
+diff --git a/src/utils/files.js b/src/utils/files.js
+new file mode 100644
+index 0000000..a384da0
+--- /dev/null
++++ b/src/utils/files.js
+@@ -0,0 +1,22 @@
++const sharp = require('sharp');
++const fs = require('fs/promises');
++const path = require('path');
++const { randomUUID } = require('crypto');
++const root = path.resolve(process.env.UPLOAD_DIR || path.join(__dirname, '../../uploads'));
++async function saveImage(file, folder, maxDimension = 2400) {
++  if (!file) throw Object.assign(new Error('Pilih gambar JPG, PNG, atau WEBP.'), { statusCode: 400 });
++  let buffer;
++  try {
++    const image = sharp(file.buffer, { limitInputPixels: 25000000 });
++    const metadata = await image.metadata();
++    if (!['jpeg', 'png', 'webp'].includes(metadata.format)) throw new Error();
++    buffer = await image.rotate().resize({ width: maxDimension, height: maxDimension, fit: 'inside', withoutEnlargement: true }).webp({ quality: 90 }).toBuffer();
++  } catch { throw Object.assign(new Error('File gambar tidak valid atau terlalu besar.'), { statusCode: 400 }); }
++  await fs.mkdir(path.join(root, folder), { recursive: true });
++  const filename = `${randomUUID()}.webp`;
++  const fullPath = path.join(root, folder, filename);
++  await fs.writeFile(fullPath, buffer, { flag: 'wx', mode: 0o640 });
++  return { filename, fullPath, url: `/uploads/${folder}/${filename}`, buffer };
++}
++const removeImage = (file) => file ? fs.unlink(file.fullPath).catch(() => {}) : Promise.resolve();
++module.exports = { saveImage, removeImage, root };
 diff --git a/src/utils/paymentSettings.js b/src/utils/paymentSettings.js
 new file mode 100644
 index 0000000..71a357b
@@ -3568,3 +3974,129 @@ index 0000000..71a357b
 +    qrisMerchant: qrisAvailable ? 'Karimmm, Digital & Kreati' : null };
 +}
 +module.exports = { paymentSettings, qrisPath };
+diff --git a/test/project-access.test.js b/test/project-access.test.js
+new file mode 100644
+index 0000000..58253e8
+--- /dev/null
++++ b/test/project-access.test.js
+@@ -0,0 +1,26 @@
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const express = require('express');
++const jwt = require('jsonwebtoken');
++process.env.JWT_SECRET = require('node:crypto').randomBytes(32).toString('hex');
++const prisma = require('../src/config/prisma');
++let writes = 0;
++prisma.user.findUnique = async ({ where }) => ({ id: where.id, role: where.id === 2 ? 'admin' : 'investor' });
++prisma.project.create = async ({ data }) => { writes++; return { id: 1, ...data }; };
++const app = express();
++app.use(express.json());
++app.use('/api/projects', require('../src/routes/project.routes'));
++test('project creation requires admin and validates payload before database write', async () => {
++  const server = app.listen(0, '127.0.0.1');
++  await new Promise((resolve) => server.once('listening', resolve));
++  const url = `http://127.0.0.1:${server.address().port}/api/projects`;
++  const send = (role, body = {}) => fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(role ? { Authorization: `Bearer ${jwt.sign({ id: role === 'admin' ? 2 : 1, role }, process.env.JWT_SECRET)}` } : {}) }, body: JSON.stringify(body) });
++  try {
++    assert.equal((await send()).status, 401);
++    assert.equal((await send('investor')).status, 403);
++    assert.equal((await send('admin')).status, 400);
++    assert.equal(writes, 0);
++    assert.equal((await send('admin', { namaProyek: 'Reef test', lokasi: 'Bali', aiStatus: 'verified', adminId: 99 })).status, 201);
++    assert.equal(writes, 1);
++  } finally { await new Promise((resolve) => server.close(resolve)); await prisma.$disconnect(); }
++});
+diff --git a/test/publishing.test.js b/test/publishing.test.js
+new file mode 100644
+index 0000000..b2159ad
+--- /dev/null
++++ b/test/publishing.test.js
+@@ -0,0 +1,88 @@
++const { test } = require('node:test');
++const assert = require('node:assert/strict');
++const { randomUUID, randomBytes } = require('crypto');
++const jwt = require('jsonwebtoken');
++const sharp = require('sharp');
++if (!process.env.DATABASE_URL?.includes('/corallink_verify_')) throw new Error('Use an isolated corallink_verify_ database');
++process.env.JWT_SECRET = randomBytes(32).toString('hex');
++const prisma = require('../src/config/prisma');
++const app = require('../src/server');
++test('publishing, milestone concurrency, private proofs, role authorization and payment accounting', async () => {
++ const server = app.listen(0, '127.0.0.1'); await new Promise(r => server.once('listening', r));
++ const base = `http://127.0.0.1:${server.address().port}`;
++ const admin = await prisma.user.create({ data: { nama: 'Test admin', email: 'admin@example.invalid', password: randomBytes(32).toString('hex'), role: 'admin' } });
++ const investor = await prisma.user.create({ data: { nama: 'Test investor', email: 'investor@example.invalid', password: randomBytes(32).toString('hex'), role: 'investor' } });
++ const other = await prisma.user.create({ data: { nama: 'Other investor', email: 'other@example.invalid', password: randomBytes(32).toString('hex'), role: 'investor' } });
++ const token = u => jwt.sign({ id: u.id, role: u.role }, process.env.JWT_SECRET);
++ const call = (url, method = 'GET', user, body) => fetch(base + url, { method, headers: { ...(user ? { Authorization: `Bearer ${token(user)}` } : {}), ...(body && !(body instanceof FormData) ? { 'Content-Type':'application/json' } : {}) }, body: body instanceof FormData ? body : body ? JSON.stringify(body) : undefined });
++ const image = await sharp({ create: { width: 20, height: 20, channels: 3, background: '#ffffff' } }).png().toBuffer();
++ const ml = require('http').createServer((req,res) => { res.setHeader('Content-Type','application/json'); res.end(JSON.stringify({predicted_class:'Bleached',confidence:99})); }).listen(0,'127.0.0.1');
++ await new Promise(r=>ml.once('listening',r)); process.env.AI_SERVICE_URL = `http://127.0.0.1:${ml.address().port}/predict`;
++ const form = (buffer = image) => { const f = new FormData(); f.append('image', new Blob([buffer], { type:'image/png' }), 'image.png'); f.append('namaProyek', 'Test reef'); f.append('lokasi', 'Test location'); f.append('description', 'Full project description'); f.append('species', 'Acropora'); f.append('fundingTarget', '100000'); return f; };
++ try {
++  const photoForm = buffer => { const f = new FormData(); f.append('image',new Blob([buffer],{type:'image/png'}),'avatar.png'); return f; };
++  assert.equal((await call('/api/auth/profile/photo')).status,401);
++  assert.equal((await call('/api/auth/profile/photo','POST',null,photoForm(image))).status,401);
++  assert.equal((await call('/api/auth/profile/photo','GET',investor)).status,204);
++  assert.equal((await call('/api/auth/profile/photo','POST',investor,photoForm(Buffer.from('invalid')))).status,400);
++  assert.equal((await call(`/api/auth/profile/photo?userId=${other.id}`,'POST',investor,photoForm(image))).status,200);
++  const photoResponse = await call('/api/auth/profile/photo','GET',investor);
++  assert.equal(photoResponse.headers.get('cache-control'),'private, no-store');
++  const photo = Buffer.from(await photoResponse.arrayBuffer());
++  assert.equal((await sharp(photo).metadata()).format,'webp');
++  assert.equal((await call('/api/auth/profile/photo','GET',other)).status,204);
++  assert.equal((await call(`/uploads/avatars/${investor.id}.webp`)).status,404);
++  assert.equal((await call('/api/auth/profile/photo','POST',investor,photoForm(Buffer.from('invalid')))).status,400);
++  assert.deepEqual(Buffer.from(await (await call('/api/auth/profile/photo','GET',investor)).arrayBuffer()),photo);
++  const largeImage = await sharp({create:{width:1200,height:800,channels:3,background:'#123456'}}).png().toBuffer();
++  assert.equal((await call('/api/auth/profile/photo','POST',investor,photoForm(largeImage))).status,200);
++  const resized = await sharp(Buffer.from(await (await call('/api/auth/profile/photo','GET',investor)).arrayBuffer())).metadata();
++  assert.equal(resized.width,512);
++  assert.equal((await call('/api/projects','POST', null, {})).status,401);
++  assert.equal((await call('/api/projects','POST', investor, {})).status,403);
++  assert.equal((await call('/api/projects','POST', admin, {})).status,400);
++  assert.equal((await call('/api/projects','POST', admin, form(Buffer.from('not an image')))).status,400);
++  const response = await call('/api/projects','POST',admin,form()); assert.equal(response.status,201); const project = (await response.json()).data;
++  assert.equal(project.description,'Full project description'); assert.equal(project.milestones.length,4);
++  assert.equal((await call(project.imageUrl)).status,200);
++  assert.equal((await call(`/api/projects/${project.id}`)).status,200);
++  const milestone = { version:0, milestones:[{phase:'Phase 1',title:'Assessment',status:'Complete'}], progressNote:'Completed field assessment' };
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',investor,milestone)).status,403);
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',admin,milestone)).status,200);
++  assert.equal((await call(`/api/projects/${project.id}/milestones`,'PUT',admin,milestone)).status,409);
++  const payload = { projectId:project.id, amount:25000, idempotencyKey:randomUUID(), status:'Completed' };
++  process.env.QRIS_IMAGE_PATH = '/nonexistent-qris-test.png';
++  assert.equal((await call('/api/transactions','POST',investor,payload)).status,503);
++  assert.equal((await (await call('/api/payments/settings')).json()).data.enabled,false);
++  delete process.env.QRIS_IMAGE_PATH;
++  const settings = (await (await call('/api/payments/settings')).json()).data;
++  assert.equal(settings.enabled,true); assert.equal(settings.bankEnabled,false);
++  const qr = await call(settings.qrisImageUrl); assert.equal(qr.status,200);
++  assert.deepEqual(Buffer.from(await qr.arrayBuffer()),require('fs').readFileSync(require('../src/utils/paymentSettings').qrisPath()));
++  const qrisRequest = await call('/api/transactions','POST',investor,payload);
++  assert.equal(qrisRequest.status,201);
++  assert.equal((await qrisRequest.json()).data.status,'AwaitingProof');
++  const account = { bankName:'TEST ONLY', accountNumber:'00000000', accountHolder:'TEST ONLY' };
++  assert.equal((await call('/api/payments/settings','PUT',investor,account)).status,403);
++  assert.equal((await call('/api/payments/settings','PUT',admin,account)).status,200);
++  const transaction = (await (await call('/api/transactions','POST',investor,payload)).json()).data;
++  assert.equal(transaction.status,'AwaitingProof');
++  assert.equal((await (await call('/api/transactions','POST',investor,payload)).json()).data.id,transaction.id);
++  assert.equal((await call(`/api/transactions/${transaction.id}`,'GET',other)).status,404);
++  const proof = new FormData(); proof.append('image',new Blob([image],{type:'image/png'}),'proof.png');
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'POST',investor,proof)).status,200);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET',other)).status,404);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET')).status,401);
++  assert.equal((await call(`/api/transactions/${transaction.id}/proof`,'GET',admin)).status,200);
++  const stored = await prisma.transaction.findUnique({where:{id:transaction.id}});
++  assert.equal((await call('/uploads/private/'+stored.proofFile)).status,404);
++  assert.equal((await (await call(`/api/projects/${project.id}`)).json()).data.fundingRaised,'0');
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',investor,{status:'Completed'})).status,403);
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',admin,{status:'Completed'})).status,200);
++  assert.equal((await call(`/api/transactions/${transaction.id}/status`,'PUT',admin,{status:'Completed'})).status,409);
++  assert.equal((await (await call(`/api/projects/${project.id}`)).json()).data.fundingRaised,'25000');
++  assert.equal((await (await call('/api/transactions/me','GET',investor)).json()).data.length,1);
++  await prisma.user.update({where:{id:admin.id},data:{role:'investor'}});
++  assert.equal((await call('/api/projects','POST',admin,form())).status,403);
++ } finally { await new Promise(r => ml.close(r)); await new Promise(r => server.close(r)); await prisma.$disconnect(); }
++});

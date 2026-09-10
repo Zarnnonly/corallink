@@ -441,3 +441,18 @@
     text-align: left;
   }
 }
+
+@media (max-width: 768px) {
+  .pd-hero { padding: 24px 0; }
+  .pd-hero-inner, .pd-milestones-inner { padding-inline: 16px; }
+  .pd-hero-grid { gap: 24px; min-width: 0; }
+  .pd-info, .pd-stat-block { min-width: 0; overflow-wrap: anywhere; }
+  .pd-back-link { margin-bottom: 20px; }
+  .pd-stats-row { flex-wrap: wrap; gap: 20px; }
+  .pd-action-buttons { gap: 12px; }
+  .pd-invest-btn, .pd-detail-project-btn { padding: 14px 8px; font-size: 14px; }
+  .pd-milestones-section { padding: 24px 0; }
+  .pd-milestones-title { margin-bottom: 24px; }
+  .pd-milestone-line { flex: none; }
+}
+@media (hover: none) { .pd-image-overlay { transform: translateY(0); } }

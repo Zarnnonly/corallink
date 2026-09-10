@@ -1,6 +1,6 @@
 # CoralLink frontend integration
 
-The original frontend before integration (commit 405c7a9) is the layout and interaction reference. Investment, payment confirmation, milestone editing and upload-success layouts have been restored. CSS and visual assets are unchanged. Existing mock project data remains in the repository but is not used as production data.
+The original frontend before integration (commit 405c7a9) is the layout and interaction reference. Investment, payment confirmation, milestone editing and upload-success layouts have been restored. The original visual assets, colors, typography and card structure are retained. Responsive CSS now reduces mobile spacing and prevents clipped forms; the original navigation stays visible and becomes sticky. Existing mock project data remains in the repository but is not used as production data.
 
 ## Supported flows
 
@@ -10,7 +10,7 @@ The original frontend before integration (commit 405c7a9) is the layout and inte
 - Milestone status and progress notes persist. Concurrent edits return a conflict instead of silently overwriting a newer version.
 - Investment retains amount buttons, monthly/once choices, investor details and the two-column layout. Monthly means a manually repeated contribution, not automatic debit.
 - Confirmation retains the summary, payment area, proof selection and support button. The original QR box displays the user-supplied QRIS (Karimmm, Digital & Kreati), served by GET /api/payments/qris. Tap it to open the original image at full size. A configured bank account remains an optional alternative. A transaction ID in the URL restores the request after refresh. Uploaded proof is Pending until reviewed.
-- Profile shows real transaction statuses alongside clearly marked legacy donation records. A failed proof can be resubmitted.
+- Profile shows real transaction statuses alongside clearly marked legacy donation records. A failed proof can be resubmitted. The original + button uploads a persistent profile photo; the investment table scrolls within its card on mobile.
 - Admin Payment Review configures the official bank account and reviews private proofs. Approval requires checking the bank statement. Only approved amounts count as funding.
 
 No real bank account was supplied or seeded. QRIS enables payment requests independently of a bank account. An administrator can optionally enter an official bank account under Account menu -> Payment Review. All test account numbers belong only to isolated test databases.
@@ -19,7 +19,7 @@ No real bank account was supplied or seeded. QRIS enables payment requests indep
 
 Public frontend config remains `VITE_API_URL=https://api.corallink.web.id` in `.env.production`. It is not a secret. Vite reads it during build; Vercel Config values override the file. JWT signing and database secrets stay on the VPS.
 
-Backend additions preserve existing endpoints and fields: project metadata, GET /api/projects/:id, milestone PUT, /api/transactions and owner/admin proof routes, /api/payments/settings, phone and /api/auth/me. Public images are re-encoded WebP under /uploads/covers. Proof images are on persistent VPS disk and accessible only through authenticated routes. No cloud-storage provider is required for this deployment.
+Backend additions preserve existing endpoints and fields: project metadata, GET /api/projects/:id, milestone PUT, /api/transactions and owner/admin proof routes, /api/payments/settings, phone and /api/auth/me. Public images are re-encoded WebP under /uploads/covers. Proof images are on persistent VPS disk and accessible only through authenticated routes. GET/POST /api/auth/profile/photo reads or replaces only the signed-in user's photo. Photos are decoded, stripped of metadata, resized to at most 512px, and saved on persistent disk under uploads/avatars. The route uses private/no-store responses; the avatars directory is not publicly served. No schema migration is required for profile photos. Include this folder with existing upload backups. No cloud-storage provider is required for this deployment.
 
 Project and payment persistence uses additive Prisma migrations. Database backup precedes migration. The backend GitHub repository is still read-only to the connected account; `backend-patches/backend-sync.patch` captures the complete unpublished backend source changes (including prior deployment fixes) relative to its GitHub baseline. Do not blindly pull/reset the VPS checkout.
 
@@ -31,6 +31,11 @@ Browser checks use the local production build and an isolated real Express/Maria
 
 Backend runtime is /opt/corallink-api. Database/source backup: /root/corallink-deploy/publishing-backup. Permanent ML startup is enabled as corallink-ml.service, running the existing model and application as a non-root user at loopback port 5000. No Nginx changes.
 
-Verified 10 September 2026: isolated browser suite passes publication/cover persistence, original milestone editor, restored investment and confirmation layouts, proof upload Pending, explicit admin approval, and investor Completed status without uncaught page exceptions. All four original layouts have comparison screenshots. Compiled CSS SHA-256 is identical to the pre-integration reference: 4567f369f9eaa468f5fb68ec56b199acc37f6166e7fed66f3d81f18833fd4585.
+Verified 10 September 2026: isolated browser suite passes publication/cover persistence, original milestone editor, restored investment and confirmation layouts, proof upload Pending, explicit admin approval, and investor Completed status without uncaught page exceptions. All four original layouts have comparison screenshots. At that checkpoint, compiled CSS SHA-256 was identical to the pre-integration reference (before the later mobile fixes): 4567f369f9eaa468f5fb68ec56b199acc37f6166e7fed66f3d81f18833fd4585.
 
 The live API also passed register using name/phone, /auth/me, multipart project creation with server ML, public cover, detail and milestone persistence. Temporary production test account/project/files were removed. Payment approval tests used only isolated databases and do not represent real money received.
+
+
+Verified 11 September 2026: responsive checks cover 13 routes at 320, 390, 768, 1024 and 1440px, including the corrected tablet detail width. No page content overflows the viewport; history tables scroll inside their existing cards. Browser checks cover sticky navigation, FAQ expansion, the mobile admin dropdown, profile-photo chooser/upload/refresh/invalid-file handling, QRIS checkout and proof submission. Entrance animation respects reduced-motion preferences. Screenshots and results are in /root/corallink-browser-tools/mobile-review.
+
+Profile-photo API tests verify authentication, isolation between users, rejection of malformed images, private cache headers, retention of the previous photo after an invalid replacement, and resizing to 512px. Build, frontend API tests and backend isolated tests pass; lint retains existing React warnings. These are local verification results; production verification is reported separately.

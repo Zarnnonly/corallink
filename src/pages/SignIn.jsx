@@ -32,7 +32,7 @@ const SignIn = () => {
     <div className="auth-page">
       <div className="auth-container">
         <div className="auth-logo-header">
-          <img src={logoImg} alt="CoralLink Logo" className="auth-logo-img" />
+          <Link to="/" className="auth-brand" aria-label="CoralLink home"><img src={logoImg} alt="CoralLink Logo" className="auth-logo-img" /></Link>
           <h2 className="auth-title">Sign In</h2>
           <p className="auth-subtitle">Welcome back! Please sign in.</p>
         </div>
