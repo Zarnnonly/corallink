@@ -54,13 +54,11 @@ function AppContent() {
           </ProtectedRoute>
         } />
         <Route path="/profile" element={
-          <ProtectedRoute allowedRoles={['user']}>
+          <ProtectedRoute allowedRoles={['user', 'admin']}>
             <UserProfile />
           </ProtectedRoute>
         } />
 
-        {/* Public Project Detail (accessible to all) */}
-        <Route path="/project/:projectId" element={<ProjectDetail />} />
 
         {/* Admin Routes */}
         <Route path="/upload-project" element={

@@ -1,3 +1,4 @@
+import ProjectState from '../components/ProjectState';
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
@@ -13,8 +14,10 @@ const conditionColors = {
 const ProjectDetail = () => {
   const { projectId } = useParams();
   const navigate = useNavigate();
-  const { getProject } = useProjects();
+  const { getProject, loading, error } = useProjects();
   const project = getProject(projectId);
+
+  if (loading || error) return <div className="container"><ProjectState /></div>;
 
   if (!project) {
     return (
@@ -25,7 +28,7 @@ const ProjectDetail = () => {
     );
   }
 
-  const cond = conditionColors[project.conditionType] || conditionColors.unhealthy;
+  const cond = conditionColors[project.conditionType] || { bg: '#eee', text: '#555', border: '#ddd' };
 
   return (
     <>
@@ -43,7 +46,7 @@ const ProjectDetail = () => {
           {/* Image + AI Result Row */}
           <div className="pdv2-top-row">
             <div className="pdv2-img-wrap">
-              <img src={project.image} alt={project.name} className="pdv2-coral-img" />
+              {project.image ? <img src={project.image} alt={project.name} className="pdv2-coral-img" /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
             </div>
 
             <div className="pdv2-ai-block">
@@ -66,7 +69,7 @@ const ProjectDetail = () => {
 
               <div className="pdv2-ai-row">
                 <span className="pdv2-ai-label">Analysis Status</span>
-                <span className="pdv2-status-badge">&#10003; {project.analysisStatus}</span>
+                <span className="pdv2-status-badge">{project.analysisStatus}</span>
               </div>
             </div>
           </div>
@@ -77,6 +80,7 @@ const ProjectDetail = () => {
           <div className="pdv2-section">
             <h3 className="pdv2-section-title">Characteristics</h3>
             <ul className="pdv2-bullet-list">
+              {!project.characteristics.length && <li>Not available yet.</li>}
               {project.characteristics.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
@@ -87,6 +91,7 @@ const ProjectDetail = () => {
           <div className="pdv2-section">
             <h3 className="pdv2-section-title">Supporting Factors</h3>
             <ul className="pdv2-bullet-list">
+              {!project.supportingFactors.length && <li>Not available yet.</li>}
               {project.supportingFactors.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
@@ -97,6 +102,7 @@ const ProjectDetail = () => {
           <div className="pdv2-section">
             <h3 className="pdv2-section-title">Why This Matters</h3>
             <ul className="pdv2-bullet-list">
+              {!project.whyThisMatters.length && <li>Not available yet.</li>}
               {project.whyThisMatters.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
@@ -107,6 +113,7 @@ const ProjectDetail = () => {
           <div className="pdv2-section">
             <h3 className="pdv2-section-title">Recommendations:</h3>
             <ul className="pdv2-bullet-list">
+              {!project.recommendations.length && <li>Not available yet.</li>}
               {project.recommendations.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}

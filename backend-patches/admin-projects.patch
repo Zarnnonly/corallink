@@ -1,0 +1,43 @@
+diff --git a/src/controllers/project.controller.js b/src/controllers/project.controller.js
+index 4ebad64..87523e2 100644
+--- a/src/controllers/project.controller.js
++++ b/src/controllers/project.controller.js
+@@ -1,3 +1,10 @@
++const { z } = require('zod');
++const projectSchema = z.object({
++  namaProyek: z.string().trim().min(2).max(191),
++  lokasi: z.string().trim().min(2).max(191),
++  tingkatKerusakan: z.string().trim().max(191).optional(),
++  targetRestorasi: z.string().trim().max(191).optional(),
++});
+ const prisma = require('../config/prisma');
+ const { success, error } = require('../utils/response');
+ 
+@@ -12,7 +19,9 @@ async function getAllProjects(req, res) {
+ 
+ async function createProject(req, res) {
+   try {
+-    const { namaProyek, lokasi, tingkatKerusakan, targetRestorasi } = req.body;
++    const parsed = projectSchema.safeParse(req.body);
++    if (!parsed.success) return error(res, parsed.error.errors[0].message, 400);
++    const { namaProyek, lokasi, tingkatKerusakan, targetRestorasi } = parsed.data;
+     const newProject = await prisma.project.create({
+       data: {
+         adminId: req.user.id,
+diff --git a/src/routes/project.routes.js b/src/routes/project.routes.js
+index f95f4f1..187dad7 100644
+--- a/src/routes/project.routes.js
++++ b/src/routes/project.routes.js
+@@ -1,9 +1,10 @@
+ const express = require('express');
+ const router = express.Router();
++const { requireRole } = require('../middleware/role.middleware');
+ const { authenticate } = require('../middleware/auth.middleware');
+ const { getAllProjects, createProject } = require('../controllers/project.controller');
+ 
+ router.get('/', getAllProjects);
+-router.post('/', authenticate, createProject);
++router.post('/', authenticate, requireRole('admin'), createProject);
+ 
+ module.exports = router;
+\ No newline at end of file

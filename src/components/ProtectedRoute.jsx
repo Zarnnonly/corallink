@@ -3,7 +3,9 @@ import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const { user } = useAuth();
+  const { user, loading, error, restoreSession, logout } = useAuth();
+  if (loading) return <p role="status">Restoring session…</p>;
+  if (!user && error) return <div role="alert"><p>{error}</p><button onClick={restoreSession}>Retry</button><button onClick={logout}>Sign in again</button></div>;
 
   // If page requires user or admin but not logged in
   if (!user && allowedRoles.length > 0 && !allowedRoles.includes('guest')) {
