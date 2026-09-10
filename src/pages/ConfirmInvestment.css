@@ -1,0 +1,189 @@
+/* ─── Confirm Investation ─── */
+.confirm-invest-page {
+  background: #EFFBFC;
+  width: 1440px;
+  max-width: 100%;
+  min-height: calc(1024px - 80px); /* minus navbar if applicable */
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.confirm-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 12px 40px rgba(47, 97, 116, 0.08);
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  overflow: hidden;
+}
+
+.confirm-left {
+  flex: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1A3F50;
+  margin: 0 0 16px 0;
+}
+
+.confirm-project-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1A3F50;
+  margin: 0 0 4px 0;
+  text-transform: uppercase;
+}
+
+.confirm-project-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A3F50;
+  margin: 0 0 32px 0;
+}
+
+.summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.summary-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A3F50;
+}
+
+.summary-value {
+  font-size: 14px;
+  color: #4A4A4A;
+}
+
+/* Payment Section */
+.payment-section {
+  background: #F8FDFD;
+  border: 1px dashed #B8DDE8;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.qris-instruction {
+  font-size: 13px;
+  color: #6B95A4;
+  text-align: center;
+  margin: 0;
+}
+
+.qris-placeholder {
+  width: 200px;
+  height: 200px;
+  background: #fff;
+  border: 2px solid #38748C;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qris-box {
+  width: 160px;
+  height: 160px;
+  border: 1px dashed #38748C;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 16px;
+}
+
+.qris-text {
+  font-size: 12px;
+  font-weight: 700;
+  color: #38748C;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border: 2px solid #38748C;
+  border-radius: 999px;
+  background: #fff;
+  color: #38748C;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.upload-btn:hover {
+  background: #F0F9FA;
+}
+
+.confirm-support-btn {
+  padding: 16px;
+  background: #38748C;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+  max-width: 300px;
+}
+
+.confirm-support-btn:hover {
+  opacity: 0.9;
+}
+
+.confirm-support-btn.ready {
+  background: #2bbf8e;
+}
+
+/* ─── Right Side: Image ─── */
+.confirm-right {
+  flex: 1;
+  max-width: 50%;
+  padding: 24px;
+  display: flex;
+}
+
+.confirm-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .confirm-card {
+    flex-direction: column;
+  }
+  .confirm-right {
+    max-width: 100%;
+    height: 300px;
+  }
+}

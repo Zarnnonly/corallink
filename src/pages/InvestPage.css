@@ -1,0 +1,443 @@
+/* ─── ProjectDetail Page ─── */
+.project-detail-page {
+  background: #EFFBFC;
+  min-height: 100vh;
+}
+
+.project-not-found {
+  background: #EFFBFC;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #2F6174;
+}
+
+/* ─── Hero Section ─── */
+.pd-hero {
+  background: #EFFBFC;
+  padding: 36px 0 48px;
+}
+
+.pd-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.pd-back-link {
+  display: inline-block;
+  margin-bottom: 28px;
+  color: #38748C;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.pd-back-link:hover {
+  opacity: 0.7;
+}
+
+.pd-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 48px;
+  align-items: flex-start;
+}
+
+/* ─── Info Column ─── */
+.pd-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pd-name {
+  font-size: 26px;
+  font-weight: 800;
+  color: #1A3F50;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+.pd-subtitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1A3F50;
+  margin: 0;
+}
+
+.pd-description {
+  font-size: 14px;
+  color: #4A4A4A;
+  line-height: 1.6;
+  margin: 0;
+  max-width: 520px;
+}
+
+/* ─── Tags ─── */
+.pd-tags {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pd-tag {
+  font-size: 13px;
+  color: #333;
+  font-weight: 500;
+}
+
+.pd-tag-status {
+  font-weight: 600;
+}
+
+/* ─── Stats Row ─── */
+.pd-stats-row {
+  display: flex;
+  gap: 40px;
+  margin-top: 10px;
+  padding-top: 18px;
+  border-top: 1px solid #C8E9EE;
+}
+
+.pd-stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pd-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #38748C;
+  text-transform: uppercase;
+}
+
+.pd-stat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pd-stat-list li {
+  font-size: 13px;
+  color: #2C2C2C;
+}
+
+.pd-funding-amount {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A3F50;
+  margin: 0;
+}
+
+/* ─── Progress Bar ─── */
+.pd-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pd-progress-bar {
+  width: 160px;
+  height: 10px;
+  background: #B8DDE8;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pd-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2F6174 0%, #38A8C4 100%);
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+
+.pd-progress-pct {
+  font-size: 13px;
+  font-weight: 700;
+  color: #38748C;
+}
+
+/* ─── Action Buttons ─── */
+.pd-action-buttons {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 460px;
+}
+
+.pd-invest-btn {
+  flex: 1;
+  padding: 16px 0;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2F6174 0%, #38A8C4 100%);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s;
+  box-shadow: 0 4px 18px rgba(47, 97, 116, 0.25);
+}
+
+.pd-detail-project-btn {
+  flex: 1;
+  padding: 16px 0;
+  border: 2px solid #2F6174;
+  border-radius: 999px;
+  background: transparent;
+  color: #2F6174;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pd-detail-project-btn:hover {
+  background: rgba(47, 97, 116, 0.05);
+  transform: translateY(-2px);
+}
+
+.pd-invest-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(47, 97, 116, 0.35);
+}
+
+.pd-invest-btn:active, .pd-detail-project-btn:active {
+  transform: translateY(0);
+}
+
+.pd-invest-btn.invested {
+  background: linear-gradient(90deg, #1a7a5e 0%, #2bbf8e 100%);
+  cursor: default;
+}
+
+/* ─── Image Column ─── */
+.pd-image-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  height: 360px;
+  box-shadow: 0 8px 32px rgba(47, 97, 116, 0.18);
+  position: relative;
+  display: block;
+}
+
+.pd-image-wrap a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pd-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.pd-image-wrap:hover .pd-hero-image {
+  transform: scale(1.04);
+}
+
+.pd-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(0deg, rgba(26,63,80,0.85) 0%, rgba(26,63,80,0) 100%);
+  padding: 32px 16px 16px;
+  text-align: center;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.pd-image-wrap:hover .pd-image-overlay {
+  transform: translateY(0);
+}
+
+.pd-image-overlay span {
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  display: inline-block;
+  padding: 6px 16px;
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+/* ─── Milestones Section ─── */
+.pd-milestones-section {
+  background: #fff;
+  padding: 56px 0 64px;
+  border-top: 1px solid #C8E9EE;
+}
+
+.pd-milestones-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 48px;
+}
+
+.pd-milestones-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #1A3F50;
+  margin: 0 0 40px 0;
+  letter-spacing: 0.02em;
+}
+
+/* ─── Milestone Track (horizontal) ─── */
+.pd-milestones-track {
+  display: flex;
+  gap: 0;
+  align-items: flex-start;
+}
+
+.pd-milestone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  position: relative;
+}
+
+.pd-milestone-dot-wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.pd-milestone-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid #B8DDE8;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  z-index: 1;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.pd-milestone.done .pd-milestone-dot {
+  border-color: #2F6174;
+  background: #2F6174;
+}
+
+.pd-milestone-check {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.pd-milestone-line {
+  flex: 1;
+  height: 3px;
+  background: #B8DDE8;
+  margin-left: -1px;
+}
+
+.pd-milestone-line.line-done {
+  background: linear-gradient(90deg, #2F6174 0%, #38A8C4 100%);
+}
+
+.pd-milestone-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  text-align: center;
+  padding: 0 8px;
+}
+
+.pd-milestone-phase {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #38748C;
+  text-transform: uppercase;
+}
+
+.pd-milestone-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A3F50;
+  line-height: 1.4;
+}
+
+.pd-milestone.pending .pd-milestone-name {
+  color: #8aacb8;
+}
+
+.pd-milestone-months {
+  font-size: 12px;
+  color: #8aacb8;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .pd-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pd-image-wrap {
+    height: 260px;
+    order: -1;
+  }
+
+  .pd-milestones-track {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .pd-milestone {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .pd-milestone-dot-wrap {
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+    margin-bottom: 0;
+    margin-right: 16px;
+  }
+
+  .pd-milestone-line {
+    width: 3px;
+    height: 40px;
+    margin-left: 0;
+    margin-top: -1px;
+  }
+
+  .pd-milestone-text {
+    align-items: flex-start;
+    text-align: left;
+  }
+}

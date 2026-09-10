@@ -17,24 +17,22 @@
 }
 
 .action-card-left {
-  background-color: #38748C;
   border-radius: 12px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  overflow: hidden;
   width: 280px;
   flex-shrink: 0;
 }
 
-.action-card-image-placeholder {
-  background-color: #EFFBFC;
-  border-radius: 8px;
+.action-card-image {
   width: 100%;
-  aspect-ratio: 1; /* Square placeholder */
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .action-btn {
+  display: block;
+  text-decoration: none;
   background-color: #FFFFFF;
   color: #38748C;
   border: none;

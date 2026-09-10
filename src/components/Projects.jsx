@@ -1,31 +1,49 @@
 import React from 'react';
 import './Projects.css';
+import { Link } from 'react-router-dom';
+import { useProjects } from '../context/ProjectContext';
 
 const Projects = () => {
+  const { projects } = useProjects();
+
   return (
     <section className="container projects-section">
       <h2 className="section-title">Our Project</h2>
-      
+
       <div className="projects-container">
         <div className="projects-header">
           <div>
             <h3 className="projects-subtitle">Explore Restoration</h3>
-            <p className="projects-description">Explore Restoration</p>
-          </div>
-          <div className="projects-header-bars">
-            <div className="ph-bar-long"></div>
-            <div className="ph-bar-short"></div>
+            <p className="projects-description">
+              Discover and support active coral reef restoration initiatives in
+              need of funding.
+            </p>
           </div>
         </div>
-        
+
         <div className="projects-grid">
-          <div className="project-card"></div>
-          <div className="project-card"></div>
-          <div className="project-card"></div>
-          <div className="project-card"></div>
+          {projects.map((project) => (
+            <Link
+              to={`/project/${project.id}`}
+              className="project-card"
+              key={project.id}
+              style={{ textDecoration: 'none' }}
+            >
+              <img
+                src={project.image}
+                alt={project.name}
+                className="project-image"
+              />
+              <div className="project-overlay">
+                <h4 className="project-title">{project.name}</h4>
+                <p className="project-subtitle-card">{project.subtitle}</p>
+              </div>
+            </Link>
+          ))}
         </div>
-        
-        <button className="btn-view-more">View More</button>
+        <Link to="/take-action">
+          <button className="btn-view-more">View More</button>
+        </Link>
       </div>
     </section>
   );

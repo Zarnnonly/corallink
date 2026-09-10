@@ -1,39 +1,156 @@
+/* ===== Section Visi & Misi ===== */
 .vm-section {
   padding-top: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
+.vm-section .section-title {
+  text-align: center;
+  margin-bottom: 60px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: #286C83;
+}
+
+/* Grid dua kolom untuk kartu */
 .vm-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 70px;
+  margin-bottom: 60px;
 }
 
+/* Kartu individual */
 .vm-card {
-  height: 462px;
-  background: var(--bg-secondary);
-  border-radius: var(--border-radius-lg);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-}
-
-.vm-bars {
+  background: #286C83;
+  border-radius: 35px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  height: 500px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
-.vm-bar {
-  height: 30px;
-  width: 100%;
-  background: var(--bg-secondary);
-  border-radius: 4px;
+
+.vm-card-header {
+  background: #dceced;
+  border-bottom: 1px solid #000;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 35px 35px 0 0;
 }
 
+.vm-card-title {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 68px;
+  letter-spacing: -0.02em;
+  color: #286C83;
+  margin: 0;
+}
+
+
+.vm-card-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 30px 40px;
+}
+
+
+.vm-card-text {
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 41px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.vm-list {
+  list-style: decimal;
+  padding-left: 30px;
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 41px;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+}
+
+.vm-list li {
+  margin-bottom: 20px;
+  /* Jarak antar poin */
+}
+
+.vm-list li:last-child {
+  margin-bottom: 0;
+}
+
+.vm-list li strong {
+  font-weight: 700;
+  /* Pertegas label */
+  color: #FFFFFF;
+  /* Pastikan warna sama */
+}
+
+/* Pesan di bawah kartu */
+.vm-message {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.vm-message p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #286C83;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Responsif untuk layar kecil */
 @media (max-width: 768px) {
   .vm-grid {
     grid-template-columns: 1fr;
+    gap: 40px;
   }
+
   .vm-card {
-    height: 300px;
+    height: auto;
+    min-height: 400px;
+  }
+
+  .vm-card-header {
+    height: 70px;
+  }
+
+  .vm-card-title {
+    font-size: 36px;
+    line-height: 50px;
+  }
+
+  .vm-card-body {
+    padding: 20px;
+  }
+
+  .vm-card-text,
+  .vm-list {
+    font-size: 22px;
+    line-height: 32px;
+  }
+
+  .vm-list {
+    padding-left: 20px;
   }
 }

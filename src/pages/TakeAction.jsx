@@ -1,38 +1,27 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
 import './TakeAction.css';
-
-const projects = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 },
-  { id: 4 },
-  { id: 5 }
-];
+import { useProjects } from '../context/ProjectContext';
 
 const TakeAction = () => {
+  const { projects } = useProjects();
+
   return (
     <>
       <div className="take-action-page container">
         {projects.map((project) => (
           <div key={project.id} className="action-card">
             <div className="action-card-left">
-              <div className="action-card-image-placeholder"></div>
-              <button className="action-btn">Investment</button>
-              <button className="action-btn">Join</button>
+              <img src={project.image} alt={`Action ${project.name}`} className="action-card-image" />
             </div>
             <div className="action-card-right">
-              <h2>MAIN HEADING</h2>
-              <h3>CORALLINK</h3>
-              <p>
-                Deskripsi dari CORALLINK deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi
-              </p>
-              <p>
-                Deskripsi dari CORALLINK deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi
-              </p>
-              <p>
-                Deskripsi dari CORALLINK deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi deskripsi
-              </p>
+              <h2>{project.name}</h2>
+              <h3>{project.subtitle}</h3>
+              <p>{project.description}</p>
+              <Link to={`/project/${project.id}`} className="action-btn">
+                View Project
+              </Link>
             </div>
           </div>
         ))}

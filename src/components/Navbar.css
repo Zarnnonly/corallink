@@ -30,25 +30,260 @@
   color: var(--bg-secondary);
 }
 
-.navbar-login {
-  background: var(--bg-secondary);
-  color: var(--text-light);
-  font-weight: 600;
-  font-size: 18px;
-  padding: 10px 40px;
-  border-radius: 100px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.3s, transform 0.3s;
+.navbar-right {
+  position: relative;
+  flex-shrink: 0;
 }
 
-.navbar-login:hover {
-  opacity: 0.9;
-  transform: scale(1.05);
+.navbar-menu-wrap {
+  position: relative;
+}
+
+.navbar-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+.navbar-profile-btn:hover {
+  background: rgba(47, 97, 116, 0.08);
+}
+
+.navbar-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(47, 97, 116, 0.15);
+  min-width: 200px;
+  z-index: 999;
+  overflow: hidden;
+  border: 1px solid #E0F2F1;
+  animation: dropdownFadeIn 0.15s ease;
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1A3F50;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+
+.dropdown-item:hover {
+  background: #F0FAFA;
+}
+
+/* NavLink Active State */
+.nav-active {
+  color: var(--bg-secondary) !important;
+  position: relative;
+}
+
+.nav-active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--bg-secondary);
+  border-radius: 2px;
+}
+
+/* Sign In Button for Guests */
+.navbar-auth-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-signin-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 24px;
+  background: var(--bg-secondary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.15s;
+}
+
+.navbar-signin-btn:hover {
+  background: #1A3F50;
+  transform: translateY(-1px);
+}
+
+/* Dropdown User Info */
+.dropdown-user-info {
+  padding: 14px 20px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-user-email {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1A3F50;
+  word-break: break-all;
+}
+
+.dropdown-user-role {
+  font-size: 11px;
+  font-weight: 500;
+  color: #38748C;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.dropdown-divider {
+  height: 1px;
+  background: #E0F2F1;
+  margin: 4px 0;
+}
+
+/* Logout Button */
+.dropdown-logout {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #C62828;
+}
+
+.dropdown-logout:hover {
+  background: #FFF5F5;
 }
 
 @media (max-width: 1024px) {
+  .navbar {
+    padding-top: 18px;
+    padding-bottom: 18px;
+    gap: 16px;
+  }
+
+  .navbar-logo {
+    font-size: 32px;
+    white-space: nowrap;
+  }
+
   .navbar-links {
-    display: none;
+    gap: 20px;
+    white-space: nowrap;
+  }
+
+  .nav-link {
+    font-size: 15px;
+  }
+
+  .navbar-login {
+    padding: 7px 22px;
+    font-size: 15px;
+    white-space: nowrap;
   }
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    gap: 8px;
+  }
+
+  .navbar-logo {
+    font-size: 22px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    white-space: nowrap;
+    flex-shrink: 1;
+  }
+
+  .nav-link {
+    font-size: 12.5px;
+    white-space: nowrap;
+  }
+
+  .navbar-login {
+    padding: 5px 14px;
+    font-size: 12.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    gap: 6px;
+  }
+
+  .navbar-logo {
+    font-size: 17px;
+  }
+
+  .navbar-links {
+    gap: 6px;
+  }
+
+  .nav-link {
+    font-size: 10.5px;
+  }
+
+  .navbar-login {
+    padding: 4px 9px;
+    font-size: 10.5px;
+  }
+}
+
+@media (max-width: 360px) {
+  .navbar-logo {
+    font-size: 15px;
+  }
+
+  .navbar-links {
+    gap: 4px;
+  }
+
+  .nav-link {
+    font-size: 9.5px;
+  }
+
+  .navbar-login {
+    padding: 3px 7px;
+    font-size: 9.5px;
+  }
+}
+
+
