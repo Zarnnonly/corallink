@@ -9,7 +9,7 @@ const Hero = () => {
   const contentRef = useScrollReveal();
 
   return (
-    <section className="container hero-section">
+    <section className="container hero-section" id="hero">
       <div className="hero-banner">
         <img
           src={heroImage}

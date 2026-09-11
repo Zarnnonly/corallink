@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
 import PageTransition from './components/PageTransition';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import TakeAction from './pages/TakeAction';
 import Welcome from './pages/Welcome';
@@ -86,6 +87,7 @@ function AppContent() {
       </PageTransition>
       <Analytics />
       <SpeedInsights />
+      <ScrollToTop />
     </>
   );
 }

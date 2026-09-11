@@ -45,17 +45,21 @@
 }
 
 .about-description {
-  align-items: start;
   font-weight: 400;
   font-size: 17px;
   line-height: 1.75;
   color: #335362;
+  text-align: left;
 }
 
 @media (max-width: 1024px) {
   .about-grid {
     grid-template-columns: 1fr;
     text-align: center;
+  }
+
+  .about-description {
+    text-align: left;
   }
 }
 
@@ -83,5 +87,6 @@
   .about-description {
     font-size: 15px;
     line-height: 1.65;
+    text-align: left;
   }
 }
