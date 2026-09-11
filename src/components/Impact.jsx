@@ -96,7 +96,7 @@ const Impact = () => {
 
   return (
     <section className="container impact-section">
-      <h2 className="section-title">Impact</h2>
+      <h2 className="section-title">IMPACT</h2>
 
       <div className="impact-grid">
         {/* Left side: Intro & Key Metrics */}
