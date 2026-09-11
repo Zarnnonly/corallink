@@ -40,11 +40,15 @@ export const ProjectProvider = ({ children }) => {
     setProjects((items) => [project, ...items.filter(p => p.id !== project.id)]);
     return project;
   };
+  const deleteProject = async (id) => {
+    await request(`/api/projects/${encodeURIComponent(id)}`, { method: 'DELETE', auth: true });
+    setProjects(items => items.filter(p => p.id !== String(id)));
+  };
   const updateMilestones = async (id, milestones, progressNote, version) => {
     const data = await request(`/api/projects/${id}/milestones`, { method: 'PUT', auth: true, body: { milestones, progressNote, version } });
     setProjects(items => items.map(p => p.id === String(id) ? { ...p, milestones: data.milestones, milestoneVersion: data.milestoneVersion, progressNote: data.progressNote } : p));
   };
-  return <ProjectContext.Provider value={{ projects, loading, error, addProject, updateMilestones, retry: () => loadProjects(),
+  return <ProjectContext.Provider value={{ projects, loading, error, addProject, updateMilestones, deleteProject, retry: () => loadProjects(),
     getProject: (id) => projects.find((p) => p.id === String(id)) || null,
   }}>{children}</ProjectContext.Provider>;
 };

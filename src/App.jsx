@@ -16,6 +16,7 @@ import UserProfile from './pages/UserProfile';
 import UploadProject from './pages/UploadProject';
 import AdminPayments from './pages/AdminPayments';
 import UpdateProject from './pages/UpdateProject';
+import DeleteProject from './pages/DeleteProject';
 import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import { ProjectProvider } from './context/ProjectContext';
@@ -74,6 +75,8 @@ function AppContent() {
         } />
 
         <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
+
+        <Route path="/admin/projects" element={<ProtectedRoute allowedRoles={['admin']}><DeleteProject /></ProtectedRoute>} />
 
         {/* 404 Catch-all */}
         <Route path="*" element={<NotFound />} />
