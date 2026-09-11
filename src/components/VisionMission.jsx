@@ -8,24 +8,24 @@ const VisionMission = () => {
 
   return (
     <section className="container vm-section">
-      <h2 className="section-title">Vision & Mission</h2>
+      <h2 className="section-title">Visi dan Misi</h2>
 
       <div className="vm-grid reveal-stagger" ref={gridRef}>
-        {/* Vision Card */}
+        {/* Kartu Visi */}
         <article className="vm-card">
           <div className="vm-card-header">
             <h3 className="vm-card-title">Our Vision</h3>
           </div>
           <div className="vm-card-body">
             <p className="vm-card-text">
-              "To be the leading global catalyst in saving the world's coral
-              reefs through a transparent, measurable, and inclusive green
-              investment ecosystem for future generations."
+              "To become the world's leading catalyst for coral reef restoration,\
+              through a transparent, measurable, and inclusive collaboration ecosystem for
+              generations to come."
             </p>
           </div>
         </article>
 
-        {/* Mission Card */}
+        {/* Kartu Misi */}
         <article className="vm-card">
           <div className="vm-card-header">
             <h3 className="vm-card-title">Our Mission</h3>
@@ -33,12 +33,12 @@ const VisionMission = () => {
           <div className="vm-card-body">
             <ol className="vm-list">
               <li>
-                <strong>Capital Mobilisation:</strong> Opening up access to
-                sustainable funding for grassroots conservation initiatives
+                <strong>Support Mobilisation:</strong> Opening up access to sustainable
+                funding for grassroots conservation initiatives.
               </li>
               <li>
-                <strong>Data Transparency:</strong> Providing an accountable
-                digital monitoring system for investors.
+                <strong>Data Transparency:</strong> Providing an accountable digital
+                monitoring system for all stakeholders.
               </li>
               <li>
                 <strong>Community Impact:</strong> Empowering the economies of
@@ -51,9 +51,9 @@ const VisionMission = () => {
 
       <div className="vm-message reveal-fade-up" ref={messageRef}>
         <p>
-          'The coral bleaching crisis calls for swift action and decentralised
-          funding. CoralLink is here to align long-term ecological benefits
-          with the sustainability goals of its investor partners.'
+          'The coral bleaching crisis calls for swift action and decentralised funding.
+          CoralLink is here to align long-term ecological benefits with a more sustainable
+          future for our oceans.'
         </p>
       </div>
     </section>

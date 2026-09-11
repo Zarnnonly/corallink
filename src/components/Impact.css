@@ -1,11 +1,11 @@
 .impact-section {
-  padding-top: 80px;
+  padding-top: 40px;
 }
 
 .impact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 80px;
+  gap: 40px;
   align-items: start;
 }
 
@@ -162,7 +162,7 @@
 
 @media (max-width: 768px) {
   .impact-section {
-    padding-top: 16px;
+    padding-top: 48px;
   }
 
   .impact-grid,

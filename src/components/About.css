@@ -66,6 +66,7 @@
 @media (max-width: 768px) {
   .about-section {
     padding-top: 24px;
+    margin-bottom: 64px;
   }
 
   .about-grid {
