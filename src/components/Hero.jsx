@@ -15,9 +15,8 @@ const Hero = () => {
         />
         <div className="hero-overlay">
           <div className="hero-content">
-            <div className="hero-badge">
-              <span className="hero-badge-pulse" />
-              <span>Coral Restoration Platform</span>
+            <div className="hero-tag">
+              Platform Restorasi Karang Indonesia
             </div>
             <h1 className="hero-title">
               Invest in Healthy Oceans,<br />

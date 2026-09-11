@@ -1,6 +1,7 @@
 import ProjectState from '../components/ProjectState';
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 import Footer from '../components/Footer';
 import './ProjectDetail.css';
 import { useProjects } from '../context/ProjectContext';
@@ -36,7 +37,9 @@ const ProjectDetail = () => {
 
         {/* Header Bar */}
         <div className="pdv2-header-bar">
-          <button onClick={() => navigate(-1)} className="pdv2-back-btn" style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit', color: 'inherit' }}>&#8592;</button>
+          <button onClick={() => navigate(-1)} className="pdv2-back-btn" aria-label="Go back" style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', color: 'inherit' }}>
+            <ArrowLeft size={22} />
+          </button>
           <h1 className="pdv2-header-title">Detail Project</h1>
         </div>
 

@@ -15,7 +15,7 @@
 
 .hero-image {
   width: 100%;
-  height: 520px;
+  height: 440px;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -46,35 +46,17 @@
   gap: 18px;
 }
 
-/* ─── Live Platform Badge ─── */
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+/* ─── Platform Category Tag ─── */
+.hero-tag {
+  display: inline-block;
   padding: 6px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(135, 213, 232, 0.4);
-  backdrop-filter: blur(8px);
-  color: #8CE8F2;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(135, 213, 232, 0.3);
+  color: #B2EBF2;
   font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.hero-badge-pulse {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #4EF2B8;
-  box-shadow: 0 0 10px #4EF2B8;
-  animation: pulseGlow 2s infinite;
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.25); }
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
 
 /* ─── Typography ─── */

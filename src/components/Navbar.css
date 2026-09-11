@@ -37,7 +37,8 @@
 
 .navbar-menu-wrap {
   position: relative;
-  padding-bottom: 8px; /* Invisible bridge to prevent hover loss */
+  padding-bottom: 8px;
+  /* Invisible bridge to prevent hover loss */
 }
 
 .navbar-profile-btn {
@@ -61,7 +62,7 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #fff;
+  background: #ffffff;
   border-radius: 12px;
   box-shadow: 0 8px 32px rgba(47, 97, 116, 0.15);
   min-width: 200px;
@@ -72,8 +73,15 @@
 }
 
 @keyframes dropdownFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .dropdown-item {
@@ -89,7 +97,7 @@
 }
 
 .dropdown-item:hover {
-  background: #F0FAFA;
+  background: #48b0b0;
 }
 
 /* NavLink Active State */
@@ -216,14 +224,51 @@
   box-shadow: 0 4px 20px rgba(26, 71, 86, 0.05);
   transition: background 0.3s ease, box-shadow 0.3s ease;
 }
-.navbar-dropdown { max-width: calc(100vw - 32px); }
+
+.navbar-dropdown {
+  max-width: calc(100vw - 32px);
+}
+
 @media (max-width: 768px) {
-  .navbar { flex-wrap: wrap; gap: 0 12px; padding-top: 8px; padding-bottom: 4px; }
-  .navbar-logo { font-size: 24px; }
-  .navbar-right { margin-left: auto; }
-  .navbar-menu-wrap { padding-bottom: 0; }
-  .navbar-profile-btn, .navbar-signin-btn { min-height: 44px; }
-  .navbar-links { order: 3; width: 100%; justify-content: space-between; gap: 8px; }
-  .nav-link { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; }
-  .nav-active::after { bottom: 4px; }
+  .navbar {
+    flex-wrap: wrap;
+    gap: 0 12px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+  }
+
+  .navbar-logo {
+    font-size: 24px;
+  }
+
+  .navbar-right {
+    margin-left: auto;
+  }
+
+  .navbar-menu-wrap {
+    padding-bottom: 0;
+  }
+
+  .navbar-profile-btn,
+  .navbar-signin-btn {
+    min-height: 44px;
+  }
+
+  .navbar-links {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 14px;
+  }
+
+  .nav-active::after {
+    bottom: 4px;
+  }
 }

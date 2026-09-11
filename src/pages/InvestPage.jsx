@@ -1,6 +1,7 @@
 import ProjectState from '../components/ProjectState';
 import React from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { ArrowLeft, MapPin, Waves, Check } from 'lucide-react';
 import Footer from '../components/Footer';
 import './InvestPage.css';
 import { useProjects } from '../context/ProjectContext';
@@ -28,7 +29,10 @@ const InvestPage = () => {
         {/* Hero Section */}
         <section className="pd-hero">
           <div className="pd-hero-inner">
-            <Link to="/take-action" className="pd-back-link">&#8592; Back to Projects</Link>
+            <Link to="/take-action" className="pd-back-link">
+              <ArrowLeft size={16} />
+              <span>Back to Projects</span>
+            </Link>
 
             <div className="pd-hero-grid">
               {/* Left: Info */}
@@ -38,10 +42,15 @@ const InvestPage = () => {
                 <p className="pd-description">{project.description}</p>
 
                 <div className="pd-tags">
-                  <span className="pd-tag">&#128205; {project.location}</span>
-                  <span className="pd-tag">&#129424; {project.species}</span>
+                  <span className="pd-tag">
+                    <MapPin size={14} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> {project.location}
+                  </span>
+                  <span className="pd-tag">
+                    <Waves size={14} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> {project.species}
+                  </span>
                   <span className="pd-tag pd-tag-status" style={{ color: project.statusColor }}>
-                    &#9899; {project.status}
+                    <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', backgroundColor: project.statusColor || '#2E7D32', marginRight: 4 }} />
+                    {project.status}
                   </span>
                 </div>
 
@@ -105,7 +114,7 @@ const InvestPage = () => {
                 <div key={i} className={`pd-milestone${m.done ? ' done' : ' pending'}`}>
                   <div className="pd-milestone-dot-wrap">
                     <div className="pd-milestone-dot">
-                      {m.done && <span className="pd-milestone-check">&#10003;</span>}
+                      {m.done && <span className="pd-milestone-check"><Check size={12} strokeWidth={3} /></span>}
                     </div>
                     {i < project.milestones.length - 1 && (
                       <div className={`pd-milestone-line${m.done ? ' line-done' : ''}`} />

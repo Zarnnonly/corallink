@@ -29,9 +29,9 @@ body {
 }
 
 .container {
-  max-width: 1380px;
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 24px;
 }
 
 /* Utilities */
@@ -57,12 +57,12 @@ body {
 
 .gap-sm { gap: 10px; }
 .gap-md { gap: 20px; }
-.gap-lg { gap: 40px; }
-.gap-xl { gap: 79px; }
+.gap-lg { gap: 32px; }
+.gap-xl { gap: 48px; }
 
 /* Sections */
 section {
-  margin-bottom: 80px;
+  margin-bottom: 56px;
 }
 
 .section-title {

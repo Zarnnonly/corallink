@@ -1,12 +1,11 @@
-/* ─── Project Detail Page (AI Analysis) ─── */
+/* ─── Project Detail Page ─── */
 .pdv2-page {
   background: #EFFBFC;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1160px;
   margin: 0 auto;
-  min-height: 2260px;
+  min-height: calc(100vh - 120px);
   padding-bottom: 64px;
-  font-family: 'Inter', sans-serif;
 }
 
 .pdv2-not-found {

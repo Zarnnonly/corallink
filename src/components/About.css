@@ -1,12 +1,14 @@
 .about-section {
-  padding-top: 80px;
+  padding-top: 48px;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 340px 1fr;
+  gap: 48px;
   align-items: center;
+  max-width: 1060px;
+  margin: 0 auto;
 }
 
 .about-logo-container {
@@ -17,7 +19,7 @@
 
 .about-logo-image {
   width: 100%;
-  max-width: 450px;
+  max-width: 280px;
   height: auto;
   object-fit: contain;
 }

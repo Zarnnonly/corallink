@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Check } from 'lucide-react';
 import Footer from '../components/Footer';
 import './UpdateProject.css';
 import { useProjects } from '../context/ProjectContext';
@@ -143,7 +144,7 @@ const UpdateProject = () => {
             {/* Success Message */}
             {submitted && (
               <div className="update-success">
-                <span className="update-success-icon">&#10003;</span>
+                <span className="update-success-icon"><Check size={20} /></span>
                 <div>
                   <h3>Progress Updated Successfully!</h3>
                   <p>The milestone data for <strong>{selectedProject?.name}</strong> has been saved. The updated progress is now visible on the project page.</p>

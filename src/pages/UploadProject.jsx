@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
 import React, { useState, useRef } from 'react';
+import { Camera, Lock, Check, CheckCircle2, AlertCircle } from 'lucide-react';
 import { predict } from '../lib/api';
 import Footer from '../components/Footer';
 import './UploadProject.css';
@@ -97,7 +98,7 @@ const UploadProject = () => {
       <>
         <div className="upload-page">
           <div className="upload-success-card">
-            <div className="success-icon">&#10003;</div>
+            <div className="success-icon"><Check size={28} /></div>
             <h2>Project Uploaded Successfully!</h2>
             <p>Your coral restoration project <strong>{formData.projectName}</strong> has been submitted for review.</p>
             <div className="success-actions">
@@ -138,7 +139,7 @@ const UploadProject = () => {
                     <img src={imagePreview} alt="Preview" className="image-preview" />
                   ) : (
                     <div className="upload-placeholder">
-                      <span className="upload-icon">&#128247;</span>
+                      <span className="upload-icon"><Camera size={32} /></span>
                       <span>Click to select coral image</span>
                       <span className="upload-hint">JPG, PNG, WEBP (max 5MB)</span>
                     </div>
@@ -166,7 +167,7 @@ const UploadProject = () => {
                         Analyzing...
                       </>
                     ) : (
-                      '🔬 Verify Coral Image'
+                      'Verify Coral Image'
                     )}
                   </button>
                 )}
@@ -174,7 +175,7 @@ const UploadProject = () => {
                 {verificationResult && (
                   <div className={`verification-result ${verificationStatus}`}>
                     <div className="vr-header">
-                      <span className="vr-icon">{verificationStatus === 'passed' ? '✅' : '❌'}</span>
+                      <span className="vr-icon">{verificationStatus === 'passed' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span>
                       <span className="vr-condition">
                         Detected: <strong>{verificationResult.condition}</strong>
                       </span>
@@ -197,7 +198,7 @@ const UploadProject = () => {
               <div className="section-number">2</div>
               <div className="section-content">
                 <h2>Project Details</h2>
-                {verificationStatus !== 'passed' && <div className="lock-overlay"><span>🔒 Complete AI verification first</span></div>}
+                {verificationStatus !== 'passed' && <div className="lock-overlay"><Lock size={15} style={{ marginRight: 6 }} /><span>Complete image analysis first</span></div>}
                 <p className="section-desc">Provide details about the coral restoration project.</p>
 
                 <div className="form-grid">
