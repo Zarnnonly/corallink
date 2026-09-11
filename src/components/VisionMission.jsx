@@ -8,7 +8,7 @@ const VisionMission = () => {
 
   return (
     <section className="container vm-section">
-      <h2 className="section-title">Visi dan Misi</h2>
+      <h2 className="section-title">Vision and Mission </h2>
 
       <div className="vm-grid reveal-stagger" ref={gridRef}>
         {/* Kartu Visi */}
