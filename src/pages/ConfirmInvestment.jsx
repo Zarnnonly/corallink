@@ -55,9 +55,9 @@ const ConfirmInvestment = () => {
     return (
       <div className="confirm-invest-page" style={{ justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
         <div className="project-state-card project-state-empty">
-          <h2 className="state-empty-title">Permintaan Pembayaran Tidak Ditemukan</h2>
-          <p className="state-empty-desc">Data transaksi atau proyek ini tidak valid atau telah kedaluwarsa.</p>
-          <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Kembali ke Daftar Proyek</button>
+          <h2 className="state-empty-title">Payment Request Not Found</h2>
+          <p className="state-empty-desc">This transaction or project data is invalid or has expired.</p>
+          <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Back to Project List</button>
         </div>
       </div>
     );
@@ -70,7 +70,7 @@ const ConfirmInvestment = () => {
           <div className="confirm-left">
             <Link to={`/invest-form/${project.id}`} className="invest-back-link">
               <ArrowLeft size={16} />
-              <span>Ubah Nominal / Kembali</span>
+              <span>Change Amount / Back</span>
             </Link>
             <h1 className="confirm-title">Investment Summary</h1>
             {failure && (
@@ -81,7 +81,7 @@ const ConfirmInvestment = () => {
             )}
             {!transaction && !failure && (
               <div className="inline-alert inline-alert-info" role="status">
-                <span>Memuat detail pembayaran…</span>
+                <span>Loading payment details…</span>
               </div>
             )}
             {transaction && (

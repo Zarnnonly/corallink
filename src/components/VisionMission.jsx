@@ -8,24 +8,24 @@ const VisionMission = () => {
 
   return (
     <section className="container vm-section">
-      <h2 className="section-title">Visi dan Misi</h2>
+      <h2 className="section-title">Vision & Mission</h2>
 
       <div className="vm-grid reveal-stagger" ref={gridRef}>
-        {/* Kartu Visi */}
+        {/* Vision Card */}
         <article className="vm-card">
           <div className="vm-card-header">
             <h3 className="vm-card-title">Our Vision</h3>
           </div>
           <div className="vm-card-body">
             <p className="vm-card-text">
-              "Menjadi katalisator global terdepan dalam menyelamatkan terumbu
-              karang dunia melalui ekosistem investasi hijau yang transparan,
-              terukur, dan inklusif bagi generasi mendatang."
+              "To be the leading global catalyst in saving the world's coral
+              reefs through a transparent, measurable, and inclusive green
+              investment ecosystem for future generations."
             </p>
           </div>
         </article>
 
-        {/* Kartu Misi */}
+        {/* Mission Card */}
         <article className="vm-card">
           <div className="vm-card-header">
             <h3 className="vm-card-title">Our Mission</h3>

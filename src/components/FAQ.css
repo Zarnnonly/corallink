@@ -15,7 +15,7 @@
   cursor: pointer;
   transition: transform 0.2s, background 0.3s;
   overflow: hidden;
-  /* agar jawaban tidak keluar dari kotak */
+  /* prevent answer from overflowing container */
 }
 
 .faq-item:hover {
@@ -48,7 +48,7 @@
 
 .faq-item.active .faq-icon {
   transform: rotate(45deg);
-  /* ikon berubah saat aktif */
+  /* icon transforms when active */
 }
 
 .faq-answer {
@@ -60,7 +60,7 @@
 
 .faq-item.active .faq-answer {
   max-height: 500px;
-  /* cukup untuk jawaban panjang */
+  /* sufficient for long answers */
   padding-bottom: 20px;
 }
 

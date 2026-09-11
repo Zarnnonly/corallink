@@ -19,23 +19,23 @@ const Hero = () => {
         <div className="hero-overlay">
           <div className="hero-content reveal-fade-up" ref={contentRef}>
             <div className="hero-tag">
-              Platform Restorasi Karang Indonesia
+              Coral Reef Restoration Platform
             </div>
             <h1 className="hero-title">
               Invest in Healthy Oceans,<br />
               Restore Our Coral Reefs
             </h1>
             <p className="hero-subtitle">
-              Platform pendanaan transparan yang menghubungkan inisiatif konservasi laut dengan para investor dan filantropis global untuk aksi restorasi terumbu karang nyata.
+              A transparent funding platform connecting marine conservation initiatives with global investors and philanthropists for real coral reef restoration action.
             </p>
             <div className="hero-actions">
               <Link to="/take-action" className="hero-btn hero-btn-primary">
-                <span>Jelajahi Proyek</span>
+                <span>Explore Projects</span>
                 <ArrowRight size={18} />
               </Link>
               <a href="/#about" className="hero-btn hero-btn-secondary">
                 <Compass size={18} />
-                <span>Pelajari Lebih Lanjut</span>
+                <span>Learn More</span>
               </a>
             </div>
           </div>

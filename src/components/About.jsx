@@ -21,10 +21,10 @@ const About = () => {
           <h2 className="about-title">CORALLINK</h2>
           <h3 className="about-subtitle">Coral Restoration Platform</h3>
           <p className="about-description">
-            CoralLink adalah platform terintegrasi yang menjembatani organisasi pelestari lingkungan maritim dengan investor, korporasi (ESG/CSR), serta filantropis global. Kami hadir untuk mengatasi kesenjangan pendanaan dalam upaya restorasi laut melalui mekanisme pendanaan transparan, terukur, dan berbasis dampak langsung.
+            CoralLink is an integrated platform connecting marine conservation organisations with investors, corporations (ESG/CSR), and global philanthropists. We are here to bridge the funding gap in ocean restoration through transparent, measurable, and direct-impact funding mechanisms.
           </p>
           <p className="about-description">
-            CoralLink bukan sekadar platform donasi—ini adalah ekosistem pendanaan yang memberdayakan komunitas pesisir dan menjaga keberlanjutan ekosistem laut Indonesia. Dengan teknologi terdepan, kami mengubah investasi menjadi aksi nyata, menciptakan masa depan laut yang lebih sehat dan berkelanjutan.
+            CoralLink is more than just a donation platform—it is a funding ecosystem that empowers coastal communities and preserves the sustainability of marine ecosystems. Leveraging cutting-edge technology, we turn investments into tangible action, creating a healthier and more sustainable ocean future.
           </p>
         </div>
       </div>

@@ -22,7 +22,7 @@ const Footer = () => {
               <span className="footer-brand-title">CORALLINK</span>
             </Link>
             <p className="footer-tagline">
-              Platform investasi & pembiayaan restorasi karang untuk masa depan ekosistem maritim.
+              Coral restoration investment & financing platform for the future of marine ecosystems.
             </p>
           </div>
 

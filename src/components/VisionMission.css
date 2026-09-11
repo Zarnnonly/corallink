@@ -1,11 +1,11 @@
-/* ===== Section Visi & Misi ===== */
+/* ===== Vision & Mission Section ===== */
 .vm-section {
   padding-top: 24px;
   max-width: 1060px;
   margin: 0 auto;
 }
 
-/* Grid dua kolom untuk kartu */
+/* Two-column grid for cards */
 .vm-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -13,7 +13,7 @@
   margin-bottom: 32px;
 }
 
-/* Kartu individual */
+/* Individual card */
 .vm-card {
   background: #286C83;
   border-radius: 18px;
@@ -103,7 +103,7 @@
   margin: 0 auto;
 }
 
-/* Responsif untuk layar kecil */
+/* Responsive for smaller screens */
 @media (max-width: 768px) {
   .vm-grid {
     grid-template-columns: 1fr;

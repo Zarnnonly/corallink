@@ -2,7 +2,7 @@ import React from 'react';
 import useScrollReveal from '../lib/useScrollReveal';
 import './Impact.css';
 
-// Komponen Ikon SVG
+// SVG Icon Components
 const CoralIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 3c-2 1.5-3 4-3 6 0 2 1 3 3 3s3-1 3-3c0-2-1-4.5-3-6z" />
@@ -48,11 +48,11 @@ const CommunityIcon = () => (
   </svg>
 );
 
-// Data untuk bagian kiri (Impact Icons)
+// Left side data (Impact Icons)
 const impactStats = [
   {
     icon: <CoralIcon />,
-    value: '125.000+',
+    value: '125,000+',
     label: 'Coral Fragment Embedded',
   },
   {
@@ -62,30 +62,30 @@ const impactStats = [
   },
   {
     icon: <HandDollarIcon />,
-    value: 'Rp 10,2 M+',
+    value: 'IDR 10.2B+',
     label: 'Total Impact Funding Disbursed',
   },
 ];
 
-// Data untuk bagian kanan (Stat Cards)
+// Right side data (Stat Cards)
 const impactDetails = [
   {
     icon: <HealthShieldIcon />,
     title: 'Biodiversity Recovery',
     subtitle: '94% Survival Rate',
-    description: 'Pemulihan keanekaragaman hayati laut dengan tingkat kelangsungan hidup bibit karang mencapai 94% dalam 18 bulan pertama.',
+    description: 'Marine biodiversity recovery with coral seedling survival rates reaching 94% within the first 18 months.',
   },
   {
     icon: <CommunityIcon />,
     title: 'Coastal Community Empowerment',
-    subtitle: '350+ Nelayan Lokal',
-    description: 'Pelibatan masyarakat pesisir sebagai teknisi transplantasi karang dan reef guardian berpenghasilan tetap.',
+    subtitle: '350+ Local Fishers',
+    description: 'Engagement of coastal communities as coral transplantation technicians and reef guardians with steady incomes.',
   },
   {
     icon: <HealthShieldIcon />,
     title: 'Carbon & Ocean Credits',
     subtitle: 'ESG Compliance',
-    description: 'Pelaporan serapan karbon biru (blue carbon) dan sertifikasi kepatuhan ESG untuk mitra korporasi.',
+    description: 'Blue carbon sequestration reporting and ESG compliance certification for corporate partners.',
   },
 ];
 
@@ -104,7 +104,7 @@ const Impact = () => {
           <div className="impact-intro reveal-fade-up" ref={introRef}>
             <h3>Real Ocean Impact, Measured Transparently</h3>
             <p>
-              Kami percaya bahwa kepercayaan lahir dari transparansi. Setiap program restorasi yang terdaftar di CoralLink melalui uji kelayakan ketat (due diligence) dan dipantau secara berkala agar dampak ekologis maupun sosialnya dapat diverifikasi secara real-time.
+              We believe trust is built on transparency. Every restoration program listed on CoralLink undergoes rigorous due diligence and is periodically monitored so that both ecological and social impacts can be verified in real time.
             </p>
           </div>
 

@@ -1,108 +1,100 @@
 # CoralLink — Backend Requirements Specification
 
-Dokumen ini disusun sebagai panduan teknis bagi Backend Developer. Frontend CoralLink saat ini berjalan menggunakan sistem **Mock Data** (`localStorage` dan `React Context`) yang dirancang semirip mungkin dengan struktur REST API. 
+This document is prepared as a technical guide for Backend Developers. The CoralLink frontend currently operates using a mock or hybrid API integration designed to mirror RESTful API structures.
 
-Tugas backend developer adalah mengganti logika lokal tersebut dengan Database nyata dan RESTful API.
-
----
-
-##  1. Arsitektur & Autentikasi (RBAC)
-
-Aplikasi ini menggunakan **Role-Based Access Control (RBAC)** dengan dua peran (role) utama:
-1. `user` (Investor): Dapat melihat proyek, berinvestasi, dan melihat riwayat profil.
-2. `admin`: Dapat menggunakan fitur AI untuk mengunggah proyek baru dan mengupdate milestone proyek.
-
-**Sistem Auth yang dibutuhkan:**
-* Menggunakan **JSON Web Tokens (JWT)**.
-* Endpoint API harus diamankan dengan *Middleware* verifikasi token dan pengecekan role.
+The backend developer's task is to provide a persistent database and RESTful API endpoints matching these requirements.
 
 ---
 
-## 2. Database Schema (Rekomendasi)
+## 1. Architecture & Authentication (RBAC)
 
-Berikut adalah struktur koleksi (MongoDB) atau tabel (PostgreSQL/MySQL) yang dibutuhkan berdasarkan struktur state di frontend:
+The application uses **Role-Based Access Control (RBAC)** with two primary roles:
+1. `user` (Investor): Can view projects, invest, and view profile history.
+2. `admin`: Can use AI features to upload new projects, review payments, and update project milestones.
 
-### A. Tabel/Koleksi `Users`
-| Field | Tipe Data | Keterangan |
+**Authentication Requirements:**
+* Uses **JSON Web Tokens (JWT)**.
+* API endpoints must be protected with token verification and role-check middleware.
+
+---
+
+## 2. Database Schema (Recommended)
+
+Below is the recommended structure for MongoDB collections or PostgreSQL/MySQL tables based on frontend state models:
+
+### A. Table / Collection `Users`
+| Field | Data Type | Description |
 |---|---|---|
 | `id` | UUID/ObjectId | Primary Key |
-| `name` | String | Nama lengkap |
-| `email` | String | Unik |
+| `name` | String | Full name |
+| `email` | String | Unique |
 | `password_hash` | String | Bcrypt hash |
-| `phone` | String | Opsional |
+| `phone` | String | Optional |
 | `role` | Enum | `['user', 'admin']` (Default: `user`) |
 | `created_at` | Timestamp | - |
 
-### B. Tabel/Koleksi `Projects`
-*Menyimpan data katalog proyek restorasi.*
-| Field | Tipe Data | Keterangan |
+### B. Table / Collection `Projects`
+*Stores the restoration project catalogue.*
+| Field | Data Type | Description |
 |---|---|---|
-| `id` | String | Slug unik (misal: `acropora-cervicornis`) |
-| `name` | String | Judul Proyek |
-| `subtitle` | String | Subjudul |
-| `description` | Text | Penjelasan detail proyek |
-| `location` | String | Lokasi laut/pantai |
-| `species` | String | Spesies karang |
-| `image_url` | String | Link gambar (Cloudinary/S3) |
+| `id` | String | Unique slug (e.g., `acropora-cervicornis`) or integer/UUID |
+| `name` | String | Project Title |
+| `subtitle` | String | Subtitle |
+| `description` | Text | Detailed project description |
+| `location` | String | Marine / coastal location |
+| `species` | String | Coral species |
+| `image_url` | String | Image link (Cloudinary/S3/local storage) |
 | `goal` | Object / JSON | `{ fragments: String, area: String, duration: String }` |
-| `fundingTarget` | String/Number | Target dana (Rupiah) |
-| `fundingPercent` | Number | Persentase terkumpul (0-100) |
-| `milestones` | Array of JSON | Daftar milestone (Phase 1, 2, dll). Masing-masing memiliki properti `done` (boolean). |
-| `ai_analysis` | Object / JSON | Menyimpan hasil deteksi: `{ condition: String, confidenceScore: String, analysisStatus: String }` |
+| `fundingTarget` | String/Number | Funding target (in IDR) |
+| `fundingPercent` | Number | Collected percentage (0-100) |
+| `milestones` | Array of JSON | List of milestones (Phase 1, 2, etc.). Each has a `done` (boolean) or status property. |
+| `ai_analysis` | Object / JSON | Stores detection results: `{ condition: String, confidenceScore: String, analysisStatus: String }` |
 
-### C. Tabel/Koleksi `Transactions`
-*Menyimpan riwayat investasi pengguna.*
-| Field | Tipe Data | Keterangan |
+### C. Table / Collection `Transactions`
+*Stores user investment history.*
+| Field | Data Type | Description |
 |---|---|---|
 | `id` | UUID/ObjectId | Primary Key |
-| `user_id` | UUID/ObjectId | Foreign Key ke `Users` |
-| `project_id` | String | Foreign Key ke `Projects` |
-| `amount` | Number/String | Nominal investasi |
-| `type` | String | Misal: `"One-Time Contribution"` |
+| `user_id` | UUID/ObjectId | Foreign Key to `Users` |
+| `project_id` | String | Foreign Key to `Projects` |
+| `amount` | Number/String | Investment amount |
+| `type` | String | E.g.: `"One-Time Contribution"` |
 | `status` | Enum | `['Pending', 'Completed', 'Failed']` |
-| `proof_url` | String | Link gambar bukti transfer (Cloudinary/S3) |
-| `created_at` | Timestamp | Tanggal transaksi |
+| `proof_url` | String | Transfer proof image URL |
+| `created_at` | Timestamp | Transaction date |
 
 ---
 
-##  3. Daftar Endpoint REST API yang Dibutuhkan
+## 3. Required REST API Endpoints
 
-Berikut adalah daftar endpoint yang perlu dibuat oleh Backend. Di frontend, panggilan `fetch` atau `axios` akan diarahkan ke endpoint ini.
+Below is the list of endpoints used by the frontend.
 
-###  Autentikasi
-* `POST /api/auth/register` : Menerima `name, email, password, phone`. Mengembalikan token JWT.
-* `POST /api/auth/login` : Menerima `email, password`. Mengembalikan token JWT dan data user (termasuk `role`).
-* `GET /api/auth/me` : Memvalidasi token JWT dan mengembalikan profil user yang sedang aktif.
+### Authentication
+* `POST /api/auth/register` : Accepts `name, email, password, phone`. Returns a JWT token and user info.
+* `POST /api/auth/login` : Accepts `email, password`. Returns a JWT token and user data (including `role`).
+* `GET /api/auth/me` or `/api/auth/profile`: Validates JWT token and returns current active user profile.
 
-###  Manajemen Proyek (Projects)
-* `GET /api/projects` : **(Public)** Mengambil semua daftar proyek (untuk Beranda dan katalog Invest).
-* `GET /api/projects/:id` : **(Public)** Mengambil detail satu proyek berdasarkan ID/slug.
-* `POST /api/projects` : **(Admin Only)** Menerima payload JSON lengkap beserta gambar cover proyek baru. Backend perlu mengunggah gambar ke cloud storage sebelum menyimpan ke DB.
-* `PUT /api/projects/:id/milestones` : **(Admin Only)** Menerima update array milestones untuk mengubah status dari "Not Started" menjadi "Complete".
+### Project Management (Projects)
+* `GET /api/projects` : **(Public)** Retrieves all projects (for Home and Take Action catalogue).
+* `GET /api/projects/:id` : **(Public)** Retrieves a single project by ID or slug.
+* `POST /api/projects` : **(Admin Only)** Accepts multipart/form-data payload with new project cover image and fields.
+* `PUT /api/projects/:id/milestones` : **(Admin Only)** Updates milestone array status and progress notes.
 
-###  Investasi & Transaksi
-* `POST /api/transactions` : **(User Only)** Menerima data investasi (ID proyek, nominal) beserta *file gambar bukti transfer*. Backend menyimpannya dengan status default `Pending`.
-* `GET /api/transactions/me` : **(User Only)** Mengambil riwayat investasi khusus milik user yang sedang login (untuk dirender di halaman `UserProfile.jsx`).
-* `GET /api/transactions` : **(Admin Only - Opsional)** Untuk dashboard admin jika ke depannya ada fitur verifikasi pembayaran manual.
-
----
-
-## 4. Integrasi Layanan Pihak Ketiga (Third-Party Services)
-
-1. **AI Model API (Sudah Ada)**
-   * Saat mengupload proyek, frontend saat ini menembak API AI eksternal `https://api.corallink.web.id/predict` untuk memverifikasi karang mati. 
-   * **Catatan untuk Backend:** Backend tidak perlu memproses AI ini, karena frontend sudah menanganinya secara independen. Backend hanya bertugas menerima payload text hasil AI tersebut saat `POST /api/projects`.
-2. **File Storage (Multer / Cloudinary / AWS S3)**
-   * Dibutuhkan sistem penyimpanan *Multipart/Form-Data* untuk menangani:
-     1. Gambar unggahan bukti pembayaran (dari user).
-     2. Gambar cover proyek baru (dari admin).
+### Investment & Transactions
+* `POST /api/transactions` : **(User Only)** Creates an investment transaction request.
+* `GET /api/transactions/me` : **(User Only)** Retrieves investment history for the authenticated user.
+* `GET /api/transactions` : **(Admin Only)** For admin payment review dashboard.
+* `PUT /api/transactions/:id/status` : **(Admin Only)** Approves or rejects payment proof.
 
 ---
 
-## 5. Catatan Transisi untuk Frontend Developer (Bila Backend Sudah Siap)
+## 4. Third-Party Service Integrations
 
-Jika API sudah siap dan dideploy (misal di Railway/Render), Frontend Developer hanya perlu:
-1. Menghapus folder `src/data/projects.js`.
-2. Mengubah `ProjectContext.jsx` agar menggunakan `fetch/axios` ke `/api/projects` (bukan dari array lokal).
-3. Mengubah `AuthContext.jsx` agar menyimpan JWT di cookies/localStorage dan mengirimnya via header `Authorization: Bearer <token>`.
-4. Mengganti semua fungsi sinkron di form menjadi *asynchronous* (`await axios.post()`).
+1. **AI Model API**
+   * When uploading projects, the frontend connects to the AI endpoint `https://api.corallink.web.id/predict` to evaluate coral condition.
+   * **Note for Backend:** Backend independently re-verifies images on upload to maintain integrity.
+2. **File Storage**
+   * Handles multipart/form-data for:
+     1. User payment proof uploads.
+     2. Admin project cover images.
+     3. User profile avatar photos.

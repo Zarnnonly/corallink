@@ -35,7 +35,7 @@ const FormInvestment = () => {
     e.preventDefault();
     if (submitting || !settings?.enabled) return;
     const number = Number(amount.replace(/[^0-9]/g, ''));
-    if (!number || number > 9999999999) { setFailure('Masukkan nominal antara Rp 1 dan Rp 9.999.999.999.'); return; }
+    if (!number || number > 9999999999) { setFailure('Enter an amount between Rp 1 and Rp 9,999,999,999.'); return; }
     setSubmitting(true); setFailure('');
     try {
       const transaction = await request('/api/transactions', { method: 'POST', auth: true, body: { projectId: Number(project.id), amount: number, idempotencyKey: requestKey, type: investType === 'Give Monthly' ? 'Monthly Contribution' : 'One-Time Contribution', contributorName: `${firstName} ${lastName}`.trim(), contributorEmail: email } });
@@ -47,9 +47,9 @@ const FormInvestment = () => {
   if (!project) return (
     <div className="form-invest-page" style={{ justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
       <div className="project-state-card project-state-empty">
-        <h2 className="state-empty-title">Proyek Tidak Ditemukan</h2>
-        <p className="state-empty-desc">Proyek yang ingin Anda dukung tidak tersedia atau telah dipindahkan.</p>
-        <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Kembali ke Daftar Proyek</button>
+        <h2 className="state-empty-title">Project Not Found</h2>
+        <p className="state-empty-desc">The project you want to support is unavailable or has been moved.</p>
+        <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Back to Project List</button>
       </div>
     </div>
   );
@@ -61,14 +61,14 @@ const FormInvestment = () => {
         <div className="form-invest-left">
           <Link to={`/invest/${project.id}`} className="invest-back-link">
             <ArrowLeft size={16} />
-            <span>Kembali ke Detail Proyek</span>
+            <span>Back to Project Details</span>
           </Link>
           <div className="form-invest-header">
             <img src={logo} alt="Corallink Logo" className="form-logo" />
             <h1 className="form-title">Investment</h1>
             <p className="form-subtitle">
-              Dukung proyek restorasi terumbu karang demi ekosistem laut yang lebih sehat.<br />
-              Anda mendukung: <strong>{project.name}</strong>
+              Support coral reef restoration projects for a healthier marine ecosystem.<br />
+              You are supporting: <strong>{project.name}</strong>
             </p>
           </div>
 
@@ -81,13 +81,13 @@ const FormInvestment = () => {
             )}
             {!settings && !failure && (
               <div className="inline-alert inline-alert-info" role="status">
-                <span>Memuat opsi pembayaran...</span>
+                <span>Loading payment options...</span>
               </div>
             )}
             {settings && !settings.enabled && (
               <div className="inline-alert inline-alert-warning">
                 <AlertCircle size={18} style={{ flexShrink: 0 }} />
-                <span>Metode pembayaran resmi belum dikonfigurasi oleh administrator.</span>
+                <span>Official payment methods have not been configured by an administrator.</span>
               </div>
             )}
             <div className="form-section">
