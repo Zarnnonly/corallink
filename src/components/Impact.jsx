@@ -83,7 +83,7 @@ const impactDetails = [
   },
   {
     icon: <HealthShieldIcon />,
-    title: 'Verified Carbon & Ocean Credits',
+    title: 'Carbon & Ocean Credits',
     subtitle: 'ESG Compliance',
     description: 'Pelaporan serapan karbon biru (blue carbon) dan sertifikasi kepatuhan ESG untuk mitra korporasi.',
   },
