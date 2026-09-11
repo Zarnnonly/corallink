@@ -21,11 +21,9 @@ const About = () => {
           <h2 className="about-title">CORALLINK</h2>
           <h3 className="about-subtitle">Coral Restoration Platform</h3>
           <p className="about-description">
-            CoralLink is an integrated platform connecting marine conservation organisations with investors, corporations (ESG/CSR), and global philanthropists. We are here to bridge the funding gap in ocean restoration through transparent, measurable, and direct-impact funding mechanisms.
-          </p>
+            CoralLink stands as a concrete contribution to SDG 14: Life Below Water, connecting marine conservation organizations, investors, corporations (ESG/CSR), and global philanthropists within a single collaborative ecosystem. We believe that coral reef restoration requires more than just funding, as it calls for transparency, accurate data, and a shared commitment to protecting our oceans.          </p>
           <p className="about-description">
-            CoralLink is more than just a donation platform—it is a funding ecosystem that empowers coastal communities and preserves the sustainability of marine ecosystems. Leveraging cutting-edge technology, we turn investments into tangible action, creating a healthier and more sustainable ocean future.
-          </p>
+            Every project submitted is analyzed using an AI-based assessment system that measures reef health conditions, urgency levels, and restoration success potential, ensuring support reaches where it matters most. More than a funding platform, CoralLink is a collective movement to empower coastal communities and safeguard the sustainability of Indonesia's marine ecosystems for a healthier planet.          </p>
         </div>
       </div>
     </section>
