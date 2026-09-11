@@ -97,7 +97,6 @@ const Impact = () => {
   return (
     <section className="container impact-section">
       <h2 className="section-title">Impact</h2>
-      <p>Illustrative impact examples below — these figures are not verified CoralLink results.</p>
 
       <div className="impact-grid">
         {/* Left side: Intro & Key Metrics */}

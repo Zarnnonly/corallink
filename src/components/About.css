@@ -45,6 +45,7 @@
 }
 
 .about-description {
+  align-items: start;
   font-weight: 400;
   font-size: 17px;
   line-height: 1.75;
@@ -59,10 +60,28 @@
 }
 
 @media (max-width: 768px) {
-  .about-section { padding-top: 24px; }
-  .about-grid { gap: 24px; }
-  .about-logo-image { max-width: 200px; }
-  .about-title { font-size: 30px; }
-  .about-subtitle { font-size: 18px; }
-  .about-description { font-size: 15px; line-height: 1.65; }
+  .about-section {
+    padding-top: 24px;
+  }
+
+  .about-grid {
+    gap: 24px;
+  }
+
+  .about-logo-image {
+    max-width: 200px;
+  }
+
+  .about-title {
+    font-size: 30px;
+  }
+
+  .about-subtitle {
+    font-size: 18px;
+  }
+
+  .about-description {
+    font-size: 15px;
+    line-height: 1.65;
+  }
 }
