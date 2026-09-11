@@ -29,22 +29,24 @@
 }
 
 .about-title {
-  font-weight: 700;
-  font-size: 50px;
-  color: var(--text-secondary);
+  font-weight: 800;
+  font-size: 42px;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 .about-subtitle {
   font-weight: 700;
-  font-size: 30px;
-  color: var(--text-secondary);
+  font-size: 22px;
+  color: var(--bg-secondary);
+  letter-spacing: 0.03em;
 }
 
 .about-description {
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 1.6;
-  color: var(--text-secondary);
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.75;
+  color: #335362;
 }
 
 @media (max-width: 1024px) {
@@ -57,8 +59,8 @@
 @media (max-width: 768px) {
   .about-section { padding-top: 24px; }
   .about-grid { gap: 24px; }
-  .about-logo-image { max-width: 220px; }
-  .about-title { font-size: 32px; }
-  .about-subtitle { font-size: 22px; }
-  .about-description { font-size: 16px; }
+  .about-logo-image { max-width: 200px; }
+  .about-title { font-size: 30px; }
+  .about-subtitle { font-size: 18px; }
+  .about-description { font-size: 15px; line-height: 1.65; }
 }

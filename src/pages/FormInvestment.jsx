@@ -2,7 +2,8 @@ import { request } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
 import ProjectState from '../components/ProjectState';
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { ArrowLeft, AlertCircle } from 'lucide-react';
 import './FormInvestment.css';
 import logo from '../assets/rectangle-47.webp';
 import bg from '../assets/bg.webp';
@@ -34,7 +35,7 @@ const FormInvestment = () => {
     e.preventDefault();
     if (submitting || !settings?.enabled) return;
     const number = Number(amount.replace(/[^0-9]/g, ''));
-    if (!number || number > 9999999999) { setFailure('Enter an amount between Rp 1 and Rp 9.999.999.999.'); return; }
+    if (!number || number > 9999999999) { setFailure('Masukkan nominal antara Rp 1 dan Rp 9.999.999.999.'); return; }
     setSubmitting(true); setFailure('');
     try {
       const transaction = await request('/api/transactions', { method: 'POST', auth: true, body: { projectId: Number(project.id), amount: number, idempotencyKey: requestKey, type: investType === 'Give Monthly' ? 'Monthly Contribution' : 'One-Time Contribution', contributorName: `${firstName} ${lastName}`.trim(), contributorEmail: email } });
@@ -43,26 +44,52 @@ const FormInvestment = () => {
     finally { setSubmitting(false); }
   };
   if (loading || error) return <div className="form-invest-page"><ProjectState /></div>;
-  if (!project) return <div className="form-invest-page"><h1>Project not found</h1><button onClick={() => navigate('/take-action')}>Back to projects</button></div>;
+  if (!project) return (
+    <div className="form-invest-page" style={{ justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+      <div className="project-state-card project-state-empty">
+        <h2 className="state-empty-title">Proyek Tidak Ditemukan</h2>
+        <p className="state-empty-desc">Proyek yang ingin Anda dukung tidak tersedia atau telah dipindahkan.</p>
+        <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Kembali ke Daftar Proyek</button>
+      </div>
+    </div>
+  );
 
   return (
     <div className="form-invest-page">
       <div className="form-invest-container">
         {/* Left Side: Form */}
         <div className="form-invest-left">
+          <Link to={`/invest/${project.id}`} className="invest-back-link">
+            <ArrowLeft size={16} />
+            <span>Kembali ke Detail Proyek</span>
+          </Link>
           <div className="form-invest-header">
             <img src={logo} alt="Corallink Logo" className="form-logo" />
             <h1 className="form-title">Investment</h1>
             <p className="form-subtitle">
-              Support coral restoration projects and creating a healthier ocean<br />
-              You're supporting: Coral Restoration Project <strong>{project.name}</strong>
+              Dukung proyek restorasi terumbu karang demi ekosistem laut yang lebih sehat.<br />
+              Anda mendukung: <strong>{project.name}</strong>
             </p>
           </div>
 
           <form className="invest-form" onSubmit={handleContinue}>
-            {failure && <p role="alert">{failure}</p>}
-            {!settings && !failure && <p role="status">Loading payment details…</p>}
-            {settings && !settings.enabled && <p>Payment details have not been configured by the administrator yet.</p>}
+            {failure && (
+              <div className="inline-alert inline-alert-error" role="alert">
+                <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                <span>{failure}</span>
+              </div>
+            )}
+            {!settings && !failure && (
+              <div className="inline-alert inline-alert-info" role="status">
+                <span>Memuat opsi pembayaran...</span>
+              </div>
+            )}
+            {settings && !settings.enabled && (
+              <div className="inline-alert inline-alert-warning">
+                <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                <span>Metode pembayaran resmi belum dikonfigurasi oleh administrator.</span>
+              </div>
+            )}
             <div className="form-section">
               <label>Select investment type</label>
               <p className="form-help">How would you like to support this project?</p>

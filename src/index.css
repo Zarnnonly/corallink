@@ -67,22 +67,22 @@ section {
 
 .section-title {
   font-weight: 700;
-  font-size: 80px;
+  font-size: 52px;
   line-height: 1.2;
   color: var(--text-primary);
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 36px;
 }
 
 @media (max-width: 1024px) {
   .section-title {
-    font-size: 60px;
+    font-size: 42px;
   }
 }
 
 @media (max-width: 768px) {
   .section-title {
-    font-size: 40px;
+    font-size: 32px;
   }
   .container {
     padding: 0 15px;
@@ -90,6 +90,28 @@ section {
   section {
     margin-bottom: 40px;
   }
+}
+
+/* ─── Global Back Navigation Link ─── */
+.invest-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #38748C;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(40, 108, 131, 0.08);
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.invest-back-link:hover {
+  background: rgba(40, 108, 131, 0.16);
+  transform: translateX(-3px);
 }
 
 /* ─── Toast Notifications ─── */

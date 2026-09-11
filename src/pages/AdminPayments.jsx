@@ -57,8 +57,8 @@ export default function AdminPayments() {
   };
   return <><div className="update-page"><div className="update-container">
     <div className="update-header"><h1>Payment Review</h1><p>Verify each transfer against your bank statement before approving it.</p></div>
-    {error && <p role="alert">{error} <button onClick={() => setAttempt(n => n + 1)}>Reload</button></p>}
-    {loading && <p role="status">Loading payments…</p>}
+    {error && <div className="inline-alert inline-alert-error" role="alert"><span>{error}</span><button type="button" className="btn-admin-action" style={{marginLeft: 'auto'}} onClick={() => setAttempt(n => n + 1)}>Reload</button></div>}
+    {loading && <div className="inline-alert inline-alert-info" role="status"><span>Loading payments…</span></div>}
     <div className="update-form">
       <form className="update-card upload-form" onSubmit={saveSettings}>
         <h2>Official payment account</h2>
@@ -71,16 +71,18 @@ export default function AdminPayments() {
         {!loading && !transactions.length && <p>No payment submissions yet.</p>}
         {transactions.length > 0 && <p className="history-scroll-hint">Swipe the table to see payment details and review proofs.</p>}
         <div className="history-table-wrapper" role="region" aria-label="Payment submissions" tabIndex={0}><table className="history-table"><thead><tr><th>Investor / Project</th><th>Amount</th><th>Status</th><th>Proof</th></tr></thead>
-          <tbody>{transactions.map(t => <tr key={t.id}><td>{t.investor?.nama}<br />{t.investor?.email}<br />{t.project?.namaProyek}</td><td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount))}</td><td>{t.status}</td><td><button disabled={!t.hasProof || busy} onClick={() => { setError(''); setSelected(t); }}>Review proof</button></td></tr>)}</tbody>
+          <tbody>{transactions.map(t => <tr key={t.id}><td>{t.investor?.nama}<br />{t.investor?.email}<br />{t.project?.namaProyek}</td><td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount))}</td><td>{t.status}</td><td><button type="button" className="btn-admin-action" disabled={!t.hasProof || busy} onClick={() => { setError(''); setSelected(t); }}>Review proof</button></td></tr>)}</tbody>
         </table></div>
       </div>
       {selected && <div className="update-card"><h2>Review: {selected.project?.namaProyek}</h2><p>{selected.investor?.nama} — {selected.amount} IDR — {selected.status}</p>
-        {proofLoading && <p role="status">Loading private proof…</p>}{proof && <img src={proof} alt="Payment proof" style={{ maxWidth: '100%', maxHeight: 600, objectFit: 'contain' }} />}
-        {selected.status === 'Pending' && <><label htmlFor="review-note">Review notes (required for rejection)</label><textarea id="review-note" rows={3} value={note} onChange={e => setNote(e.target.value)} />
-          <label><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} /> I checked the bank statement and confirmed the amount was received.</label>
-          <button className="update-submit-btn" disabled={busy || !confirmed || !proof} onClick={() => review('Completed')}>Approve payment</button>
-          <button disabled={busy || !note.trim()} onClick={() => review('Failed')}>Reject proof</button></>}
-        <button disabled={busy} onClick={() => setSelected(null)}>Close review</button>
+        {proofLoading && <p role="status">Loading private proof…</p>}{proof && <img src={proof} alt="Payment proof" style={{ maxWidth: '100%', maxHeight: 600, objectFit: 'contain', borderRadius: 12, border: '1px solid #E0F2F1' }} />}
+        {selected.status === 'Pending' ? <><label htmlFor="review-note">Review notes (required for rejection)</label><textarea id="review-note" rows={3} value={note} onChange={e => setNote(e.target.value)} />
+          <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: '8px 0' }}><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} /> I checked the bank statement and confirmed the amount was received.</label>
+          <div className="admin-review-actions">
+            <button type="button" className="btn-admin-approve" disabled={busy || !confirmed || !proof} onClick={() => review('Completed')}>Approve payment</button>
+            <button type="button" className="btn-admin-reject" disabled={busy || !note.trim()} onClick={() => review('Failed')}>Reject proof</button>
+            <button type="button" className="btn-admin-close" disabled={busy} onClick={() => setSelected(null)}>Close review</button>
+          </div></> : <div className="admin-review-actions"><button type="button" className="btn-admin-close" disabled={busy} onClick={() => setSelected(null)}>Close review</button></div>}
       </div>}
     </div>
   </div></div><Footer /></>;

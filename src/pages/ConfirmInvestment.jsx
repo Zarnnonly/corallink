@@ -1,7 +1,8 @@
 import { request, API_URL } from '../lib/api';
 import ProjectState from '../components/ProjectState';
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { ArrowLeft, AlertCircle } from 'lucide-react';
 import './ConfirmInvestment.css';
 import { useProjects } from '../context/ProjectContext';
 import { useToast } from '../context/ToastContext';
@@ -50,17 +51,44 @@ const ConfirmInvestment = () => {
     finally { setSubmitting(false); }
   };
   if (loading || error) return <div className="confirm-invest-page"><ProjectState /></div>;
-  if (!project || !transactionId || (transaction && String(transaction.projectId) !== projectId)) return <div className="confirm-invest-page"><h1>Payment request not found</h1><button onClick={() => navigate('/take-action')}>Back to projects</button></div>;
+  if (!project || !transactionId || (transaction && String(transaction.projectId) !== projectId)) {
+    return (
+      <div className="confirm-invest-page" style={{ justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <div className="project-state-card project-state-empty">
+          <h2 className="state-empty-title">Permintaan Pembayaran Tidak Ditemukan</h2>
+          <p className="state-empty-desc">Data transaksi atau proyek ini tidak valid atau telah kedaluwarsa.</p>
+          <button type="button" className="state-retry-btn" onClick={() => navigate('/take-action')}>Kembali ke Daftar Proyek</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
       <div className="confirm-invest-page">
         <div className="confirm-card">
           <div className="confirm-left">
+            <Link to={`/invest-form/${project.id}`} className="invest-back-link">
+              <ArrowLeft size={16} />
+              <span>Ubah Nominal / Kembali</span>
+            </Link>
             <h1 className="confirm-title">Investment Summary</h1>
-            {failure && <p role="alert">{failure}</p>}
-            {!transaction && !failure && <p role="status">Loading payment…</p>}
-            {transaction && <p>Status: {transaction.status} {transaction.reviewNote}</p>}
+            {failure && (
+              <div className="inline-alert inline-alert-error" role="alert">
+                <AlertCircle size={18} style={{ flexShrink: 0 }} />
+                <span>{failure}</span>
+              </div>
+            )}
+            {!transaction && !failure && (
+              <div className="inline-alert inline-alert-info" role="status">
+                <span>Memuat detail pembayaran…</span>
+              </div>
+            )}
+            {transaction && (
+              <div className={`inline-alert ${transaction.status === 'Completed' ? 'inline-alert-info' : 'inline-alert-warning'}`}>
+                <span>Status: <strong>{transaction.status}</strong> {transaction.reviewNote ? `— ${transaction.reviewNote}` : ''}</span>
+              </div>
+            )}
             <h2 className="confirm-project-name">{project.name}</h2>
             <h3 className="confirm-project-subtitle">{project.subtitle}</h3>
 

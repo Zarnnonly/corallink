@@ -204,8 +204,18 @@
   }
 }
 
-/* The original navigation stays visible; small screens get room to wrap. */
-.site-header { position: sticky; top: 0; z-index: 100; background: var(--bg-primary); }
+/* The sticky navigation stays visible with subtle glassmorphism elevation. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(239, 251, 252, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(40, 108, 131, 0.12);
+  box-shadow: 0 4px 20px rgba(26, 71, 86, 0.05);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
 .navbar-dropdown { max-width: calc(100vw - 32px); }
 @media (max-width: 768px) {
   .navbar { flex-wrap: wrap; gap: 0 12px; padding-top: 8px; padding-bottom: 4px; }

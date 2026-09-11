@@ -4,6 +4,7 @@ import './UserProfile.css';
 import bg from '../assets/bg.webp';
 import { request } from '../lib/api';
 import { useAuth } from '../context/AuthContext';
+import Footer from '../components/Footer';
 
 const UserProfile = () => {
   const { user } = useAuth();
@@ -129,7 +130,7 @@ const UserProfile = () => {
                     <tr>
                       <td colSpan="5" style={{ textAlign: 'center', padding: '30px', color: '#666' }}>
                         {loading ? 'Loading donation history…' : error ? error : user.role === 'admin' ? 'Donation history is available for investor accounts.' : 'No investment history found.'}
-                        {error && <button onClick={() => setAttempt((n) => n + 1)}>Try again</button>}
+                        {error && <button className="state-retry-btn" style={{ marginLeft: 12 }} onClick={() => setAttempt((n) => n + 1)}>Try again</button>}
                       </td>
                     </tr>
                   )}
@@ -139,6 +140,7 @@ const UserProfile = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

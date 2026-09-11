@@ -1,13 +1,213 @@
+.hero-section {
+  margin-top: 16px;
+  margin-bottom: 64px;
+}
+
 .hero-banner {
+  position: relative;
   width: 100%;
-  border-radius: var(--border-radius-lg, 16px);
+  border-radius: var(--border-radius-lg, 24px);
   display: flex;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 40px rgba(26, 71, 86, 0.16);
   overflow: hidden;
+  background-color: #1A4756;
 }
 
 .hero-image {
   width: 100%;
-  height: auto;
+  height: 520px;
+  object-fit: cover;
+  object-position: center;
   display: block;
+}
+
+/* ─── Gradient Overlay ─── */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 44, 55, 0.92) 0%,
+    rgba(20, 60, 75, 0.82) 42%,
+    rgba(26, 71, 86, 0.45) 75%,
+    rgba(14, 44, 55, 0.2) 100%
+  );
+  display: flex;
+  align-items: center;
+  padding: 48px 64px;
+  z-index: 2;
+}
+
+.hero-content {
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+/* ─── Live Platform Badge ─── */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(135, 213, 232, 0.4);
+  backdrop-filter: blur(8px);
+  color: #8CE8F2;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.hero-badge-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4EF2B8;
+  box-shadow: 0 0 10px #4EF2B8;
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.25); }
+}
+
+/* ─── Typography ─── */
+.hero-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.18;
+  color: #FFFFFF;
+  margin: 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  letter-spacing: -0.02em;
+}
+
+.hero-subtitle {
+  font-size: 16.5px;
+  line-height: 1.65;
+  color: rgba(239, 251, 252, 0.9);
+  margin: 0;
+  font-weight: 400;
+  max-width: 580px;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* ─── CTA Action Buttons ─── */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.hero-btn-primary {
+  background: linear-gradient(135deg, #38A8C4 0%, #226C83 100%);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(40, 140, 168, 0.35);
+}
+
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(40, 140, 168, 0.5);
+  background: linear-gradient(135deg, #42B9D8 0%, #287C97 100%);
+}
+
+.hero-btn-primary:hover svg {
+  transform: translateX(4px);
+  transition: transform 0.2s ease;
+}
+
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* ─── Responsive Media Queries ─── */
+@media (max-width: 1024px) {
+  .hero-banner {
+    min-height: 460px;
+  }
+  .hero-image {
+    height: 480px;
+  }
+  .hero-overlay {
+    padding: 36px 40px;
+  }
+  .hero-title {
+    font-size: 36px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    margin-top: 10px;
+    margin-bottom: 40px;
+  }
+  .hero-banner {
+    min-height: auto;
+    border-radius: 18px;
+  }
+  .hero-image {
+    height: 460px;
+  }
+  .hero-overlay {
+    padding: 28px 20px;
+    background: linear-gradient(
+      180deg,
+      rgba(14, 44, 55, 0.85) 0%,
+      rgba(14, 44, 55, 0.95) 100%
+    );
+    align-items: flex-start;
+  }
+  .hero-title {
+    font-size: 27px;
+    line-height: 1.25;
+  }
+  .hero-subtitle {
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .hero-actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .hero-btn {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
 }

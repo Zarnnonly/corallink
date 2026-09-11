@@ -299,3 +299,88 @@
   .project-select, .progress-note-section textarea, .update-card textarea { font-size: 16px; width: 100%; }
   .update-submit-btn { max-width: none; }
 }
+
+/* ─── Admin Payments Actions ─── */
+.btn-admin-action {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #EFFBFC;
+  color: #286C83;
+  border: 1px solid #B8DDE8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-admin-action:hover:not(:disabled) {
+  background: #286C83;
+  color: #FFFFFF;
+}
+
+.btn-admin-action:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-review-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.btn-admin-approve {
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #2E7D32;
+  color: #FFFFFF;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-admin-approve:hover:not(:disabled) {
+  background: #1B5E20;
+}
+
+.btn-admin-approve:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-admin-reject {
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: #FFEBEE;
+  color: #C62828;
+  border: 1px solid #FFCDD2;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-admin-reject:hover:not(:disabled) {
+  background: #C62828;
+  color: #FFFFFF;
+}
+
+.btn-admin-close {
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #ECEFF1;
+  color: #455A64;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-admin-close:hover:not(:disabled) {
+  background: #CFD8DC;
+}

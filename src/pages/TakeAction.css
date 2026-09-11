@@ -10,16 +10,27 @@
 
 .action-card {
   display: flex;
-  background-color: transparent;
+  background-color: #FFFFFF;
+  border-radius: 20px;
+  padding: 24px;
   width: 100%;
   max-width: 1000px;
   gap: 32px;
+  box-shadow: 0 8px 30px rgba(40, 108, 131, 0.08);
+  border: 1px solid #E0F2F1;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(40, 108, 131, 0.14);
 }
 
 .action-card-left {
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  width: 280px;
+  width: 300px;
+  height: 220px;
   flex-shrink: 0;
 }
 
@@ -31,55 +42,66 @@
 }
 
 .action-btn {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   text-decoration: none;
-  background-color: #FFFFFF;
-  color: #38748C;
+  background: linear-gradient(135deg, #38A8C4 0%, #286C83 100%);
+  color: #FFFFFF;
   border: none;
-  border-radius: 20px;
-  padding: 10px 0;
-  font-weight: 600;
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-weight: 700;
+  font-size: 15px;
   cursor: pointer;
   text-align: center;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+  width: fit-content;
+  box-shadow: 0 4px 14px rgba(40, 140, 168, 0.25);
 }
 
 .action-btn:hover {
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #42B9D8 0%, #1A4756 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(40, 140, 168, 0.35);
 }
 
 .action-card-right {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   flex-grow: 1;
+  justify-content: center;
 }
 
 .action-card-right h2 {
-  color: #2F6174;
+  color: #1A3F50;
   font-size: 24px;
+  font-weight: 800;
   margin: 0;
 }
 
 .action-card-right h3 {
-  color: #2F6174;
-  font-size: 16px;
+  color: #38A8C4;
+  font-size: 14px;
+  font-weight: 700;
   margin: 0;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .action-card-right p {
-  color: #4A4A4A;
-  font-size: 14px;
+  color: #4A636E;
+  font-size: 14.5px;
   line-height: 1.6;
-  margin: 0 0 12px 0;
+  margin: 0 0 8px 0;
 }
 
 @media (max-width: 768px) {
-  .take-action-page { padding-top: 24px; gap: 24px; }
-  .action-card { flex-direction: column; gap: 16px; }
-  .action-card-left { width: 100%; height: 220px; }
+  .take-action-page { padding-top: 24px; gap: 20px; }
+  .action-card { flex-direction: column; gap: 16px; padding: 18px; }
+  .action-card-left { width: 100%; height: 200px; border-radius: 12px; }
   .action-card-right { min-width: 0; overflow-wrap: anywhere; }
   .action-card-right h2 { font-size: 22px; }
-  .action-btn { min-height: 44px; }
+  .action-btn { width: 100%; min-height: 44px; }
 }
