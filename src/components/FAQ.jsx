@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import useScrollReveal from '../lib/useScrollReveal';
 import './FAQ.css';
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const listRef = useScrollReveal();
 
   const faqData = [
     {
@@ -31,7 +33,7 @@ const FAQ = () => {
     <section className="container faq-section" id="faq">
       <h2 className="section-title">FAQ</h2>
 
-      <div className="faq-list">
+      <div className="faq-list reveal-stagger" ref={listRef}>
         {faqData.map((item, index) => (
           <div
             className={`faq-item ${openIndex === index ? 'active' : ''}`}

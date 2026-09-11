@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Compass } from 'lucide-react';
+import useScrollReveal from '../lib/useScrollReveal';
 import './Hero.css';
 import heroImage from '../assets/hero-banner.webp';
 
 const Hero = () => {
+  const contentRef = useScrollReveal();
+
   return (
     <section className="container hero-section">
       <div className="hero-banner">
@@ -14,7 +17,7 @@ const Hero = () => {
           className="hero-image"
         />
         <div className="hero-overlay">
-          <div className="hero-content">
+          <div className="hero-content reveal-fade-up" ref={contentRef}>
             <div className="hero-tag">
               Platform Restorasi Karang Indonesia
             </div>

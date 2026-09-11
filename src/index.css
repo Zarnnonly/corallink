@@ -233,3 +233,73 @@ button:disabled { cursor: not-allowed; }
   .section-title { font-size: 32px; margin-bottom: 24px; }
   .toast-message { min-width: 0; overflow-wrap: anywhere; }
 }
+
+/* ─── Scroll Reveal Animation Classes ─── */
+@media (prefers-reduced-motion: no-preference) {
+  /* Base hidden states */
+  .reveal-fade-up,
+  .reveal-fade-left,
+  .reveal-fade-right,
+  .reveal-scale {
+    opacity: 0;
+    will-change: opacity, transform;
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal-fade-up {
+    transform: translateY(32px);
+  }
+  .reveal-fade-left {
+    transform: translateX(-40px);
+  }
+  .reveal-fade-right {
+    transform: translateX(40px);
+  }
+  .reveal-scale {
+    transform: scale(0.92);
+  }
+
+  /* Revealed state */
+  .reveal-fade-up.revealed,
+  .reveal-fade-left.revealed,
+  .reveal-fade-right.revealed,
+  .reveal-scale.revealed {
+    opacity: 1;
+    transform: translate(0) scale(1);
+  }
+
+  /* Stagger children: add .reveal-stagger to parent, children get sequential delays */
+  .reveal-stagger.revealed > * {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: revealStaggerChild 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .reveal-stagger.revealed > *:nth-child(1) { animation-delay: 0ms; }
+  .reveal-stagger.revealed > *:nth-child(2) { animation-delay: 100ms; }
+  .reveal-stagger.revealed > *:nth-child(3) { animation-delay: 200ms; }
+  .reveal-stagger.revealed > *:nth-child(4) { animation-delay: 300ms; }
+  .reveal-stagger.revealed > *:nth-child(5) { animation-delay: 400ms; }
+  .reveal-stagger.revealed > *:nth-child(6) { animation-delay: 500ms; }
+  .reveal-stagger.revealed > *:nth-child(7) { animation-delay: 600ms; }
+  .reveal-stagger.revealed > *:nth-child(8) { animation-delay: 700ms; }
+
+  @keyframes revealStaggerChild {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Custom delay utilities via data attribute */
+  [data-reveal-delay="100"] { transition-delay: 100ms !important; }
+  [data-reveal-delay="200"] { transition-delay: 200ms !important; }
+  [data-reveal-delay="300"] { transition-delay: 300ms !important; }
+  [data-reveal-delay="400"] { transition-delay: 400ms !important; }
+  [data-reveal-delay="500"] { transition-delay: 500ms !important; }
+}
+

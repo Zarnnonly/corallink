@@ -1,4 +1,5 @@
 import React from 'react';
+import useScrollReveal from '../lib/useScrollReveal';
 import './Impact.css';
 
 // Komponen Ikon SVG
@@ -89,6 +90,10 @@ const impactDetails = [
 ];
 
 const Impact = () => {
+  const introRef = useScrollReveal();
+  const statsRef = useScrollReveal();
+  const cardsRef = useScrollReveal();
+
   return (
     <section className="container impact-section">
       <h2 className="section-title">Impact</h2>
@@ -97,14 +102,14 @@ const Impact = () => {
       <div className="impact-grid">
         {/* Left side: Intro & Key Metrics */}
         <div className="impact-left">
-          <div className="impact-intro">
+          <div className="impact-intro reveal-fade-up" ref={introRef}>
             <h3>Real Ocean Impact, Measured Transparently</h3>
             <p>
               Kami percaya bahwa kepercayaan lahir dari transparansi. Setiap program restorasi yang terdaftar di CoralLink melalui uji kelayakan ketat (due diligence) dan dipantau secara berkala agar dampak ekologis maupun sosialnya dapat diverifikasi secara real-time.
             </p>
           </div>
 
-          <div className="impact-icons">
+          <div className="impact-icons reveal-stagger" ref={statsRef}>
             {impactStats.map((stat, index) => (
               <div className="icon-item" key={index}>
                 <div className="icon-wrapper">
@@ -120,7 +125,7 @@ const Impact = () => {
         </div>
 
         {/* Right side: Detailed impact cards */}
-        <div className="impact-right">
+        <div className="impact-right reveal-stagger" ref={cardsRef}>
           {impactDetails.map((detail, index) => (
             <div className="stat-card" key={index}>
               <div className="stat-icon">

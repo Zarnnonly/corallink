@@ -1,16 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Globe, ExternalLink } from 'lucide-react';
+import useScrollReveal from '../lib/useScrollReveal';
 import './Footer.css';
 import logoFooter from '../assets/rectangle-47.webp';
 
 const Footer = () => {
+  const mainRef = useScrollReveal();
+
   return (
     <footer className="footer-section">
       <div className="container footer-container">
         
         {/* Main Content Row */}
-        <div className="footer-main-row">
+        <div className="footer-main-row reveal-fade-up" ref={mainRef}>
           
           {/* Brand & Tagline */}
           <div className="footer-brand">

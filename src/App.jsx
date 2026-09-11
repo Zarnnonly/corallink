@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import Navbar from './components/Navbar';
+import PageTransition from './components/PageTransition';
 import Home from './pages/Home';
 import TakeAction from './pages/TakeAction';
 import Welcome from './pages/Welcome';
@@ -33,54 +34,56 @@ function AppContent() {
   return (
     <>
       {!hideNavbar && <Navbar />}
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/take-action" element={<TakeAction />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/signin" element={<SignIn />} />
+      <PageTransition>
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/take-action" element={<TakeAction />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
 
-        <Route path="/invest/:projectId" element={<InvestPage />} />
-        <Route path="/project/:projectId" element={<ProjectDetail />} />
+          <Route path="/invest/:projectId" element={<InvestPage />} />
+          <Route path="/project/:projectId" element={<ProjectDetail />} />
 
-        {/* User Routes */}
-        <Route path="/invest-form/:projectId" element={
-          <ProtectedRoute allowedRoles={['user']}>
-            <FormInvestment />
-          </ProtectedRoute>
-        } />
-        <Route path="/confirm-invest/:projectId" element={
-          <ProtectedRoute allowedRoles={['user']}>
-            <ConfirmInvestment />
-          </ProtectedRoute>
-        } />
-        <Route path="/profile" element={
-          <ProtectedRoute allowedRoles={['user', 'admin']}>
-            <UserProfile />
-          </ProtectedRoute>
-        } />
+          {/* User Routes */}
+          <Route path="/invest-form/:projectId" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <FormInvestment />
+            </ProtectedRoute>
+          } />
+          <Route path="/confirm-invest/:projectId" element={
+            <ProtectedRoute allowedRoles={['user']}>
+              <ConfirmInvestment />
+            </ProtectedRoute>
+          } />
+          <Route path="/profile" element={
+            <ProtectedRoute allowedRoles={['user', 'admin']}>
+              <UserProfile />
+            </ProtectedRoute>
+          } />
 
 
-        {/* Admin Routes */}
-        <Route path="/upload-project" element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <UploadProject />
-          </ProtectedRoute>
-        } />
-        <Route path="/update-project" element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <UpdateProject />
-          </ProtectedRoute>
-        } />
+          {/* Admin Routes */}
+          <Route path="/upload-project" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UploadProject />
+            </ProtectedRoute>
+          } />
+          <Route path="/update-project" element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <UpdateProject />
+            </ProtectedRoute>
+          } />
 
-        <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
+          <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
 
-        <Route path="/admin/projects" element={<ProtectedRoute allowedRoles={['admin']}><DeleteProject /></ProtectedRoute>} />
+          <Route path="/admin/projects" element={<ProtectedRoute allowedRoles={['admin']}><DeleteProject /></ProtectedRoute>} />
 
-        {/* 404 Catch-all */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+          {/* 404 Catch-all */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </PageTransition>
       <Analytics />
       <SpeedInsights />
     </>

@@ -1,11 +1,13 @@
 import ProjectState from '../components/ProjectState';
 import React from 'react';
+import useScrollReveal from '../lib/useScrollReveal';
 import './Projects.css';
 import { Link } from 'react-router-dom';
 import { useProjects } from '../context/ProjectContext';
 
 const Projects = () => {
   const { projects } = useProjects();
+  const gridRef = useScrollReveal();
 
   return (
     <section className="container projects-section">
@@ -22,7 +24,7 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="projects-grid">
+        <div className="projects-grid reveal-stagger" ref={gridRef}>
           <ProjectState />
           {projects.map((project) => (
             <Link

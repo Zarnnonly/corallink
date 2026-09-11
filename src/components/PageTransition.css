@@ -1,0 +1,45 @@
+/* ─── Page Transition Animations ─── */
+
+.page-transition {
+  will-change: opacity, transform;
+}
+
+.page-enter {
+  animation: pageEnterAnim 0.4s ease-out both;
+}
+
+.page-exit {
+  animation: pageExitAnim 0.25s ease-in both;
+}
+
+@keyframes pageEnterAnim {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pageExitAnim {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter,
+  .page-exit {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
