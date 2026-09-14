@@ -2,10 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { request } from '../lib/api';
 import { useProjects } from '../context/ProjectContext';
 import { useToast } from '../context/ToastContext';
-import Footer from '../components/Footer';
+import AdminLayout from '../components/AdminLayout';
 import './UpdateProject.css';
 import './UploadProject.css';
 import './UserProfile.css';
+
+const statusBadgeClass = (status) => {
+  if (status === 'Pending') return 'status-badge status-badge-pending';
+  if (status === 'Completed') return 'status-badge status-badge-completed';
+  if (status === 'Failed') return 'status-badge status-badge-failed';
+  if (status === 'AwaitingProof') return 'status-badge status-badge-awaiting';
+  return 'status-badge';
+};
 
 export default function AdminPayments() {
   const [transactions, setTransactions] = useState([]);
@@ -55,8 +63,7 @@ export default function AdminPayments() {
       setSelected(null); setAttempt(n => n + 1); retry(); showToast('Payment review saved.', 'success');
     } catch (e) { setError(e.message); } finally { setBusy(false); }
   };
-  return <><div className="update-page"><div className="update-container">
-    <div className="update-header"><h1>Payment Review</h1><p>Verify each transfer against your bank statement before approving it.</p></div>
+  return <AdminLayout title="Payment Review" description="Verify each transfer against your bank statement before approving it." breadcrumb="Payment Review">
     {error && <div className="inline-alert inline-alert-error" role="alert"><span>{error}</span><button type="button" className="btn-admin-action" style={{marginLeft: 'auto'}} onClick={() => setAttempt(n => n + 1)}>Reload</button></div>}
     {loading && <div className="inline-alert inline-alert-info" role="status"><span>Loading payments…</span></div>}
     <div className="update-form">
@@ -71,10 +78,10 @@ export default function AdminPayments() {
         {!loading && !transactions.length && <p>No payment submissions yet.</p>}
         {transactions.length > 0 && <p className="history-scroll-hint">Swipe the table to see payment details and review proofs.</p>}
         <div className="history-table-wrapper" role="region" aria-label="Payment submissions" tabIndex={0}><table className="history-table"><thead><tr><th>Investor / Project</th><th>Amount</th><th>Status</th><th>Proof</th></tr></thead>
-          <tbody>{transactions.map(t => <tr key={t.id}><td>{t.investor?.nama}<br />{t.investor?.email}<br />{t.project?.namaProyek}</td><td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount))}</td><td>{t.status}</td><td><button type="button" className="btn-admin-action" disabled={!t.hasProof || busy} onClick={() => { setError(''); setSelected(t); }}>Review proof</button></td></tr>)}</tbody>
+          <tbody>{transactions.map(t => <tr key={t.id}><td>{t.investor?.nama}<br />{t.investor?.email}<br />{t.project?.namaProyek}</td><td>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(Number(t.amount))}</td><td><span className={statusBadgeClass(t.status)}>{t.status}</span></td><td><button type="button" className="btn-admin-action" disabled={!t.hasProof || busy} onClick={() => { setError(''); setSelected(t); }}>Review proof</button></td></tr>)}</tbody>
         </table></div>
       </div>
-      {selected && <div className="update-card"><h2>Review: {selected.project?.namaProyek}</h2><p>{selected.investor?.nama} — {selected.amount} IDR — {selected.status}</p>
+      {selected && <div className="update-card"><h2>Review: {selected.project?.namaProyek}</h2><p>{selected.investor?.nama} — {selected.amount} IDR — <span className={statusBadgeClass(selected.status)}>{selected.status}</span></p>
         {proofLoading && <p role="status">Loading private proof…</p>}{proof && <img src={proof} alt="Payment proof" style={{ maxWidth: '100%', maxHeight: 600, objectFit: 'contain', borderRadius: 12, border: '1px solid #E0F2F1' }} />}
         {selected.status === 'Pending' ? <><label htmlFor="review-note">Review notes (required for rejection)</label><textarea id="review-note" rows={3} value={note} onChange={e => setNote(e.target.value)} />
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: '8px 0' }}><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} /> I checked the bank statement and confirmed the amount was received.</label>
@@ -85,5 +92,5 @@ export default function AdminPayments() {
           </div></> : <div className="admin-review-actions"><button type="button" className="btn-admin-close" disabled={busy} onClick={() => setSelected(null)}>Close review</button></div>}
       </div>}
     </div>
-  </div></div><Footer /></>;
+  </AdminLayout>;
 }

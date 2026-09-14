@@ -1,33 +1,5 @@
-/* ─── Update Project Page ─── */
-.update-page {
-  background: #EFFBFC;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  padding: 40px 24px 64px;
-}
+/* ─── Update Project Page (inside AdminLayout) ─── */
 
-.update-container {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.update-header {
-  margin-bottom: 40px;
-}
-
-.update-header h1 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #1A3F50;
-  margin: 0 0 8px 0;
-}
-
-.update-header p {
-  font-size: 15px;
-  color: #4A4A4A;
-  line-height: 1.6;
-  margin: 0;
-}
 
 .update-form {
   display: flex;
@@ -286,9 +258,6 @@
 
 
 @media (max-width: 768px) {
-  .update-page { padding: 24px 16px 40px; }
-  .update-header { margin-bottom: 24px; }
-  .update-header h1 { font-size: 26px; }
   .update-form { gap: 20px; min-width: 0; }
   .update-card { padding: 20px 16px; min-width: 0; overflow-wrap: anywhere; }
   .update-card h2 { font-size: 20px; }

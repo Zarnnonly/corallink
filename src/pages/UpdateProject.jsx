@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Check } from 'lucide-react';
-import Footer from '../components/Footer';
+import AdminLayout from '../components/AdminLayout';
 import './UpdateProject.css';
 import { useProjects } from '../context/ProjectContext';
 import { useToast } from '../context/ToastContext';
@@ -61,101 +61,91 @@ const UpdateProject = () => {
   };
 
   return (
-    <>
-      <div className="update-page">
-        <div className="update-container">
-          <div className="update-header">
-            <h1>Update Project Progress</h1>
-            <p>Select a coral restoration project and update its milestone progress to keep investors informed.</p>
-          </div>
+    <AdminLayout title="Update Project Progress" description="Select a coral restoration project and update its milestone progress to keep investors informed." breadcrumb="Update Project">
+      <form className="update-form" onSubmit={handleSubmit}>
+        {loading && <p role="status">Loading projects…</p>}
+        {(error || saveError) && <p role="alert">{error || saveError}</p>}
+        {error && <button type="button" onClick={retry}>Try again</button>}
+        {!loading && !error && !projects.length && <p>No projects published yet.</p>}
+        {/* Project Selector */}
+        <div className="update-card">
+          <h2>Select Project</h2>
+          <select
+            className="project-select" disabled={saving}
+            value={selectedProjectId}
+            onChange={handleProjectSelect}
+            required
+          >
+            <option value="" disabled>— Choose a project —</option>
+            {projects.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name} — {p.subtitle}
+              </option>
+            ))}
+          </select>
+        </div>
 
-          <form className="update-form" onSubmit={handleSubmit}>
-            {loading && <p role="status">Loading projects…</p>}
-            {(error || saveError) && <p role="alert">{error || saveError}</p>}
-            {error && <button type="button" onClick={retry}>Try again</button>}
-            {!loading && !error && !projects.length && <p>No projects published yet.</p>}
-            {/* Project Selector */}
-            <div className="update-card">
-              <h2>Select Project</h2>
-              <select
-                className="project-select" disabled={saving}
-                value={selectedProjectId}
-                onChange={handleProjectSelect}
-                required
-              >
-                <option value="" disabled>— Choose a project —</option>
-                {projects.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} — {p.subtitle}
-                  </option>
-                ))}
-              </select>
+        {/* Milestones Update */}
+        {selectedProject && (
+          <div className="update-card">
+            <h2>Milestone Progress</h2>
+            <p className="update-card-desc">Update the status of each phase for <strong>{selectedProject.name}</strong>.</p>
+
+            <div className="milestones-list">
+              {milestoneUpdates.map((m, i) => (
+                <div key={i} className="milestone-row">
+                  <div className="milestone-info">
+                    <span className="milestone-phase-badge">{m.phase}</span>
+                    <div className="milestone-details">
+                      <span className="milestone-title">{m.title}</span>
+                      <span className="milestone-months">{m.months}</span>
+                    </div>
+                  </div>
+                  <div className="milestone-status-select">
+                    {statusOptions.map((opt) => (
+                      <button
+                        key={opt}
+                        type="button"
+                        className={`status-chip ${m.status === opt ? 'active' : ''} ${opt.toLowerCase().replace(' ', '-')}`}
+                        onClick={() => handleStatusChange(i, opt)}
+                      >
+                        {opt}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
 
-            {/* Milestones Update */}
-            {selectedProject && (
-              <div className="update-card">
-                <h2>Milestone Progress</h2>
-                <p className="update-card-desc">Update the status of each phase for <strong>{selectedProject.name}</strong>.</p>
+            {/* Progress Note */}
+            <div className="progress-note-section">
+              <label>Progress Notes</label>
+              <textarea
+                value={progressNote}
+                onChange={(e) => setProgressNote(e.target.value)}
+                placeholder="Describe what work has been completed, any challenges, and next steps..."
+                rows={5}
+              />
+            </div>
 
-                <div className="milestones-list">
-                  {milestoneUpdates.map((m, i) => (
-                    <div key={i} className="milestone-row">
-                      <div className="milestone-info">
-                        <span className="milestone-phase-badge">{m.phase}</span>
-                        <div className="milestone-details">
-                          <span className="milestone-title">{m.title}</span>
-                          <span className="milestone-months">{m.months}</span>
-                        </div>
-                      </div>
-                      <div className="milestone-status-select">
-                        {statusOptions.map((opt) => (
-                          <button
-                            key={opt}
-                            type="button"
-                            className={`status-chip ${m.status === opt ? 'active' : ''} ${opt.toLowerCase().replace(' ', '-')}`}
-                            onClick={() => handleStatusChange(i, opt)}
-                          >
-                            {opt}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+            <button type="submit" disabled={saving || !milestoneUpdates.length} className="update-submit-btn">
+              Submit Progress Update
+            </button>
+          </div>
+        )}
 
-                {/* Progress Note */}
-                <div className="progress-note-section">
-                  <label>Progress Notes</label>
-                  <textarea
-                    value={progressNote}
-                    onChange={(e) => setProgressNote(e.target.value)}
-                    placeholder="Describe what work has been completed, any challenges, and next steps..."
-                    rows={5}
-                  />
-                </div>
-
-                <button type="submit" disabled={saving || !milestoneUpdates.length} className="update-submit-btn">
-                  Submit Progress Update
-                </button>
-              </div>
-            )}
-
-            {/* Success Message */}
-            {submitted && (
-              <div className="update-success">
-                <span className="update-success-icon"><Check size={20} /></span>
-                <div>
-                  <h3>Progress Updated Successfully!</h3>
-                  <p>The milestone data for <strong>{selectedProject?.name}</strong> has been saved. The updated progress is now visible on the project page.</p>
-                </div>
-              </div>
-            )}
-          </form>
-        </div>
-      </div>
-      <Footer />
-    </>
+        {/* Success Message */}
+        {submitted && (
+          <div className="update-success">
+            <span className="update-success-icon"><Check size={20} /></span>
+            <div>
+              <h3>Progress Updated Successfully!</h3>
+              <p>The milestone data for <strong>{selectedProject?.name}</strong> has been saved. The updated progress is now visible on the project page.</p>
+            </div>
+          </div>
+        )}
+      </form>
+    </AdminLayout>
   );
 };
 

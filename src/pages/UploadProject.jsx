@@ -3,7 +3,7 @@ import { useProjects } from '../context/ProjectContext';
 import React, { useState, useRef } from 'react';
 import { Camera, Lock, Check, CheckCircle2, AlertCircle } from 'lucide-react';
 import { predict } from '../lib/api';
-import Footer from '../components/Footer';
+import AdminLayout from '../components/AdminLayout';
 import './UploadProject.css';
 import { useToast } from '../context/ToastContext';
 
@@ -95,221 +95,208 @@ const UploadProject = () => {
 
   if (submitted) {
     return (
-      <>
-        <div className="upload-page">
-          <div className="upload-success-card">
-            <div className="success-icon"><Check size={28} /></div>
-            <h2>Project Uploaded Successfully!</h2>
-            <p>Your coral restoration project <strong>{formData.projectName}</strong> has been submitted for review.</p>
-            <div className="success-actions">
-              <button className="success-btn primary" onClick={() => navigate('/take-action')}>
-                View All Projects
-              </button>
-              <button className="success-btn secondary" onClick={() => { setSubmitted(false); setFormData({ projectName: '', species: '', location: '', description: '', fundingGoal: '', duration: '', fragments: '', area: '' }); setImageFile(null); setImagePreview(null); setVerificationStatus(null); setVerificationResult(null); }}>
-                Upload Another Project
-              </button>
-            </div>
+      <AdminLayout title="Upload New Project" description="Project uploaded successfully." breadcrumb="Upload Project">
+        <div className="upload-success-card">
+          <div className="success-icon"><Check size={28} /></div>
+          <h2>Project Uploaded Successfully!</h2>
+          <p>Your coral restoration project <strong>{formData.projectName}</strong> has been submitted for review.</p>
+          <div className="success-actions">
+            <button className="success-btn primary" onClick={() => navigate('/take-action')}>
+              View All Projects
+            </button>
+            <button className="success-btn secondary" onClick={() => { setSubmitted(false); setFormData({ projectName: '', species: '', location: '', description: '', fundingGoal: '', duration: '', fragments: '', area: '' }); setImageFile(null); setImagePreview(null); setVerificationStatus(null); setVerificationResult(null); }}>
+              Upload Another Project
+            </button>
           </div>
         </div>
-        <Footer />
-      </>
+      </AdminLayout>
     );
   }
 
   return (
-    <>
-      <div className="upload-page">
-        <div className="upload-container">
-          <div className="upload-header">
-            <h1>Upload New Project</h1>
-            <p>Submit a new coral restoration project with a cover image and restoration goals. AI analysis is informational.</p>
-          </div>
+    <AdminLayout title="Upload New Project" description="Submit a new coral restoration project with a cover image and restoration goals. AI analysis is informational." breadcrumb="Upload Project">
+      <form className="upload-form" onSubmit={handleSubmit}>
+        {submitError && <p role="alert">{submitError}</p>}
+        {/* Section 1: ML Verification */}
+        <div className="upload-section verification-section">
+          <div className="section-number">1</div>
+          <div className="section-content">
+            <h2>AI Coral Analysis</h2>
+            <p className="section-desc">Upload a photo of the coral reef. Our AI will estimate its condition for review.</p>
 
-          <form className="upload-form" onSubmit={handleSubmit}>
-            {submitError && <p role="alert">{submitError}</p>}
-            {/* Section 1: ML Verification */}
-            <div className="upload-section verification-section">
-              <div className="section-number">1</div>
-              <div className="section-content">
-                <h2>AI Coral Analysis</h2>
-                <p className="section-desc">Upload a photo of the coral reef. Our AI will estimate its condition for review.</p>
+            <div className="image-upload-area" role="button" tabIndex={0} aria-label="Select coral image" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click(); }} onClick={() => fileInputRef.current?.click()}>
+              {imagePreview ? (
+                <img src={imagePreview} alt="Preview" className="image-preview" />
+              ) : (
+                <div className="upload-placeholder">
+                  <span className="upload-icon"><Camera size={32} /></span>
+                  <span>Click to select coral image</span>
+                  <span className="upload-hint">JPG, PNG, WEBP (max 5MB)</span>
+                </div>
+              )}
+              <input
+                type="file"
+                ref={fileInputRef}
+                accept="image/jpeg,image/png,image/webp"
+                disabled={verificationStatus === 'loading' || submitting}
+                onChange={handleImageSelect}
+                hidden
+              />
+            </div>
 
-                <div className="image-upload-area" role="button" tabIndex={0} aria-label="Select coral image" onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') fileInputRef.current?.click(); }} onClick={() => fileInputRef.current?.click()}>
-                  {imagePreview ? (
-                    <img src={imagePreview} alt="Preview" className="image-preview" />
-                  ) : (
-                    <div className="upload-placeholder">
-                      <span className="upload-icon"><Camera size={32} /></span>
-                      <span>Click to select coral image</span>
-                      <span className="upload-hint">JPG, PNG, WEBP (max 5MB)</span>
-                    </div>
+            {imageFile && (
+              <button
+                type="button"
+                className={`verify-btn ${verificationStatus === 'loading' ? 'loading' : ''}`}
+                onClick={handleVerify}
+                disabled={verificationStatus === 'loading' || submitting}
+              >
+                {verificationStatus === 'loading' ? (
+                  <>
+                    <span className="spinner"></span>
+                    Analyzing...
+                  </>
+                ) : (
+                  'Verify Coral Image'
+                )}
+              </button>
+            )}
+
+            {verificationResult && (
+              <div className={`verification-result ${verificationStatus}`}>
+                <div className="vr-header">
+                  <span className="vr-icon">{verificationStatus === 'passed' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span>
+                  <span className="vr-condition">
+                    Detected: <strong>{verificationResult.condition}</strong>
+                  </span>
+                  {verificationResult.confidence != null && (
+                    <span className="vr-confidence">
+                      Confidence: {typeof verificationResult.confidence === 'number'
+                        ? `${verificationResult.confidence.toFixed(1)}%`
+                        : verificationResult.confidence}
+                    </span>
                   )}
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/jpeg,image/png,image/webp"
-                    disabled={verificationStatus === 'loading' || submitting}
-                    onChange={handleImageSelect}
-                    hidden
-                  />
                 </div>
-
-                {imageFile && (
-                  <button
-                    type="button"
-                    className={`verify-btn ${verificationStatus === 'loading' ? 'loading' : ''}`}
-                    onClick={handleVerify}
-                    disabled={verificationStatus === 'loading' || submitting}
-                  >
-                    {verificationStatus === 'loading' ? (
-                      <>
-                        <span className="spinner"></span>
-                        Analyzing...
-                      </>
-                    ) : (
-                      'Verify Coral Image'
-                    )}
-                  </button>
-                )}
-
-                {verificationResult && (
-                  <div className={`verification-result ${verificationStatus}`}>
-                    <div className="vr-header">
-                      <span className="vr-icon">{verificationStatus === 'passed' ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}</span>
-                      <span className="vr-condition">
-                        Detected: <strong>{verificationResult.condition}</strong>
-                      </span>
-                      {verificationResult.confidence != null && (
-                        <span className="vr-confidence">
-                          Confidence: {typeof verificationResult.confidence === 'number'
-                            ? `${verificationResult.confidence.toFixed(1)}%`
-                            : verificationResult.confidence}
-                        </span>
-                      )}
-                    </div>
-                    <p className="vr-message">{verificationResult.message}</p>
-                  </div>
-                )}
+                <p className="vr-message">{verificationResult.message}</p>
               </div>
-            </div>
-
-            {/* Section 2: Project Details */}
-            <div className={`upload-section details-section ${verificationStatus !== 'passed' ? 'locked' : ''}`}>
-              <div className="section-number">2</div>
-              <div className="section-content">
-                <h2>Project Details</h2>
-                {verificationStatus !== 'passed' && <div className="lock-overlay"><Lock size={15} style={{ marginRight: 6 }} /><span>Complete image analysis first</span></div>}
-                <p className="section-desc">Provide details about the coral restoration project.</p>
-
-                <div className="form-grid">
-                  <div className="form-group full">
-                    <label>Project Name *</label>
-                    <input
-                      type="text"
-                      name="projectName"
-                      value={formData.projectName}
-                      onChange={handleInputChange}
-                      placeholder="e.g., Acropora Cervicornis Restoration"
-                      required
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Species *</label>
-                    <input
-                      type="text"
-                      name="species"
-                      value={formData.species}
-                      onChange={handleInputChange}
-                      placeholder="e.g., Acropora cervicornis"
-                      required
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Location *</label>
-                    <input
-                      type="text"
-                      name="location"
-                      value={formData.location}
-                      onChange={handleInputChange}
-                      placeholder="e.g., Raja Ampat, Indonesia"
-                      required
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group full">
-                    <label>Description</label>
-                    <textarea
-                      name="description"
-                      value={formData.description}
-                      onChange={handleInputChange}
-                      placeholder="Describe the current condition and restoration goals..."
-                      rows={4}
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Funding Goal (Rp) *</label>
-                    <input
-                      type="text"
-                      name="fundingGoal"
-                      value={formData.fundingGoal}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 60.000.000"
-                      required
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Project Duration (months)</label>
-                    <input
-                      type="text"
-                      name="duration"
-                      value={formData.duration}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 18"
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Coral Fragments Target</label>
-                    <input
-                      type="text"
-                      name="fragments"
-                      value={formData.fragments}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 500"
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Restoration Area (m²)</label>
-                    <input
-                      type="text"
-                      name="area"
-                      value={formData.area}
-                      onChange={handleInputChange}
-                      placeholder="e.g., 500"
-                      disabled={submitting || verificationStatus !== 'passed'}
-                    />
-                  </div>
-                </div>
-
-                <button
-                  type="submit"
-                  className="submit-project-btn"
-                  disabled={submitting || verificationStatus !== 'passed'}
-                >
-                  {submitting ? 'Publishing…' : 'Upload Project'}
-                </button>
-              </div>
-            </div>
-          </form>
+            )}
+          </div>
         </div>
-      </div>
-      <Footer />
-    </>
+
+        {/* Section 2: Project Details */}
+        <div className={`upload-section details-section ${verificationStatus !== 'passed' ? 'locked' : ''}`}>
+          <div className="section-number">2</div>
+          <div className="section-content">
+            <h2>Project Details</h2>
+            {verificationStatus !== 'passed' && <div className="lock-overlay"><Lock size={15} style={{ marginRight: 6 }} /><span>Complete image analysis first</span></div>}
+            <p className="section-desc">Provide details about the coral restoration project.</p>
+
+            <div className="form-grid">
+              <div className="form-group full">
+                <label>Project Name *</label>
+                <input
+                  type="text"
+                  name="projectName"
+                  value={formData.projectName}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Acropora Cervicornis Restoration"
+                  required
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Species *</label>
+                <input
+                  type="text"
+                  name="species"
+                  value={formData.species}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Acropora cervicornis"
+                  required
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Location *</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  placeholder="e.g., Raja Ampat, Indonesia"
+                  required
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group full">
+                <label>Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleInputChange}
+                  placeholder="Describe the current condition and restoration goals..."
+                  rows={4}
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Funding Goal (Rp) *</label>
+                <input
+                  type="text"
+                  name="fundingGoal"
+                  value={formData.fundingGoal}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 60.000.000"
+                  required
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Project Duration (months)</label>
+                <input
+                  type="text"
+                  name="duration"
+                  value={formData.duration}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 18"
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Coral Fragments Target</label>
+                <input
+                  type="text"
+                  name="fragments"
+                  value={formData.fragments}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 500"
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+              <div className="form-group">
+                <label>Restoration Area (m²)</label>
+                <input
+                  type="text"
+                  name="area"
+                  value={formData.area}
+                  onChange={handleInputChange}
+                  placeholder="e.g., 500"
+                  disabled={submitting || verificationStatus !== 'passed'}
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="submit-project-btn"
+              disabled={submitting || verificationStatus !== 'passed'}
+            >
+              {submitting ? 'Publishing…' : 'Upload Project'}
+            </button>
+          </div>
+        </div>
+      </form>
+    </AdminLayout>
   );
 };
 

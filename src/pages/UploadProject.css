@@ -1,33 +1,4 @@
-/* ─── Upload Project Page ─── */
-.upload-page {
-  background: #EFFBFC;
-  min-height: 100vh;
-  font-family: 'Inter', sans-serif;
-  padding: 40px 24px 64px;
-}
-
-.upload-container {
-  max-width: 860px;
-  margin: 0 auto;
-}
-
-.upload-header {
-  margin-bottom: 40px;
-}
-
-.upload-header h1 {
-  font-size: 32px;
-  font-weight: 800;
-  color: #1A3F50;
-  margin: 0 0 8px 0;
-}
-
-.upload-header p {
-  font-size: 15px;
-  color: #4A4A4A;
-  line-height: 1.6;
-  margin: 0;
-}
+/* ─── Upload Project Page (inside AdminLayout) ─── */
 
 /* ─── Form ─── */
 .upload-form {
@@ -37,7 +8,7 @@
 }
 
 /* ─── Sections ─── */
-.upload-page .upload-section {
+.upload-section {
   background: #fff;
   border-radius: 20px;
   box-shadow: 0 8px 32px rgba(47, 97, 116, 0.07);
@@ -47,7 +18,7 @@
   position: relative;
 }
 
-.upload-page .upload-section.locked .section-content {
+.upload-section.locked .section-content {
   opacity: 0.4;
   pointer-events: none;
   filter: blur(1px);
@@ -384,7 +355,7 @@
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
-  .upload-page .upload-section {
+  .upload-section {
     flex-direction: column;
     padding: 24px;
   }
@@ -400,11 +371,8 @@
 
 
 @media (max-width: 768px) {
-  .upload-page { padding: 24px 16px 40px; }
-  .upload-header { margin-bottom: 24px; }
-  .upload-header h1 { font-size: 26px; }
   .upload-form { gap: 20px; }
-  .upload-page .upload-section { padding: 20px 16px; gap: 16px; }
+  .upload-section { padding: 20px 16px; gap: 16px; }
   .section-content, .form-grid, .upload-form .form-group { min-width: 0; }
   .section-content h2 { font-size: 20px; }
   .lock-overlay { white-space: normal; width: calc(100% - 32px); text-align: center; padding: 12px 16px; }

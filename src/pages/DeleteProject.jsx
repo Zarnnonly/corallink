@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MapPin, Trash2, Search } from 'lucide-react';
-import Footer from '../components/Footer';
+import AdminLayout from '../components/AdminLayout';
 import { useProjects } from '../context/ProjectContext';
 import './DeleteProject.css';
 
@@ -29,7 +29,7 @@ export default function DeleteProject() {
     inFlight.current = true; setBusy(true); setDeleteError('');
     try {
       await deleteProject(selected.id);
-      setMessage(`“${selected.name}” was deleted successfully.`);
+      setMessage(`"${selected.name}" was deleted successfully.`);
       dialog.current.close(); setSelected(null);
       heading.current.focus();
     } catch (e) { setDeleteError(e.message); }
@@ -37,30 +37,23 @@ export default function DeleteProject() {
   };
 
   return <>
-    <main className="delete-page">
-      <div className="delete-container">
-        <header className="delete-header">
-          <span className="delete-eyebrow">ADMIN / PROJECTS</span>
-          <h1 ref={heading} tabIndex={-1}>Delete Project</h1>
-          <p>Manage published coral restoration projects. Review a project before removing it permanently.</p>
-        </header>
-        <div className="delete-notice">Projects with donations or transactions cannot be deleted, so payment history stays intact.</div>
-        <section className="delete-panel" aria-label="Published projects">
-          <div className="delete-toolbar">
-            <h2>Published projects <span>{projects.length}</span></h2>
-            <label className="delete-search"><Search size={18} aria-hidden="true" /><input aria-label="Search projects" type="search" placeholder="Search name or location" value={search} onChange={e => setSearch(e.target.value)} /></label>
-          </div>
-          {message && <p className="delete-success" role="status">{message}</p>}
-          {loading ? <p role="status">Loading projects…</p> : error ? <div role="alert"><p>{error}</p><button className="delete-secondary" onClick={retry}>Try again</button></div> : !projects.length ? <div className="delete-empty"><h3>No projects published yet</h3><p>Projects will appear here after publication.</p><Link to="/upload-project">Upload a project</Link></div> : !filtered.length ? <p className="delete-empty">No projects match your search.</p> : <ul className="delete-list">
-            {filtered.map(project => <li key={project.id}>
-              {project.image ? <img src={project.image} alt="" /> : <div className="delete-image-placeholder" aria-hidden="true">CL</div>}
-              <div className="delete-project-info"><h3>{project.name}</h3><p><MapPin size={14} aria-hidden="true" /> {project.location}</p><span>Project #{project.id}</span></div>
-              <div className="delete-actions"><Link to={`/project/${project.id}`}>View project</Link><button className="delete-danger" onClick={() => openConfirmation(project)} aria-label={`Delete ${project.name}`}><Trash2 size={16} aria-hidden="true" /> Delete</button></div>
-            </li>)}
-          </ul>}
-        </section>
-      </div>
-    </main>
+    <AdminLayout title="Delete Project" description="Manage published coral restoration projects. Review a project before removing it permanently." breadcrumb="Delete Project">
+      <div className="delete-notice">Projects with donations or transactions cannot be deleted, so payment history stays intact.</div>
+      <section className="delete-panel" aria-label="Published projects">
+        <div className="delete-toolbar">
+          <h2 ref={heading} tabIndex={-1}>Published projects <span>{projects.length}</span></h2>
+          <label className="delete-search"><Search size={18} aria-hidden="true" /><input aria-label="Search projects" type="search" placeholder="Search name or location" value={search} onChange={e => setSearch(e.target.value)} /></label>
+        </div>
+        {message && <p className="delete-success" role="status">{message}</p>}
+        {loading ? <p role="status">Loading projects…</p> : error ? <div role="alert"><p>{error}</p><button className="delete-secondary" onClick={retry}>Try again</button></div> : !projects.length ? <div className="delete-empty"><h3>No projects published yet</h3><p>Projects will appear here after publication.</p><Link to="/upload-project">Upload a project</Link></div> : !filtered.length ? <p className="delete-empty">No projects match your search.</p> : <ul className="delete-list">
+          {filtered.map(project => <li key={project.id}>
+            {project.image ? <img src={project.image} alt="" /> : <div className="delete-image-placeholder" aria-hidden="true">CL</div>}
+            <div className="delete-project-info"><h3>{project.name}</h3><p><MapPin size={14} aria-hidden="true" /> {project.location}</p><span>Project #{project.id}</span></div>
+            <div className="delete-actions"><Link to={`/project/${project.id}`}>View project</Link><button className="delete-danger" onClick={() => openConfirmation(project)} aria-label={`Delete ${project.name}`}><Trash2 size={16} aria-hidden="true" /> Delete</button></div>
+          </li>)}
+        </ul>}
+      </section>
+    </AdminLayout>
     <dialog ref={dialog} className="delete-dialog" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-description" onCancel={e => { if (inFlight.current) e.preventDefault(); }}>
       <form onSubmit={remove} aria-busy={busy}>
         <div className="delete-dialog-icon"><Trash2 size={24} aria-hidden="true" /></div>
@@ -72,6 +65,5 @@ export default function DeleteProject() {
         <div className="delete-dialog-actions"><button type="button" className="delete-secondary" autoFocus disabled={busy} onClick={close}>Cancel</button><button className="delete-danger" type="submit" disabled={busy || !selected || confirmation !== selected.name}>{busy ? 'Deleting…' : 'Delete permanently'}</button></div>
       </form>
     </dialog>
-    <Footer />
   </>;
 }

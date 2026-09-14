@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { UserCircle, Upload, RefreshCw, ChevronDown, LogOut, Trash2 } from 'lucide-react';
+import { UserCircle, LayoutDashboard, ChevronDown, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import './Navbar.css';
@@ -52,16 +52,9 @@ const Navbar = () => {
                     </Link>
                   )}
                   {user.role === 'admin' && (
-                    <>
-                      <Link to="/upload-project" className="dropdown-item" onClick={() => setMenuOpen(false)}>
-                        <Upload size={16} /> Upload Project
-                      </Link>
-                      <Link to="/admin/projects" className="dropdown-item" onClick={() => setMenuOpen(false)}><Trash2 size={16} /> Delete Project</Link>
-                      <Link to="/admin/payments" className="dropdown-item" onClick={() => setMenuOpen(false)}>Payment Review</Link>
-                      <Link to="/update-project" className="dropdown-item" onClick={() => setMenuOpen(false)}>
-                        <RefreshCw size={16} /> Update Project
-                      </Link>
-                    </>
+                    <Link to="/upload-project" className="dropdown-item" onClick={() => setMenuOpen(false)}>
+                      <LayoutDashboard size={16} /> Admin Panel
+                    </Link>
                   )}
                   <button className="dropdown-item dropdown-logout" onClick={handleLogout}>
                     <LogOut size={16} /> Logout
