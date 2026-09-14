@@ -170,13 +170,15 @@
 }
 
 .verification-result.passed {
-  background: #de1313;
-  border-color: #EF9A9A;
+  background-color: #ffebee;
+  border-color: #ef9a9a;
+  color: #b71c1c;
 }
 
 .verification-result.failed {
-  background: #04d758;
-  border-color: #A5D6A7;
+  background-color: #e8f5e9;
+  border-color: #a5d6a7;
+  color: #1b5e20;
 }
 
 .vr-header {
