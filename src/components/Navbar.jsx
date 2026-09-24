@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { UserCircle, LayoutDashboard, ChevronDown, LogOut } from 'lucide-react';
+import { UserCircle, LayoutDashboard, ChevronDown, LogOut, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const { showToast } = useToast();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -33,6 +35,13 @@ const Navbar = () => {
           <NavLink to="/take-action" className={({ isActive }) => `nav-link ${isActive ? 'nav-active' : ''}`}>Take Action</NavLink>
         </div>
         <div className="navbar-right">
+          <button
+            className="navbar-theme-btn"
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            onClick={toggleTheme}
+          >
+            {theme === 'dark' ? <Sun size={20} strokeWidth={1.5} /> : <Moon size={20} strokeWidth={1.5} />}
+          </button>
           {user ? (
             <div className="navbar-menu-wrap" onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setMenuOpen(false); }} onKeyDown={(e) => { if (e.key === 'Escape') setMenuOpen(false); }}>
               <button className="navbar-profile-btn" aria-label="Account menu" aria-expanded={menuOpen} onClick={toggleMenu}>

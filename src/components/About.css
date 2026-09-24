@@ -40,7 +40,7 @@
 .about-subtitle {
   font-weight: 700;
   font-size: 22px;
-  color: var(--bg-secondary);
+  color: var(--accent-brand);
   letter-spacing: 0.03em;
 }
 
@@ -50,6 +50,10 @@
   line-height: 1.75;
   color: #335362;
   text-align: left;
+}
+
+[data-theme="dark"] .about-description {
+  color: var(--text-body);
 }
 
 @media (max-width: 1024px) {

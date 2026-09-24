@@ -1,6 +1,6 @@
 /* ─── Project Detail Page ─── */
 .pdv2-page {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   width: 100%;
   max-width: 1160px;
   margin: 0 auto;
@@ -9,18 +9,18 @@
 }
 
 .pdv2-not-found {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  color: #2F6174;
+  color: var(--accent-strong);
 }
 
 .pdv2-not-found a {
-  color: #38748C;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
@@ -36,7 +36,7 @@
 
 .pdv2-back-btn {
   font-size: 24px;
-  color: #1A3F50;
+  color: var(--text-heading);
   text-decoration: none;
   margin-right: 24px;
   transition: opacity 0.2s;
@@ -46,8 +46,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 4px 12px rgba(47, 97, 116, 0.1);
+  background: var(--surface-card);
+  box-shadow: 0 4px 12px rgba(var(--shadow-color), 0.1);
 }
 
 .pdv2-back-btn:hover {
@@ -57,19 +57,19 @@
 .pdv2-header-title {
   font-size: 28px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
   letter-spacing: 0.02em;
 }
 
 /* ─── Main Card ─── */
 .pdv2-card {
-  background: #fff;
+  background: var(--surface-card);
   border-radius: 24px;
   padding: 48px;
   margin: 0 auto;
   max-width: 1100px;
-  box-shadow: 0 12px 40px rgba(47, 97, 116, 0.08);
+  box-shadow: 0 12px 40px rgba(var(--shadow-color), 0.08);
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -99,8 +99,8 @@
 
 /* ─── AI Block ─── */
 .pdv2-ai-block {
-  background: #F8FDFD;
-  border: 1px solid #C8E9EE;
+  background: var(--surface-muted);
+  border: 1px solid var(--border-soft);
   border-radius: 16px;
   padding: 32px;
   display: flex;
@@ -112,7 +112,7 @@
 .pdv2-ai-title {
   font-size: 20px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 8px 0;
   text-align: center;
   text-transform: uppercase;
@@ -124,7 +124,7 @@
   justify-content: space-between;
   align-items: center;
   padding-bottom: 16px;
-  border-bottom: 1px dashed #C8E9EE;
+  border-bottom: 1px dashed var(--border-soft);
 }
 
 .pdv2-ai-row:last-child {
@@ -135,7 +135,7 @@
 .pdv2-ai-label {
   font-size: 15px;
   font-weight: 600;
-  color: #38748C;
+  color: var(--accent);
 }
 
 .pdv2-condition-badge {
@@ -150,8 +150,8 @@
 .pdv2-confidence-badge {
   font-size: 16px;
   font-weight: 800;
-  color: #1A3F50;
-  background: #E0F2F1;
+  color: var(--text-heading);
+  background: var(--border-color);
   padding: 6px 12px;
   border-radius: 8px;
 }
@@ -172,7 +172,7 @@
 .pdv2-divider {
   border: none;
   height: 1px;
-  background: #E0F2F1;
+  background: var(--border-color);
   margin: 0;
 }
 
@@ -186,7 +186,7 @@
 .pdv2-section-title {
   font-size: 20px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
   position: relative;
   padding-left: 16px;
@@ -214,7 +214,7 @@
 
 .pdv2-bullet-list li {
   font-size: 16px;
-  color: #4A4A4A;
+  color: var(--text-body);
   line-height: 1.6;
   position: relative;
   padding-left: 24px;
@@ -227,6 +227,11 @@
   position: absolute;
   left: 0;
   top: -2px;
+}
+
+[data-theme="dark"] .pdv2-status-badge {
+  color: #81D4FA;
+  background: rgba(2, 136, 209, 0.18);
 }
 
 /* ─── Responsive ─── */

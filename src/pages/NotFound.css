@@ -36,6 +36,10 @@
   line-height: 1.6;
 }
 
+[data-theme="dark"] .notfound-desc {
+  color: var(--text-muted);
+}
+
 .notfound-actions {
   display: flex;
   gap: 16px;
@@ -60,13 +64,13 @@
 }
 
 .notfound-btn.primary:hover {
-  background-color: var(--text-primary);
+  background-color: var(--accent-deep);
 }
 
 .notfound-btn.secondary {
   background-color: transparent;
-  color: var(--bg-secondary);
-  border: 2px solid var(--bg-secondary);
+  color: var(--accent-brand);
+  border: 2px solid var(--accent-brand);
 }
 
 .notfound-btn.secondary:hover {

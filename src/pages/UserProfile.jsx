@@ -128,7 +128,7 @@ const UserProfile = () => {
                     ))
                   ) : (
                     <tr>
-                      <td colSpan="5" style={{ textAlign: 'center', padding: '30px', color: '#666' }}>
+                      <td colSpan="5" className="history-empty">
                         {loading ? 'Loading donation history…' : error ? error : user.role === 'admin' ? 'Donation history is available for investor accounts.' : 'No investment history found.'}
                         {error && <button className="state-retry-btn" style={{ marginLeft: 12 }} onClick={() => setAttempt((n) => n + 1)}>Try again</button>}
                       </td>

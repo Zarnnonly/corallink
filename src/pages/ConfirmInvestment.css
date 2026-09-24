@@ -1,6 +1,6 @@
 /* ─── Confirm Investation ─── */
 .confirm-invest-page {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   width: 1440px;
   max-width: 100%;
   min-height: calc(1024px - 80px); /* minus navbar if applicable */
@@ -13,9 +13,9 @@
 }
 
 .confirm-card {
-  background: #fff;
+  background: var(--surface-card);
   border-radius: 24px;
-  box-shadow: 0 12px 40px rgba(47, 97, 116, 0.08);
+  box-shadow: 0 12px 40px rgba(var(--shadow-color), 0.08);
   display: flex;
   width: 100%;
   max-width: 1100px;
@@ -32,14 +32,14 @@
 .confirm-title {
   font-size: 20px;
   font-weight: 700;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 16px 0;
 }
 
 .confirm-project-name {
   font-size: 24px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 4px 0;
   text-transform: uppercase;
 }
@@ -47,7 +47,7 @@
 .confirm-project-subtitle {
   font-size: 16px;
   font-weight: 700;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 32px 0;
 }
 
@@ -67,18 +67,18 @@
 .summary-label {
   font-size: 14px;
   font-weight: 600;
-  color: #1A3F50;
+  color: var(--text-heading);
 }
 
 .summary-value {
   font-size: 14px;
-  color: #4A4A4A;
+  color: var(--text-body);
 }
 
 /* Payment Section */
 .payment-section {
-  background: #F8FDFD;
-  border: 1px dashed #B8DDE8;
+  background: var(--surface-muted);
+  border: 1px dashed var(--border-strong);
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 32px;
@@ -90,7 +90,7 @@
 
 .qris-instruction {
   font-size: 13px;
-  color: #6B95A4;
+  color: var(--text-muted);
   text-align: center;
   margin: 0;
 }
@@ -98,7 +98,7 @@
 .qris-placeholder {
   width: 200px;
   height: 200px;
-  background: #fff;
+  background: var(--surface-card);
   border: 2px solid #38748C;
   border-radius: 12px;
   display: flex;
@@ -120,16 +120,16 @@
 .qris-text {
   font-size: 12px;
   font-weight: 700;
-  color: #38748C;
+  color: var(--accent);
 }
 
 .upload-btn {
   display: inline-block;
   padding: 10px 24px;
-  border: 2px solid #38748C;
+  border: 2px solid var(--accent);
   border-radius: 999px;
-  background: #fff;
-  color: #38748C;
+  background: var(--surface-card);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
@@ -137,7 +137,7 @@
 }
 
 .upload-btn:hover {
-  background: #F0F9FA;
+  background: var(--surface-hover);
 }
 
 .confirm-support-btn {

@@ -82,7 +82,7 @@ export default function AdminPayments() {
         </table></div>
       </div>
       {selected && <div className="update-card"><h2>Review: {selected.project?.namaProyek}</h2><p>{selected.investor?.nama} — {selected.amount} IDR — <span className={statusBadgeClass(selected.status)}>{selected.status}</span></p>
-        {proofLoading && <p role="status">Loading private proof…</p>}{proof && <img src={proof} alt="Payment proof" loading="lazy" decoding="async" style={{ maxWidth: '100%', maxHeight: 600, objectFit: 'contain', borderRadius: 12, border: '1px solid #E0F2F1' }} />}
+        {proofLoading && <p role="status">Loading private proof…</p>}{proof && <img src={proof} alt="Payment proof" loading="lazy" decoding="async" style={{ maxWidth: '100%', maxHeight: 600, objectFit: 'contain', borderRadius: 12, border: '1px solid var(--border-color)' }} />}
         {selected.status === 'Pending' ? <><label htmlFor="review-note">Review notes (required for rejection)</label><textarea id="review-note" rows={3} value={note} onChange={e => setNote(e.target.value)} />
           <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: '8px 0' }}><input type="checkbox" checked={confirmed} onChange={e => setConfirmed(e.target.checked)} /> I checked the bank statement and confirmed the amount was received.</label>
           <div className="admin-review-actions">

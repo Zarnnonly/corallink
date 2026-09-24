@@ -90,7 +90,7 @@
 
 .btn-view-more {
   background: var(--text-white);
-  color: var(--text-dark);
+  color: #000000;
   font-weight: 600;
   font-size: 18px;
   padding: 10px 30px;

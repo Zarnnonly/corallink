@@ -19,7 +19,7 @@
 
 
 .auth-container {
-  background-color: #EFFBFC;
+  background-color: var(--bg-primary);
   border-radius: 20px;
   padding: 40px;
   width: 100%;
@@ -52,7 +52,7 @@
 
 
 .auth-title {
-  color: #2F6174;
+  color: var(--accent-strong);
   font-size: 28px;
   font-weight: bold;
   margin: 0 0 8px 0;
@@ -79,10 +79,10 @@
 .role-btn {
   flex: 1;
   padding: 10px;
-  border: 1px solid #38748C;
+  border: 1px solid var(--accent);
   border-radius: 20px;
   background: transparent;
-  color: #38748C;
+  color: var(--accent);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -106,7 +106,7 @@
 
 
 .form-group label {
-  color: #38748C;
+  color: var(--accent);
   font-weight: 600;
   margin-bottom: 8px;
   font-size: 14px;
@@ -133,7 +133,7 @@
 .auth-input {
   width: 100%;
   padding: 12px 12px 12px 40px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-input);
   border-radius: 20px;
   outline: none;
   font-size: 14px;
@@ -142,7 +142,7 @@
 
 
 .auth-input:focus {
-  border-color: #38748C;
+  border-color: var(--accent);
 }
 
 
@@ -179,7 +179,7 @@
 .auth-divider::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--border-input);
 }
 
 .auth-divider::before {
@@ -202,7 +202,7 @@
 
 
 .auth-link {
-  color: #38748C;
+  color: var(--accent);
   font-weight: 700;
   text-decoration: none;
 }
@@ -279,3 +279,8 @@
   .welcome-title { font-size: 36px; }
   .welcome-buttons { gap: 12px; flex-wrap: wrap; }
 }
+
+[data-theme="dark"] .auth-input { background: var(--input-bg); }
+[data-theme="dark"] .auth-subtitle, [data-theme="dark"] .auth-redirect { color: var(--text-body); }
+[data-theme="dark"] .input-icon { color: var(--text-muted); }
+[data-theme="dark"] .auth-divider { color: var(--text-muted); }

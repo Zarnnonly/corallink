@@ -1,6 +1,6 @@
 /* ─── User Profile ─── */
 .profile-page {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   width: 100%;
   max-width: 1160px;
   min-height: calc(100vh - 120px);
@@ -47,9 +47,9 @@
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: #fff;
-  border: 4px solid #fff;
-  box-shadow: 0 8px 24px rgba(47, 97, 116, 0.15);
+  background: var(--surface-card);
+  border: 4px solid var(--surface-card);
+  box-shadow: 0 8px 24px rgba(var(--shadow-color), 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -70,9 +70,9 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #38748C;
-  color: #38748C;
+  background: var(--surface-card);
+  border: 2px solid var(--accent);
+  color: var(--accent);
   font-size: 24px;
   display: flex;
   align-items: center;
@@ -89,22 +89,22 @@
 .profile-name {
   font-size: 32px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 4px 0;
 }
 
 .profile-email {
   font-size: 16px;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
   font-weight: 500;
 }
 
 /* History Card */
 .history-card {
-  background: #fff;
+  background: var(--surface-card);
   border-radius: 24px;
-  box-shadow: 0 12px 40px rgba(47, 97, 116, 0.08);
+  box-shadow: 0 12px 40px rgba(var(--shadow-color), 0.08);
   padding: 40px;
 }
 
@@ -116,13 +116,13 @@
 .history-title {
   font-size: 28px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 8px 0;
 }
 
 .history-subtitle {
   font-size: 15px;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
   font-weight: 500;
 }
@@ -139,13 +139,13 @@
 }
 
 .history-table th {
-  background: #fff;
-  color: #38748C;
+  background: var(--surface-card);
+  color: var(--accent);
   font-size: 14px;
   font-weight: 700;
   text-transform: uppercase;
   padding: 16px;
-  border: 1px solid #38748C;
+  border: 1px solid var(--accent);
   text-align: center;
 }
 
@@ -153,14 +153,14 @@
   padding: 16px;
   font-size: 14px;
   font-weight: 600;
-  color: #1A3F50;
-  border: 1px solid #38748C;
+  color: var(--text-heading);
+  border: 1px solid var(--accent);
   text-align: center;
 }
 
 .history-table td.col-project {
   text-align: left;
-  color: #38748C;
+  color: var(--accent);
 }
 
 /* ─── Responsive ─── */
@@ -177,11 +177,13 @@
 
 
 .profile-photo { width: 100%; height: 100%; object-fit: cover; }
-.profile-photo-feedback { margin-bottom: 16px; color: #38748C; }
+.profile-photo-feedback { margin-bottom: 16px; color: var(--accent); }
 .profile-avatar-badge:disabled { opacity: .6; }
 .history-table-wrapper { max-width: 100%; overscroll-behavior-x: contain; }
 .history-table-empty { min-width: 0; }
 .history-scroll-hint { display: none; }
+.history-empty { text-align: center; padding: 30px; color: #666; }
+[data-theme="dark"] .history-empty { color: var(--text-muted); }
 .profile-info { min-width: 0; overflow-wrap: anywhere; }
 @media (max-width: 768px) {
   .profile-page { min-height: 100svh; }
@@ -196,7 +198,7 @@
   .history-title { font-size: 24px; }
   .history-header { margin-bottom: 20px; }
   .history-subtitle { font-size: 14px; line-height: 1.6; }
-  .history-scroll-hint { display: block; margin-bottom: 12px; color: #38748C; font-size: 13px; }
+  .history-scroll-hint { display: block; margin-bottom: 12px; color: var(--accent); font-size: 13px; }
   .history-table th, .history-table td { padding: 12px; font-size: 13px; }
   .history-table-empty thead { display: none; }
 }

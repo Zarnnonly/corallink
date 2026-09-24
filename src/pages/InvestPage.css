@@ -1,23 +1,23 @@
 /* ─── ProjectDetail Page ─── */
 .project-detail-page {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   min-height: 100vh;
 }
 
 .project-not-found {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 16px;
-  color: #2F6174;
+  color: var(--accent-strong);
 }
 
 /* ─── Hero Section ─── */
 .pd-hero {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   padding: 36px 0 48px;
 }
 
@@ -30,7 +30,7 @@
 .pd-back-link {
   display: inline-block;
   margin-bottom: 28px;
-  color: #38748C;
+  color: var(--accent);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -58,7 +58,7 @@
 .pd-name {
   font-size: 26px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
   letter-spacing: 0.04em;
 }
@@ -66,13 +66,13 @@
 .pd-subtitle {
   font-size: 16px;
   font-weight: 700;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
 }
 
 .pd-description {
   font-size: 14px;
-  color: #4A4A4A;
+  color: var(--text-body);
   line-height: 1.6;
   margin: 0;
   max-width: 520px;
@@ -101,7 +101,7 @@
   gap: 40px;
   margin-top: 10px;
   padding-top: 18px;
-  border-top: 1px solid #C8E9EE;
+  border-top: 1px solid var(--border-soft);
 }
 
 .pd-stat-block {
@@ -114,7 +114,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #38748C;
+  color: var(--accent);
   text-transform: uppercase;
 }
 
@@ -135,7 +135,7 @@
 .pd-funding-amount {
   font-size: 18px;
   font-weight: 700;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
 }
 
@@ -149,7 +149,7 @@
 .pd-progress-bar {
   width: 160px;
   height: 10px;
-  background: #B8DDE8;
+  background: var(--border-strong);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -164,7 +164,7 @@
 .pd-progress-pct {
   font-size: 13px;
   font-weight: 700;
-  color: #38748C;
+  color: var(--accent);
 }
 
 /* ─── Action Buttons ─── */
@@ -188,16 +188,16 @@
   letter-spacing: 0.04em;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s;
-  box-shadow: 0 4px 18px rgba(47, 97, 116, 0.25);
+  box-shadow: 0 4px 18px rgba(var(--shadow-color), 0.25);
 }
 
 .pd-detail-project-btn {
   flex: 1;
   padding: 16px 0;
-  border: 2px solid #2F6174;
+  border: 2px solid var(--accent-strong);
   border-radius: 999px;
   background: transparent;
-  color: #2F6174;
+  color: var(--accent-strong);
   font-size: 16px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -217,7 +217,7 @@
 
 .pd-invest-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(47, 97, 116, 0.35);
+  box-shadow: 0 8px 28px rgba(var(--shadow-color), 0.35);
 }
 
 .pd-invest-btn:active, .pd-detail-project-btn:active {
@@ -234,7 +234,7 @@
   border-radius: 16px;
   overflow: hidden;
   height: 360px;
-  box-shadow: 0 8px 32px rgba(47, 97, 116, 0.18);
+  box-shadow: 0 8px 32px rgba(var(--shadow-color), 0.18);
   position: relative;
   display: block;
 }
@@ -288,9 +288,9 @@
 
 /* ─── Milestones Section ─── */
 .pd-milestones-section {
-  background: #fff;
+  background: var(--surface-card);
   padding: 56px 0 64px;
-  border-top: 1px solid #C8E9EE;
+  border-top: 1px solid var(--border-soft);
 }
 
 .pd-milestones-inner {
@@ -302,7 +302,7 @@
 .pd-milestones-title {
   font-size: 20px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 40px 0;
   letter-spacing: 0.02em;
 }
@@ -322,7 +322,7 @@
   left: 18px;             /* start at center of first dot */
   right: 18px;            /* end at center of last dot */
   height: 3px;
-  background: #B8DDE8;
+  background: var(--border-strong);
   z-index: 0;
 }
 
@@ -361,8 +361,8 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 3px solid #B8DDE8;
-  background: #fff;
+  border: 3px solid var(--border-strong);
+  background: var(--surface-card);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -374,7 +374,7 @@
 .pd-milestone.done .pd-milestone-dot {
   border-color: #2F6174;
   background: #2F6174;
-  box-shadow: 0 0 0 4px rgba(47, 97, 116, 0.12);
+  box-shadow: 0 0 0 4px rgba(var(--shadow-color), 0.12);
 }
 
 .pd-milestone-check {
@@ -403,7 +403,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #38748C;
+  color: var(--accent);
   text-transform: uppercase;
   white-space: nowrap;
 }
@@ -411,7 +411,7 @@
 .pd-milestone-name {
   font-size: 13px;
   font-weight: 600;
-  color: #1A3F50;
+  color: var(--text-heading);
   line-height: 1.4;
 }
 
@@ -423,6 +423,11 @@
   font-size: 12px;
   color: #8aacb8;
   white-space: nowrap;
+}
+
+[data-theme="dark"] .pd-tag,
+[data-theme="dark"] .pd-stat-list li {
+  color: var(--text-body);
 }
 
 /* ─── Responsive: vertical layout ─── */

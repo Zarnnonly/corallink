@@ -5,14 +5,14 @@
   margin: 24px auto;
   padding: 36px 32px;
   border-radius: 20px;
-  background: #FFFFFF;
-  box-shadow: 0 10px 30px rgba(40, 108, 131, 0.08);
+  background: var(--surface-card);
+  box-shadow: 0 10px 30px rgba(var(--shadow-alt), 0.08);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 16px;
-  border: 1px solid #E0F2F1;
+  border: 1px solid var(--border-color);
   animation: stateFadeIn 0.3s ease-out;
 }
 
@@ -25,7 +25,7 @@
 .project-state-loading .state-spinner {
   width: 44px;
   height: 44px;
-  border: 4px solid #E0F2F1;
+  border: 4px solid var(--border-color);
   border-top-color: #38A8C4;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
@@ -39,13 +39,13 @@
 .state-loading-title {
   font-size: 17px;
   font-weight: 700;
-  color: #244655;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .state-loading-subtitle {
   font-size: 13.5px;
-  color: #5A7E8D;
+  color: var(--text-subtle);
   margin: 0;
 }
 
@@ -106,15 +106,15 @@
 
 /* ─── Empty State ─── */
 .project-state-empty {
-  border-color: #E0F2F1;
+  border-color: var(--border-color);
 }
 
 .state-empty-icon {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  background: #EFFBFC;
-  color: #38748C;
+  background: var(--bg-primary);
+  color: var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -123,13 +123,13 @@
 .state-empty-title {
   font-size: 18px;
   font-weight: 700;
-  color: #244655;
+  color: var(--text-primary);
   margin: 0;
 }
 
 .state-empty-desc {
   font-size: 14px;
-  color: #5A7E8D;
+  color: var(--text-subtle);
   margin: 0;
   line-height: 1.5;
 }
@@ -163,4 +163,41 @@
   background: #FFF8E1;
   color: #E65100;
   border: 1px solid #FFE082;
+}
+
+/* ─── Dark Theme ─── */
+[data-theme="dark"] .project-state-error {
+  border-color: rgba(239, 154, 154, 0.35);
+  background: var(--surface-card);
+}
+
+[data-theme="dark"] .state-error-icon {
+  background: rgba(198, 40, 40, 0.2);
+  color: #EF9A9A;
+}
+
+[data-theme="dark"] .state-error-title {
+  color: #EF9A9A;
+}
+
+[data-theme="dark"] .state-error-desc {
+  color: var(--text-body);
+}
+
+[data-theme="dark"] .inline-alert-error {
+  background: rgba(198, 40, 40, 0.16);
+  color: #EF9A9A;
+  border-color: rgba(239, 154, 154, 0.35);
+}
+
+[data-theme="dark"] .inline-alert-info {
+  background: rgba(2, 119, 189, 0.18);
+  color: #81D4FA;
+  border-color: rgba(129, 212, 250, 0.3);
+}
+
+[data-theme="dark"] .inline-alert-warning {
+  background: rgba(230, 81, 0, 0.18);
+  color: #FFCC80;
+  border-color: rgba(255, 204, 128, 0.3);
 }

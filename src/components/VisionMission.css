@@ -15,10 +15,10 @@
 
 /* Individual card */
 .vm-card {
-  background: #286C83;
+  background: var(--bg-secondary);
   border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 10px 24px rgba(40, 108, 131, 0.1);
+  box-shadow: 0 10px 24px rgba(var(--shadow-alt), 0.1);
   height: auto;
   min-height: 280px;
   display: flex;
@@ -26,7 +26,7 @@
 }
 
 .vm-card-header {
-  background: #dceced;
+  background: var(--vm-header-bg);
   border-bottom: 1px solid rgba(40, 108, 131, 0.2);
   height: 56px;
   display: flex;
@@ -40,7 +40,7 @@
   font-weight: 700;
   font-size: 22px;
   letter-spacing: -0.01em;
-  color: #286C83;
+  color: var(--accent-brand);
   margin: 0;
 }
 
@@ -98,7 +98,7 @@
   font-size: 16px;
   line-height: 1.7;
   font-weight: 400;
-  color: #286C83;
+  color: var(--accent-brand);
   max-width: 800px;
   margin: 0 auto;
 }

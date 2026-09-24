@@ -1,5 +1,5 @@
 .take-action-page {
-  background: #EFFBFC;
+  background: var(--bg-primary);
   min-height: 100vh;
   padding: 40px 0;
   display: flex;
@@ -10,20 +10,20 @@
 
 .action-card {
   display: flex;
-  background-color: #FFFFFF;
+  background-color: var(--surface-card);
   border-radius: 20px;
   padding: 24px;
   width: 100%;
   max-width: 1000px;
   gap: 32px;
-  box-shadow: 0 8px 30px rgba(40, 108, 131, 0.08);
-  border: 1px solid #E0F2F1;
+  box-shadow: 0 8px 30px rgba(var(--shadow-alt), 0.08);
+  border: 1px solid var(--border-color);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .action-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 14px 36px rgba(40, 108, 131, 0.14);
+  box-shadow: 0 14px 36px rgba(var(--shadow-alt), 0.14);
 }
 
 .action-card-left {
@@ -75,7 +75,7 @@
 }
 
 .action-card-right h2 {
-  color: #1A3F50;
+  color: var(--text-heading);
   font-size: 24px;
   font-weight: 800;
   margin: 0;
@@ -95,6 +95,10 @@
   font-size: 14.5px;
   line-height: 1.6;
   margin: 0 0 8px 0;
+}
+
+[data-theme="dark"] .action-card-right p {
+  color: var(--text-body);
 }
 
 @media (max-width: 768px) {

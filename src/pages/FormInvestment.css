@@ -1,13 +1,13 @@
 /* ─── Form Investation ─── */
 .form-invest-page {
-  background: #FFFFFF;
+  background: var(--surface-card);
   width: 100%;
   max-width: 1160px;
   min-height: 80vh;
   margin: 24px auto;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 12px 40px rgba(40, 108, 131, 0.08);
+  box-shadow: 0 12px 40px rgba(var(--shadow-alt), 0.08);
   display: flex;
   align-items: stretch;
 }
@@ -21,7 +21,7 @@
 /* ─── Left Side: Form ─── */
 .form-invest-left {
   flex: 1;
-  background: #F2FAFA; /* Soft blue background for form side */
+  background: var(--surface-soft); /* Soft blue background for form side */
   padding: 48px 80px;
   display: flex;
   flex-direction: column;
@@ -39,7 +39,7 @@
 }
 
 .form-title {
-  color: #38748C;
+  color: var(--accent);
   font-size: 32px;
   font-weight: 800;
   margin: 0 0 12px 0;
@@ -47,7 +47,7 @@
 }
 
 .form-subtitle {
-  color: #38748C;
+  color: var(--accent);
   font-size: 14px;
   line-height: 1.5;
   margin: 0;
@@ -67,13 +67,13 @@
 }
 
 .form-section label {
-  color: #38748C;
+  color: var(--accent);
   font-size: 18px;
   font-weight: 700;
 }
 
 .form-help {
-  color: #6B95A4;
+  color: var(--text-muted);
   font-size: 13px;
   margin: -6px 0 6px 0;
 }
@@ -87,10 +87,10 @@
 .toggle-btn {
   flex: 1;
   padding: 12px 24px;
-  border: 2px solid #38748C;
+  border: 2px solid var(--accent);
   border-radius: 999px;
   background: transparent;
-  color: #38748C;
+  color: var(--accent);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -111,10 +111,10 @@
 
 .amount-btn {
   padding: 12px 20px;
-  border: 2px solid #38748C;
+  border: 2px solid var(--accent);
   border-radius: 999px;
   background: transparent;
-  color: #38748C;
+  color: var(--accent);
   font-size: 15px;
   font-weight: 700;
   cursor: pointer;
@@ -129,14 +129,14 @@
 .custom-amount-wrapper {
   display: flex;
   align-items: center;
-  border: 2px solid #38748C;
+  border: 2px solid var(--accent);
   border-radius: 999px;
   padding: 0 16px;
-  background: #fff;
+  background: var(--input-bg);
 }
 
 .currency-prefix {
-  color: #38748C;
+  color: var(--accent);
   font-weight: 700;
   font-size: 15px;
   margin-right: 8px;
@@ -147,7 +147,7 @@
   outline: none;
   background: transparent;
   width: 100px;
-  color: #38748C;
+  color: var(--accent);
   font-size: 15px;
   font-weight: 700;
 }
@@ -161,9 +161,9 @@
 .input-group-row input, .full-width-input {
   flex: 1;
   padding: 14px 16px;
-  border: 1px solid #B8DDE8;
+  border: 1px solid var(--border-strong);
   border-radius: 8px;
-  background: #fff;
+  background: var(--input-bg);
   font-size: 14px;
   color: #333;
   outline: none;
@@ -188,6 +188,11 @@
 
 .form-submit-btn:hover {
   opacity: 0.9;
+}
+
+[data-theme="dark"] .input-group-row input,
+[data-theme="dark"] .full-width-input {
+  color: var(--text-dark);
 }
 
 /* ─── Right Side: Image ─── */

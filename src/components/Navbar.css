@@ -27,12 +27,32 @@
 }
 
 .nav-link:hover {
-  color: var(--bg-secondary);
+  color: var(--accent-brand);
 }
 
 .navbar-right {
   position: relative;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar-theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+.navbar-theme-btn:hover {
+  background: rgba(47, 97, 116, 0.08);
 }
 
 .navbar-menu-wrap {
@@ -62,13 +82,13 @@
   position: absolute;
   top: 100%;
   right: 0;
-  background: #ffffff;
+  background: var(--surface-card);
   border-radius: 12px;
-  box-shadow: 0 8px 32px rgba(47, 97, 116, 0.15);
+  box-shadow: 0 8px 32px rgba(var(--shadow-color), 0.15);
   min-width: 200px;
   z-index: 999;
   overflow: hidden;
-  border: 1px solid #E0F2F1;
+  border: 1px solid var(--border-color);
   animation: dropdownFadeIn 0.15s ease;
 }
 
@@ -91,7 +111,7 @@
   padding: 14px 20px;
   font-size: 14px;
   font-weight: 600;
-  color: #1A3F50;
+  color: var(--text-heading);
   text-decoration: none;
   transition: background 0.15s;
 }
@@ -100,9 +120,13 @@
   background: #48b0b0;
 }
 
+[data-theme="dark"] .dropdown-item:hover {
+  background: var(--surface-hover);
+}
+
 /* NavLink Active State */
 .nav-active {
-  color: var(--bg-secondary) !important;
+  color: var(--accent-brand) !important;
   position: relative;
 }
 
@@ -113,7 +137,7 @@
   left: 0;
   right: 0;
   height: 2px;
-  background: var(--bg-secondary);
+  background: var(--accent-brand);
   border-radius: 2px;
 }
 
@@ -152,21 +176,21 @@
 .dropdown-user-email {
   font-size: 13px;
   font-weight: 600;
-  color: #1A3F50;
+  color: var(--text-heading);
   word-break: break-all;
 }
 
 .dropdown-user-role {
   font-size: 11px;
   font-weight: 500;
-  color: #38748C;
+  color: var(--accent);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .dropdown-divider {
   height: 1px;
-  background: #E0F2F1;
+  background: var(--border-color);
   margin: 4px 0;
 }
 
@@ -182,6 +206,14 @@
 
 .dropdown-logout:hover {
   background: #FFF5F5;
+}
+
+[data-theme="dark"] .dropdown-logout {
+  color: #EF9A9A;
+}
+
+[data-theme="dark"] .dropdown-logout:hover {
+  background: rgba(198, 40, 40, 0.15);
 }
 
 @media (max-width: 1024px) {
@@ -217,7 +249,7 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(239, 251, 252, 0.94);
+  background: var(--header-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(40, 108, 131, 0.12);
@@ -250,8 +282,10 @@
   }
 
   .navbar-profile-btn,
-  .navbar-signin-btn {
+  .navbar-signin-btn,
+  .navbar-theme-btn {
     min-height: 44px;
+    min-width: 44px;
   }
 
   .navbar-links {

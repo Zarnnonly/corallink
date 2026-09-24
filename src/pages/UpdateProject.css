@@ -9,9 +9,9 @@
 
 /* ─── Cards ─── */
 .update-card {
-  background: #fff;
+  background: var(--surface-card);
   border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(47, 97, 116, 0.07);
+  box-shadow: 0 8px 32px rgba(var(--shadow-color), 0.07);
   padding: 40px;
   display: flex;
   flex-direction: column;
@@ -21,25 +21,25 @@
 .update-card h2 {
   font-size: 22px;
   font-weight: 800;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0;
 }
 
 .update-card-desc {
   font-size: 14px;
-  color: #6B95A4;
+  color: var(--text-muted);
   margin: 0;
 }
 
 /* ─── Project Selector ─── */
 .project-select {
   padding: 14px 16px;
-  border: 1px solid #B8DDE8;
+  border: 1px solid var(--border-strong);
   border-radius: 12px;
   font-size: 15px;
-  color: #1A3F50;
+  color: var(--text-heading);
   font-weight: 600;
-  background: #fff;
+  background: var(--input-bg);
   outline: none;
   cursor: pointer;
   transition: border-color 0.2s;
@@ -62,8 +62,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #F8FDFD;
-  border: 1px solid #E0F2F1;
+  background: var(--surface-muted);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   padding: 20px 24px;
   gap: 20px;
@@ -100,7 +100,7 @@
 .milestone-title {
   font-size: 14px;
   font-weight: 700;
-  color: #1A3F50;
+  color: var(--text-heading);
 }
 
 .milestone-months {
@@ -122,7 +122,7 @@
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.2s;
-  background: #f0f0f0;
+  background: var(--surface-disabled);
   color: #666;
 }
 
@@ -163,16 +163,16 @@
 .progress-note-section label {
   font-size: 14px;
   font-weight: 600;
-  color: #38748C;
+  color: var(--accent);
 }
 
 .progress-note-section textarea {
   padding: 14px 16px;
-  border: 1px solid #B8DDE8;
+  border: 1px solid var(--border-strong);
   border-radius: 12px;
   font-size: 14px;
-  color: #1A3F50;
-  background: #fff;
+  color: var(--text-heading);
+  background: var(--input-bg);
   outline: none;
   resize: vertical;
   font-family: 'Inter', sans-serif;
@@ -229,13 +229,13 @@
 
 .update-success h3 {
   font-size: 18px;
-  color: #1A3F50;
+  color: var(--text-heading);
   margin: 0 0 4px 0;
 }
 
 .update-success p {
   font-size: 14px;
-  color: #4A4A4A;
+  color: var(--text-body);
   line-height: 1.5;
   margin: 0;
 }
@@ -273,9 +273,9 @@
 .btn-admin-action {
   padding: 8px 16px;
   border-radius: 8px;
-  background: #EFFBFC;
-  color: #286C83;
-  border: 1px solid #B8DDE8;
+  background: var(--bg-primary);
+  color: var(--accent-brand);
+  border: 1px solid var(--border-strong);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -352,4 +352,58 @@
 
 .btn-admin-close:hover:not(:disabled) {
   background: #CFD8DC;
+}
+
+/* ─── Dark Theme ─── */
+[data-theme="dark"] .status-chip {
+  color: var(--text-body);
+}
+
+[data-theme="dark"] .status-chip.not-started,
+[data-theme="dark"] .status-chip.in-progress,
+[data-theme="dark"] .status-chip.complete {
+  border-color: var(--border-delete);
+}
+
+[data-theme="dark"] .status-chip.not-started.active {
+  background: var(--surface-hover);
+  border-color: var(--text-muted);
+  color: var(--text-heading);
+}
+
+[data-theme="dark"] .status-chip.in-progress.active {
+  background: rgba(230, 81, 0, 0.18);
+  border-color: #FF9800;
+  color: #FFCC80;
+}
+
+[data-theme="dark"] .status-chip.complete.active {
+  background: rgba(46, 125, 50, 0.18);
+  border-color: #4CAF50;
+  color: #A5D6A7;
+}
+
+[data-theme="dark"] .update-success {
+  background: rgba(46, 125, 50, 0.18);
+  border-color: rgba(165, 214, 167, 0.3);
+}
+
+[data-theme="dark"] .btn-admin-reject {
+  background: rgba(198, 40, 40, 0.16);
+  color: #EF9A9A;
+  border-color: rgba(239, 154, 154, 0.35);
+}
+
+[data-theme="dark"] .btn-admin-reject:hover:not(:disabled) {
+  background: #C62828;
+  color: #FFFFFF;
+}
+
+[data-theme="dark"] .btn-admin-close {
+  background: var(--surface-disabled);
+  color: var(--text-body);
+}
+
+[data-theme="dark"] .btn-admin-close:hover:not(:disabled) {
+  background: var(--surface-hover);
 }

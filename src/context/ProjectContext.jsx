@@ -8,7 +8,7 @@ export const adaptProject = (p) => ({
   subtitle: p.species ? `${p.species} Restoration Project` : p.tingkatKerusakan || '',
   description: p.description || p.targetRestorasi || unavailable,
   image: p.imageUrl ? new URL(p.imageUrl, API_URL).href : null, species: p.species || unavailable,
-  status: 'Restoration project', statusColor: '#2f6174',
+  status: 'Restoration project', statusColor: 'var(--accent-strong)',
   goal: { fragments: p.fragments ? `${p.fragments} coral fragments` : p.targetRestorasi || unavailable,
     area: p.area ? `${p.area} m² restoration area` : unavailable, duration: p.duration ? `${p.duration} months project duration` : unavailable },
   fundingTarget: p.fundingTarget ? new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 }).format(Number(p.fundingTarget)) : unavailable,

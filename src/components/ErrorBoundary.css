@@ -10,10 +10,10 @@
 .error-boundary-card {
   max-width: 480px;
   text-align: center;
-  background: var(--text-white);
+  background: var(--surface-card);
   border-radius: var(--border-radius-md);
   padding: 48px 36px;
-  box-shadow: 0 8px 30px rgba(40, 108, 131, 0.15);
+  box-shadow: 0 8px 30px rgba(var(--shadow-alt), 0.15);
 }
 
 .error-boundary-title {
@@ -43,7 +43,7 @@
   font-size: 15px;
   cursor: pointer;
   text-decoration: none;
-  border: 2px solid var(--bg-secondary);
+  border: 2px solid var(--accent-brand);
 }
 
 .error-boundary-btn.primary {
@@ -53,5 +53,5 @@
 
 .error-boundary-btn.secondary {
   background: transparent;
-  color: var(--bg-secondary);
+  color: var(--accent-brand);
 }
