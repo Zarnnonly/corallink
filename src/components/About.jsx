@@ -15,6 +15,8 @@ const About = () => {
             src={aboutLogo}
             alt="Corallink Logo"
             className="about-logo-image"
+            loading="lazy"
+            decoding="async"
           />
         </div>
         <div className="about-text-container reveal-fade-right" ref={textRef}>

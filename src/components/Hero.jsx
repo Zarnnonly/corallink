@@ -15,6 +15,8 @@ const Hero = () => {
           src={heroImage}
           alt="Corallink - Invest in healthy oceans"
           className="hero-image"
+          fetchPriority="high"
+          decoding="async"
         />
         <div className="hero-overlay">
           <div className="hero-content reveal-fade-up" ref={contentRef}>

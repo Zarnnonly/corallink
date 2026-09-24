@@ -37,6 +37,8 @@ const Projects = () => {
                 src={project.image}
                 alt={project.name}
                 className="project-image"
+                loading="lazy"
+                decoding="async"
               /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
               <div className="project-overlay">
                 <h4 className="project-title">{project.name}</h4>

@@ -136,7 +136,7 @@ const ConfirmInvestment = () => {
           </div>
 
           <div className="confirm-right">
-            <img src={project.image} alt={project.name} className="confirm-image" />
+            <img src={project.image} alt={project.name} className="confirm-image" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>

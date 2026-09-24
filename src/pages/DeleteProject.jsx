@@ -47,7 +47,7 @@ export default function DeleteProject() {
         {message && <p className="delete-success" role="status">{message}</p>}
         {loading ? <p role="status">Loading projects…</p> : error ? <div role="alert"><p>{error}</p><button className="delete-secondary" onClick={retry}>Try again</button></div> : !projects.length ? <div className="delete-empty"><h3>No projects published yet</h3><p>Projects will appear here after publication.</p><Link to="/upload-project">Upload a project</Link></div> : !filtered.length ? <p className="delete-empty">No projects match your search.</p> : <ul className="delete-list">
           {filtered.map(project => <li key={project.id}>
-            {project.image ? <img src={project.image} alt="" /> : <div className="delete-image-placeholder" aria-hidden="true">CL</div>}
+            {project.image ? <img src={project.image} alt="" loading="lazy" decoding="async" /> : <div className="delete-image-placeholder" aria-hidden="true">CL</div>}
             <div className="delete-project-info"><h3>{project.name}</h3><p><MapPin size={14} aria-hidden="true" /> {project.location}</p><span>Project #{project.id}</span></div>
             <div className="delete-actions"><Link to={`/project/${project.id}`}>View project</Link><button className="delete-danger" onClick={() => openConfirmation(project)} aria-label={`Delete ${project.name}`}><Trash2 size={16} aria-hidden="true" /> Delete</button></div>
           </li>)}

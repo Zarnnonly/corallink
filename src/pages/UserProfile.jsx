@@ -75,7 +75,7 @@ const UserProfile = () => {
       <div className="profile-page">
         {/* Banner */}
         <div className="profile-banner">
-          <img src={bg} alt="" aria-hidden="true" className="profile-banner-img" />
+          <img src={bg} alt="" aria-hidden="true" className="profile-banner-img" loading="lazy" decoding="async" />
         </div>
 
         <div className="profile-container">
@@ -83,7 +83,7 @@ const UserProfile = () => {
           <div className="profile-header">
             <div className="profile-avatar-wrapper">
               <div className="profile-avatar">
-                {photo ? <img src={photo} alt="Your profile" className="profile-photo" /> : <div className="avatar-placeholder">{initials}</div>}
+                {photo ? <img src={photo} alt="Your profile" className="profile-photo" loading="lazy" decoding="async" /> : <div className="avatar-placeholder">{initials}</div>}
               </div>
               <button type="button" className="profile-avatar-badge" aria-label="Upload profile photo" title="Upload profile photo" disabled={photoBusy} onClick={() => photoInput.current?.click()}>+</button>
               <input ref={photoInput} type="file" accept="image/jpeg,image/png,image/webp" onChange={uploadPhoto} hidden />

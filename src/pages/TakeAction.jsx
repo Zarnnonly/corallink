@@ -15,7 +15,7 @@ const TakeAction = () => {
         {projects.map((project) => (
           <div key={project.id} className="action-card">
             <div className="action-card-left">
-              {project.image ? <img src={project.image} alt={`Action ${project.name}`} className="action-card-image" /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
+              {project.image ? <img src={project.image} alt={`Action ${project.name}`} className="action-card-image" loading="lazy" decoding="async" /> : <div role="img" aria-label="Project image unavailable">Image not available yet</div>}
             </div>
             <div className="action-card-right">
               <h2>{project.name}</h2>

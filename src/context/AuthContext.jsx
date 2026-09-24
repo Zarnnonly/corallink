@@ -1,14 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { request, getToken, setToken } from '../lib/api';
+import { getTokenExpiry } from '../lib/token';
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 const adaptUser = (user) => ({ ...user, name: user.nama, role: user.role === 'investor' ? 'user' : user.role });
-const getTokenExpiry = (token) => {
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
-    return typeof payload.exp === 'number' ? payload.exp * 1000 : null;
-  } catch { return null; }
-};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);

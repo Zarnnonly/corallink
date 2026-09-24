@@ -158,7 +158,7 @@ const FormInvestment = () => {
 
         {/* Right Side: Image */}
         <div className="form-invest-right">
-          <img src={bg} alt="" aria-hidden="true" className="form-bg-image" />
+          <img src={bg} alt="" aria-hidden="true" className="form-bg-image" loading="lazy" decoding="async" />
           <div className="coral-overlay">
             {/* Coral illustration placeholder */}
             <svg viewBox="0 0 100 100" className="coral-svg" fill="#6CC4C5">

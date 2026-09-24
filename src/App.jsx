@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/react';
@@ -6,25 +6,26 @@ import Navbar from './components/Navbar';
 import PageTransition from './components/PageTransition';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
-import TakeAction from './pages/TakeAction';
-import Welcome from './pages/Welcome';
-import SignUp from './pages/SignUp';
-import SignIn from './pages/SignIn';
-import InvestPage from './pages/InvestPage';
-import ProjectDetail from './pages/ProjectDetail';
-import FormInvestment from './pages/FormInvestment';
-import ConfirmInvestment from './pages/ConfirmInvestment';
-import UserProfile from './pages/UserProfile';
-import UploadProject from './pages/UploadProject';
-import AdminPayments from './pages/AdminPayments';
-import UpdateProject from './pages/UpdateProject';
-import DeleteProject from './pages/DeleteProject';
-import NotFound from './pages/NotFound';
 import { AuthProvider } from './context/AuthContext';
 import { ProjectProvider } from './context/ProjectContext';
 import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary from './components/ErrorBoundary';
+
+const TakeAction = lazy(() => import('./pages/TakeAction'));
+const Welcome = lazy(() => import('./pages/Welcome'));
+const SignUp = lazy(() => import('./pages/SignUp'));
+const SignIn = lazy(() => import('./pages/SignIn'));
+const InvestPage = lazy(() => import('./pages/InvestPage'));
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const FormInvestment = lazy(() => import('./pages/FormInvestment'));
+const ConfirmInvestment = lazy(() => import('./pages/ConfirmInvestment'));
+const UserProfile = lazy(() => import('./pages/UserProfile'));
+const UploadProject = lazy(() => import('./pages/UploadProject'));
+const AdminPayments = lazy(() => import('./pages/AdminPayments'));
+const UpdateProject = lazy(() => import('./pages/UpdateProject'));
+const DeleteProject = lazy(() => import('./pages/DeleteProject'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 function AppContent() {
   const location = useLocation();
@@ -38,54 +39,56 @@ function AppContent() {
       {!hideNavbar && <Navbar />}
       <ErrorBoundary>
         <PageTransition>
-          <Routes>
-            {/* Public Routes */}
-            <Route path="/" element={<Home />} />
-            <Route path="/take-action" element={<TakeAction />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/signin" element={<SignIn />} />
+          <Suspense fallback={<p role="status" className="route-fallback">Loading…</p>}>
+            <Routes>
+              {/* Public Routes */}
+              <Route path="/" element={<Home />} />
+              <Route path="/take-action" element={<TakeAction />} />
+              <Route path="/welcome" element={<Welcome />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/signin" element={<SignIn />} />
 
-            <Route path="/invest/:projectId" element={<InvestPage />} />
-            <Route path="/project/:projectId" element={<ProjectDetail />} />
+              <Route path="/invest/:projectId" element={<InvestPage />} />
+              <Route path="/project/:projectId" element={<ProjectDetail />} />
 
-            {/* User Routes */}
-            <Route path="/invest-form/:projectId" element={
-              <ProtectedRoute allowedRoles={['user']}>
-                <FormInvestment />
-              </ProtectedRoute>
-            } />
-            <Route path="/confirm-invest/:projectId" element={
-              <ProtectedRoute allowedRoles={['user']}>
-                <ConfirmInvestment />
-              </ProtectedRoute>
-            } />
-            <Route path="/profile" element={
-              <ProtectedRoute allowedRoles={['user', 'admin']}>
-                <UserProfile />
-              </ProtectedRoute>
-            } />
+              {/* User Routes */}
+              <Route path="/invest-form/:projectId" element={
+                <ProtectedRoute allowedRoles={['user']}>
+                  <FormInvestment />
+                </ProtectedRoute>
+              } />
+              <Route path="/confirm-invest/:projectId" element={
+                <ProtectedRoute allowedRoles={['user']}>
+                  <ConfirmInvestment />
+                </ProtectedRoute>
+              } />
+              <Route path="/profile" element={
+                <ProtectedRoute allowedRoles={['user', 'admin']}>
+                  <UserProfile />
+                </ProtectedRoute>
+              } />
 
 
-            {/* Admin Routes */}
-            <Route path="/upload-project" element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <UploadProject />
-              </ProtectedRoute>
-            } />
-            <Route path="/update-project" element={
-              <ProtectedRoute allowedRoles={['admin']}>
-                <UpdateProject />
-              </ProtectedRoute>
-            } />
+              {/* Admin Routes */}
+              <Route path="/upload-project" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UploadProject />
+                </ProtectedRoute>
+              } />
+              <Route path="/update-project" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UpdateProject />
+                </ProtectedRoute>
+              } />
 
-            <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
+              <Route path="/admin/payments" element={<ProtectedRoute allowedRoles={['admin']}><AdminPayments /></ProtectedRoute>} />
 
-            <Route path="/admin/projects" element={<ProtectedRoute allowedRoles={['admin']}><DeleteProject /></ProtectedRoute>} />
+              <Route path="/admin/projects" element={<ProtectedRoute allowedRoles={['admin']}><DeleteProject /></ProtectedRoute>} />
 
-            {/* 404 Catch-all */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+              {/* 404 Catch-all */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </PageTransition>
       </ErrorBoundary>
       <Analytics />

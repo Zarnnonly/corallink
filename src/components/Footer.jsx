@@ -18,7 +18,7 @@ const Footer = () => {
           {/* Brand & Tagline */}
           <div className="footer-brand">
             <Link to="/" className="footer-brand-header">
-              <img src={logoFooter} alt="CoralLink Logo" className="footer-logo-img" />
+              <img src={logoFooter} alt="CoralLink Logo" className="footer-logo-img" loading="lazy" decoding="async" />
               <span className="footer-brand-title">CORALLINK</span>
             </Link>
             <p className="footer-tagline">

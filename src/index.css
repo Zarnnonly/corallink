@@ -159,7 +159,6 @@ section {
 }
 
 .toast-icon {
-  font-size: 18px;
   flex-shrink: 0;
   width: 24px;
   height: 24px;
@@ -219,6 +218,7 @@ html { scroll-behavior: smooth; scroll-padding-top: 132px; }
 body { overflow-x: clip; }
 :where(button, a, input, select, textarea):focus-visible { outline: 2px solid #38748C; outline-offset: 3px; }
 button:disabled { cursor: not-allowed; }
+.route-fallback { display: flex; justify-content: center; padding: 96px 24px; color: var(--text-secondary); font-weight: 600; }
 @keyframes coralEnter { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @media (prefers-reduced-motion: no-preference) {
   .auth-container, .form-invest-container, .confirm-card, .profile-container, .upload-container, .update-container, .pdv2-card, .admin-content { animation: coralEnter .35s ease-out; }
