@@ -18,7 +18,7 @@ const VisionMission = () => {
           </div>
           <div className="vm-card-body">
             <p className="vm-card-text">
-              "To become the world's leading catalyst for coral reef restoration,\
+              "To become the world's leading catalyst for coral reef restoration,
               through a transparent, measurable, and inclusive collaboration ecosystem for
               generations to come."
             </p>
