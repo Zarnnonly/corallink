@@ -75,7 +75,7 @@ const UserProfile = () => {
       <div className="profile-page">
         {/* Banner */}
         <div className="profile-banner">
-          <img src={bg} alt="Banner" className="profile-banner-img" />
+          <img src={bg} alt="" aria-hidden="true" className="profile-banner-img" />
         </div>
 
         <div className="profile-container">

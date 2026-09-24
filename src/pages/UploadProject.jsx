@@ -193,9 +193,10 @@ const UploadProject = () => {
 
             <div className="form-grid">
               <div className="form-group full">
-                <label>Project Name *</label>
+                <label htmlFor="project-name">Project Name *</label>
                 <input
                   type="text"
+                  id="project-name"
                   name="projectName"
                   value={formData.projectName}
                   onChange={handleInputChange}
@@ -205,9 +206,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Species *</label>
+                <label htmlFor="species">Species *</label>
                 <input
                   type="text"
+                  id="species"
                   name="species"
                   value={formData.species}
                   onChange={handleInputChange}
@@ -217,9 +219,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Location *</label>
+                <label htmlFor="location">Location *</label>
                 <input
                   type="text"
+                  id="location"
                   name="location"
                   value={formData.location}
                   onChange={handleInputChange}
@@ -229,8 +232,9 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group full">
-                <label>Description</label>
+                <label htmlFor="description">Description</label>
                 <textarea
+                  id="description"
                   name="description"
                   value={formData.description}
                   onChange={handleInputChange}
@@ -240,9 +244,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Funding Goal (Rp) *</label>
+                <label htmlFor="funding-goal">Funding Goal (Rp) *</label>
                 <input
                   type="text"
+                  id="funding-goal"
                   name="fundingGoal"
                   value={formData.fundingGoal}
                   onChange={handleInputChange}
@@ -252,9 +257,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Project Duration (months)</label>
+                <label htmlFor="duration">Project Duration (months)</label>
                 <input
                   type="text"
+                  id="duration"
                   name="duration"
                   value={formData.duration}
                   onChange={handleInputChange}
@@ -263,9 +269,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Coral Fragments Target</label>
+                <label htmlFor="fragments">Coral Fragments Target</label>
                 <input
                   type="text"
+                  id="fragments"
                   name="fragments"
                   value={formData.fragments}
                   onChange={handleInputChange}
@@ -274,9 +281,10 @@ const UploadProject = () => {
                 />
               </div>
               <div className="form-group">
-                <label>Restoration Area (m²)</label>
+                <label htmlFor="area">Restoration Area (m²)</label>
                 <input
                   type="text"
+                  id="area"
                   name="area"
                   value={formData.area}
                   onChange={handleInputChange}

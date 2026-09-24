@@ -91,10 +91,10 @@ const FormInvestment = () => {
               </div>
             )}
             <div className="form-section">
-              <label>Select investment type</label>
+              <label id="invest-type-label">Select investment type</label>
               <p className="form-help">How would you like to support this project?</p>
               {investType === 'Give Monthly' && <p className="form-help">Monthly contributions use manual payments. No automatic debit is set up.</p>}
-              <div className="toggle-group">
+              <div className="toggle-group" role="group" aria-labelledby="invest-type-label">
                 <button
                   type="button"
                   className={`toggle-btn ${investType === 'Give Monthly' ? 'active' : ''}`}
@@ -113,7 +113,7 @@ const FormInvestment = () => {
             </div>
 
             <div className="form-section">
-              <label>Investment Amount</label>
+              <label htmlFor="custom-amount">Investment Amount</label>
               <div className="amount-grid">
                 {['Rp 500.000', 'Rp 1.000.000', 'Rp 5.000.000', 'Rp 10.000.000'].map((val) => (
                   <button
@@ -129,6 +129,7 @@ const FormInvestment = () => {
                   <span className="currency-prefix">Rp</span>
                   <input
                     type="text"
+                    id="custom-amount"
                     className="custom-amount-input"
                     placeholder="Enter custom amount"
                     value={!['Rp 500.000', 'Rp 1.000.000', 'Rp 5.000.000', 'Rp 10.000.000'].includes(amount) ? amount : ''}
@@ -143,12 +144,12 @@ const FormInvestment = () => {
             </div>
 
             <div className="form-section">
-              <label>Investor Information</label>
+              <label htmlFor="invest-first-name">Investor Information</label>
               <div className="input-group-row">
-                <input type="text" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
-                <input type="text" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
+                <input type="text" id="invest-first-name" aria-label="First Name" placeholder="First Name" value={firstName} onChange={e => setFirstName(e.target.value)} required />
+                <input type="text" id="invest-last-name" aria-label="Last Name" placeholder="Last Name" value={lastName} onChange={e => setLastName(e.target.value)} required />
               </div>
-              <input type="email" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="full-width-input" />
+              <input type="email" id="invest-email" aria-label="Email Address" placeholder="Email Address" value={email} onChange={e => setEmail(e.target.value)} required className="full-width-input" />
             </div>
 
             <button type="submit" disabled={submitting || !settings?.enabled} className="form-submit-btn">{submitting ? 'Creating request…' : 'Continue to Payment'}</button>
@@ -157,7 +158,7 @@ const FormInvestment = () => {
 
         {/* Right Side: Image */}
         <div className="form-invest-right">
-          <img src={bg} alt="Underwater Background" className="form-bg-image" />
+          <img src={bg} alt="" aria-hidden="true" className="form-bg-image" />
           <div className="coral-overlay">
             {/* Coral illustration placeholder */}
             <svg viewBox="0 0 100 100" className="coral-svg" fill="#6CC4C5">

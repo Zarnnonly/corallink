@@ -67,7 +67,6 @@ corallink-app/
 │   ├── assets/                  # High-resolution WebP banners and icons
 │   ├── components/              # Modular UI components (Navbar, Hero, About, Impact, etc.)
 │   ├── context/                 # React Contexts (AuthContext, ProjectContext, ToastContext)
-│   ├── data/                    # Project catalog schema and fallback data
 │   ├── lib/                     # API client wrapper, scroll reveal helpers
 │   ├── pages/                   # Application route views (Home, Invest, Profile, Admin, etc.)
 │   ├── App.jsx                  # Main routing configuration & provider tree

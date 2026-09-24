@@ -26,9 +26,9 @@ export const ToastProvider = ({ children }) => {
       {children}
       {/* Toast Container */}
       {toasts.length > 0 && (
-        <div className="toast-container">
+        <div className="toast-container" aria-live="polite">
           {toasts.map((toast) => (
-            <div key={toast.id} className={`toast toast-${toast.type}`}>
+            <div key={toast.id} className={`toast toast-${toast.type}`} role={toast.type === 'error' ? 'alert' : 'status'}>
               <span className="toast-icon">
                 {toast.type === 'success' && '✓'}
                 {toast.type === 'error' && '✕'}

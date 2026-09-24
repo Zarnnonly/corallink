@@ -119,8 +119,9 @@ const UpdateProject = () => {
 
             {/* Progress Note */}
             <div className="progress-note-section">
-              <label>Progress Notes</label>
+              <label htmlFor="progress-note">Progress Notes</label>
               <textarea
+                id="progress-note"
                 value={progressNote}
                 onChange={(e) => setProgressNote(e.target.value)}
                 placeholder="Describe what work has been completed, any challenges, and next steps..."

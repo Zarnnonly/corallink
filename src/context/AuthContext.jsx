@@ -3,16 +3,23 @@ import { request, getToken, setToken } from '../lib/api';
 const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext);
 const adaptUser = (user) => ({ ...user, name: user.nama, role: user.role === 'investor' ? 'user' : user.role });
+const getTokenExpiry = (token) => {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    return typeof payload.exp === 'number' ? payload.exp * 1000 : null;
+  } catch { return null; }
+};
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const revision = useRef(0);
+  const expiryTimer = useRef(null);
   const logout = useCallback(() => {
     revision.current++;
+    if (expiryTimer.current) { clearTimeout(expiryTimer.current); expiryTimer.current = null; }
     setToken(null);
-    localStorage.removeItem('corallink_user');
     setUser(null);
     setError('');
     setLoading(false);
@@ -38,9 +45,24 @@ export const AuthProvider = ({ children }) => {
     const storage = (e) => { if (e.key === 'corallink_token') { revision.current++; setUser(null); restoreSession(); } };
     window.addEventListener('corallink:unauthorized', expired);
     window.addEventListener('storage', storage);
-    restoreSession();
+    const token = getToken();
+    const expiry = token ? getTokenExpiry(token) : null;
+    if (token && (!expiry || expiry <= Date.now())) logout();
+    else restoreSession();
     return () => { revision.current++; window.removeEventListener('corallink:unauthorized', expired); window.removeEventListener('storage', storage); };
   }, [logout, restoreSession]);
+  useEffect(() => {
+    if (!user) return undefined;
+    const token = getToken();
+    const expiry = token ? getTokenExpiry(token) : null;
+    const delay = expiry ? Math.min(Math.max(expiry - Date.now(), 0), 2147483647) : 0;
+    expiryTimer.current = setTimeout(() => {
+      expiryTimer.current = null;
+      logout();
+      setError('Your session expired. Please sign in again.');
+    }, delay);
+    return () => { if (expiryTimer.current) { clearTimeout(expiryTimer.current); expiryTimer.current = null; } };
+  }, [user, logout]);
   const authenticate = async (path, body) => {
     const current = ++revision.current;
     const data = await request(path, { method: 'POST', body });
